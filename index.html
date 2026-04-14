@@ -4,381 +4,195 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="theme-color" content="#0a0a0a">
+<meta name="theme-color" content="#1c1915">
 <title>Batch Cooking — Brice</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Instrument+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #0f0f0f;
-  --bg2: #181818;
-  --bg3: #222222;
-  --border: rgba(255,255,255,0.08);
-  --border2: rgba(255,255,255,0.15);
-  --text: #f0ede6;
-  --text2: #a09a8e;
-  --text3: #6a6460;
-  --green: #4CAF82;
-  --green-bg: rgba(76,175,130,0.12);
-  --green-border: rgba(76,175,130,0.3);
-  --amber: #E8A838;
-  --amber-bg: rgba(232,168,56,0.12);
-  --amber-border: rgba(232,168,56,0.3);
-  --red: #E05A4E;
-  --red-bg: rgba(224,90,78,0.12);
-  --accent: #4CAF82;
-  --serif: 'DM Serif Display', Georgia, serif;
-  --sans: 'DM Sans', system-ui, sans-serif;
-  --r: 10px;
-  --r-lg: 16px;
-}
-* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-html { scroll-behavior: smooth; }
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--sans);
-  font-size: 15px;
-  line-height: 1.6;
-  min-height: 100vh;
-}
+:root{--ink:#1c1915;--ink2:#3d3530;--ink3:#6b5f58;--ink4:#9a8e86;--paper:#faf7f2;--paper2:#f3ede3;--paper3:#e6ddd0;--white:#ffffff;--sage:#4e7a52;--sage-light:#eaf3ea;--sage-mid:#a3c9a6;--amber:#b86820;--amber-light:#fdf2e4;--amber-mid:#e8b060;--rose:#b84040;--serif:'Cormorant Garamond',Georgia,serif;--sans:'Instrument Sans',system-ui,sans-serif;--r:8px;--r-lg:14px;--shadow:0 1px 8px rgba(28,25,21,0.07);--shadow-md:0 4px 20px rgba(28,25,21,0.10);--shadow-lg:0 8px 36px rgba(28,25,21,0.13)}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.65;min-height:100vh}
 
 /* HEADER */
-.site-header {
-  padding: 2rem 1.5rem 1.5rem;
-  border-bottom: 1px solid var(--border);
-  position: sticky;
-  top: 0;
-  background: rgba(15,15,15,0.95);
-  backdrop-filter: blur(12px);
-  z-index: 100;
-}
-.header-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
-.logo h1 { font-family: var(--serif); font-size: 22px; font-weight: 400; color: var(--text); letter-spacing: -0.02em; }
-.logo p { font-size: 12px; color: var(--text3); margin-top: 1px; }
+.site-header{background:var(--ink);position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(255,255,255,0.05)}
+.header-inner{max-width:980px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;height:62px}
+.logo-group{display:flex;align-items:baseline;gap:12px}
+.logo-name{font-family:var(--serif);font-size:22px;font-weight:300;color:var(--paper);letter-spacing:0.02em;font-style:italic}
+.logo-sep{color:rgba(255,255,255,0.2);font-size:14px}
+.logo-sub{font-size:11px;color:var(--ink4);letter-spacing:0.1em;text-transform:uppercase}
+.header-pill{font-size:10.5px;padding:4px 12px;border-radius:100px;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.35);letter-spacing:0.05em}
 
-/* NAV TABS */
-.nav-tabs {
-  display: flex;
-  gap: 4px;
-  padding: 0 1.5rem;
-  border-bottom: 1px solid var(--border);
-  overflow-x: auto;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  background: var(--bg);
-  position: sticky;
-  top: 73px;
-  z-index: 99;
-}
-.nav-tabs::-webkit-scrollbar { display: none; }
-.nav-tab {
-  padding: 12px 16px;
-  font-size: 13px;
-  font-weight: 400;
-  color: var(--text3);
-  cursor: pointer;
-  border: none;
-  background: none;
-  white-space: nowrap;
-  border-bottom: 2px solid transparent;
-  transition: all 0.2s;
-  font-family: var(--sans);
-}
-.nav-tab:hover { color: var(--text2); }
-.nav-tab.active { color: var(--text); border-bottom-color: var(--green); }
+/* NAV */
+.nav-wrap{background:var(--ink2);position:sticky;top:62px;z-index:99;overflow-x:auto;-ms-overflow-style:none;scrollbar-width:none}
+.nav-wrap::-webkit-scrollbar{display:none}
+.nav-inner{max-width:980px;margin:0 auto;padding:0 2rem;display:flex}
+.nav-tab{padding:12px 20px;font-size:12px;font-weight:400;color:rgba(255,255,255,0.4);cursor:pointer;border:none;background:none;white-space:nowrap;border-bottom:2px solid transparent;transition:all .2s;font-family:var(--sans);letter-spacing:0.05em;text-transform:uppercase}
+.nav-tab:hover{color:rgba(255,255,255,0.7)}
+.nav-tab.active{color:var(--paper);border-bottom-color:var(--amber-mid)}
 
 /* MAIN */
-.main { max-width: 900px; margin: 0 auto; padding: 1.5rem; }
-.section { display: none; }
-.section.active { display: block; }
+.main{max-width:980px;margin:0 auto;padding:2.5rem 2rem}
+.section{display:none}.section.active{display:block}
 
-/* MODE SELECTOR */
-.mode-bar { display: flex; gap: 8px; margin-bottom: 1.5rem; flex-wrap: wrap; }
-.mode-btn {
-  padding: 7px 14px;
-  border-radius: 100px;
-  border: 1px solid var(--border2);
-  background: transparent;
-  font-size: 12px;
-  color: var(--text2);
-  cursor: pointer;
-  transition: all 0.2s;
-  font-family: var(--sans);
-  font-weight: 400;
-}
-.mode-btn:hover { border-color: var(--green-border); color: var(--text); }
-.mode-btn.active { background: var(--green-bg); border-color: var(--green-border); color: var(--green); }
+/* PAGE HEADER */
+.pg-head{margin-bottom:2rem}
+.pg-title{font-family:var(--serif);font-size:42px;font-weight:300;color:var(--ink);letter-spacing:-.01em;margin-bottom:4px;line-height:1.15}
+.pg-title em{font-style:italic;color:var(--ink3)}
+.pg-sub{font-size:13px;color:var(--ink4)}
 
-/* GENERATE BTN */
-.gen-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 20px;
-  border-radius: var(--r);
-  border: 1px solid var(--green-border);
-  background: var(--green-bg);
-  color: var(--green);
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  margin-bottom: 1.5rem;
-  transition: all 0.2s;
-  font-family: var(--sans);
-}
-.gen-btn:hover { background: rgba(76,175,130,0.2); }
-.gen-btn .spin { display: inline-block; }
-.gen-btn.loading .spin { animation: spin 0.6s linear infinite; }
-@keyframes spin { to { transform: rotate(360deg); } }
+/* MODE BAR */
+.mode-bar{display:flex;gap:6px;margin-bottom:1.5rem;flex-wrap:wrap;align-items:center}
+.mode-lbl{font-size:10px;color:var(--ink4);letter-spacing:.1em;text-transform:uppercase;margin-right:2px;align-self:center}
+.mode-btn{padding:6px 16px;border-radius:100px;border:1.5px solid var(--paper3);background:transparent;font-size:12px;color:var(--ink3);cursor:pointer;transition:all .2s;font-family:var(--sans)}
+.mode-btn:hover{border-color:var(--ink3);color:var(--ink)}
+.mode-btn.active{background:var(--ink);border-color:var(--ink);color:var(--paper)}
 
-/* TOTALS BAR */
-.totals {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-  gap: 8px;
-  margin-bottom: 1.5rem;
-}
-.total-card {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 10px 14px;
-}
-.total-card .t-label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
-.total-card .t-val { font-size: 18px; font-weight: 500; color: var(--text); }
-.total-card .t-val.good { color: var(--green); }
-.total-card .t-val.warn { color: var(--amber); }
-.total-card .t-val.bad { color: var(--red); }
+/* GEN BUTTON */
+.gen-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 24px;border-radius:var(--r);border:none;background:var(--amber);color:var(--white);font-size:13px;font-weight:500;cursor:pointer;margin-bottom:2rem;transition:all .25s;font-family:var(--sans);letter-spacing:.02em;box-shadow:0 2px 10px rgba(184,104,32,.35)}
+.gen-btn:hover{background:#a05a18;box-shadow:0 4px 20px rgba(184,104,32,.45);transform:translateY(-1px)}
+.gen-btn:active{transform:translateY(0)}
+.gen-btn.loading .spin{animation:spin .5s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
 
-/* OMEGA ALERT */
-.alert {
-  padding: 10px 14px;
-  border-radius: var(--r);
-  font-size: 13px;
-  margin-bottom: 1.5rem;
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
-}
-.alert.green { background: var(--green-bg); border: 1px solid var(--green-border); color: var(--green); }
-.alert.amber { background: var(--amber-bg); border: 1px solid var(--amber-border); color: var(--amber); }
+/* TOTALS */
+.totals{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:1.5rem}
+.total-card{background:var(--white);border:1px solid var(--paper3);border-radius:var(--r-lg);padding:14px 16px;box-shadow:var(--shadow)}
+.t-lbl{font-size:10px;color:var(--ink4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px}
+.t-val{font-family:var(--serif);font-size:24px;font-weight:400;color:var(--ink);line-height:1}
+.t-val.good{color:var(--sage)}.t-val.warn{color:var(--amber)}
 
-/* MENU GRID */
-.menu-slots {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 8px;
-  margin-bottom: 1.5rem;
-}
-@media (max-width: 700px) { .menu-slots { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 400px) { .menu-slots { grid-template-columns: 1fr; } }
-.meal-slot {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 12px;
-  cursor: pointer;
-  transition: border-color 0.2s;
-}
-.meal-slot:hover { border-color: var(--border2); }
-.meal-slot.has-omega { border-color: var(--green-border); }
-.meal-slot h3 { font-size: 10px; font-weight: 500; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
-.meal-slot p { font-size: 12px; color: var(--text); line-height: 1.4; font-weight: 400; }
-.meal-slot .macro-mini { font-size: 11px; color: var(--text3); margin-top: 5px; }
+/* ALERTS */
+.alert{padding:10px 14px;border-radius:var(--r);font-size:12.5px;margin-bottom:1.5rem;display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+.alert.green{background:var(--sage-light);border:1px solid var(--sage-mid);color:var(--sage)}
+.alert.amber{background:var(--amber-light);border:1px solid var(--amber-mid);color:var(--amber)}
+
+/* MENU SLOTS */
+.menu-slots{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:2rem}
+@media(max-width:700px){.menu-slots{grid-template-columns:1fr 1fr}}
+@media(max-width:380px){.menu-slots{grid-template-columns:1fr}}
+.meal-slot{background:var(--white);border:1px solid var(--paper3);border-radius:var(--r-lg);padding:14px;box-shadow:var(--shadow);transition:box-shadow .2s,border-color .2s}
+.meal-slot.has-omega{border-color:var(--sage-mid)}
+.slot-ico{font-size:16px;margin-bottom:7px;display:block;line-height:1}
+.slot-cat{font-size:9px;font-weight:500;color:var(--ink4);text-transform:uppercase;letter-spacing:.12em;margin-bottom:4px}
+.slot-name{font-size:12px;color:var(--ink);line-height:1.4}
+.slot-macro{font-size:11px;color:var(--ink4);margin-top:4px}
+
+/* DIVIDER */
+.divider{height:1px;background:linear-gradient(to right,var(--paper3),transparent);margin:1.75rem 0}
 
 /* RECIPE CARDS */
-.recipe-card {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--r-lg);
-  padding: 1rem 1.25rem;
-  margin-bottom: 10px;
-  transition: border-color 0.2s;
-}
-.recipe-card:hover { border-color: var(--border2); }
-.recipe-card.omega { border-left: 3px solid var(--green); }
-.card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
-.card-meta { flex: 1; min-width: 0; }
-.card-slot-label { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 3px; }
-.card-name { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 6px; line-height: 1.4; }
-.badges { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 6px; }
-.badge {
-  font-size: 10px;
-  padding: 2px 7px;
-  border-radius: 100px;
-  font-weight: 500;
-  letter-spacing: 0.02em;
-}
-.badge.anti { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
-.badge.proto { background: rgba(100,149,237,0.12); color: #6495ED; border: 1px solid rgba(100,149,237,0.3); }
-.badge.vegan { background: rgba(154,205,50,0.12); color: #8BC34A; border: 1px solid rgba(154,205,50,0.3); }
-.badge.omega { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-border); }
-.badge.gf { background: rgba(180,160,100,0.12); color: #C8A96E; border: 1px solid rgba(180,160,100,0.3); }
-.ai-dots { display: flex; gap: 3px; align-items: center; margin-bottom: 6px; }
-.ai-dots .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--bg3); border: 1px solid var(--border2); }
-.ai-dots .dot.on { background: var(--green); border-color: var(--green); }
-.ai-dots .label { font-size: 10px; color: var(--text3); margin-left: 5px; }
-.card-macros { font-size: 12px; color: var(--text3); display: flex; gap: 8px; flex-wrap: wrap; }
-.card-macros b { color: var(--text2); font-weight: 500; }
-.expand-btn {
-  background: none;
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  color: var(--text3);
-  font-size: 12px;
-  cursor: pointer;
-  padding: 5px 10px;
-  white-space: nowrap;
-  transition: all 0.2s;
-  font-family: var(--sans);
-  flex-shrink: 0;
-}
-.expand-btn:hover { border-color: var(--border2); color: var(--text2); }
-.recipe-detail { display: none; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); animation: fadeIn 0.2s ease; }
-.recipe-detail.open { display: block; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
-.ai-tip-box {
-  background: var(--green-bg);
-  border: 1px solid var(--green-border);
-  border-radius: var(--r);
-  padding: 8px 12px;
-  font-size: 12px;
-  color: var(--green);
-  margin-bottom: 12px;
-  line-height: 1.5;
-}
-.recipe-but { font-size: 13px; color: var(--text2); margin-bottom: 12px; font-style: italic; line-height: 1.5; }
-.detail-block { margin-bottom: 12px; }
-.detail-block h4 { font-size: 10px; font-weight: 500; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
-.detail-block ul { list-style: none; font-size: 13px; color: var(--text); line-height: 1.8; }
-.detail-block ul li::before { content: "—  "; color: var(--text3); }
-.detail-block ol { padding-left: 18px; font-size: 13px; color: var(--text); line-height: 1.9; }
-.detail-block ol li { padding-left: 4px; }
+.rc{background:var(--white);border:1px solid var(--paper3);border-radius:var(--r-lg);padding:1.1rem 1.25rem;margin-bottom:10px;box-shadow:var(--shadow);transition:box-shadow .2s}
+.rc:hover{box-shadow:var(--shadow-md)}
+.rc.omega{border-left:3px solid var(--sage)}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:14px}
+.card-meta{flex:1;min-width:0}
+.card-cat-lbl{font-size:9px;font-weight:500;color:var(--ink4);text-transform:uppercase;letter-spacing:.12em;margin-bottom:4px}
+.card-name{font-family:var(--serif);font-size:18px;font-weight:400;color:var(--ink);margin-bottom:8px;line-height:1.25}
+.badges{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:8px}
+.badge{font-size:10px;padding:2px 8px;border-radius:100px;font-weight:400;letter-spacing:.02em}
+.badge.anti{background:var(--sage-light);color:var(--sage);border:1px solid var(--sage-mid)}
+.badge.proto{background:#e8f0f8;color:#2a5a8a;border:1px solid #9abcd8}
+.badge.vegan{background:#f0f8e8;color:#3a6a2a;border:1px solid #9acc88}
+.badge.omega{background:var(--amber-light);color:var(--amber);border:1px solid var(--amber-mid)}
+.badge.gf{background:#f8f4e4;color:#7a6020;border:1px solid #ccc070}
+.badge.dessert{background:#f8e8f4;color:#8a2a7a;border:1px solid #d490c4}
+.badge.apero{background:#e8f4f8;color:#1a6070;border:1px solid #80c0d0}
+.ai-row{display:flex;gap:4px;align-items:center;margin-bottom:8px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--paper3);border:1px solid var(--paper3)}
+.dot.on{background:var(--sage);border-color:var(--sage)}
+.ai-src{font-size:10px;color:var(--ink4);margin-left:8px}
+.card-macros{font-size:12px;color:var(--ink4);display:flex;gap:10px;flex-wrap:wrap}
+.card-macros b{color:var(--ink2);font-weight:500}
+.expand-btn{background:none;border:1px solid var(--paper3);border-radius:var(--r);color:var(--ink3);font-size:11.5px;cursor:pointer;padding:6px 14px;white-space:nowrap;transition:all .2s;font-family:var(--sans);flex-shrink:0}
+.expand-btn:hover{background:var(--paper2);color:var(--ink)}
+.rd{display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--paper2)}
+.rd.open{display:block;animation:fd .2s ease}
+@keyframes fd{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+.tip-box{background:var(--sage-light);border:1px solid var(--sage-mid);border-radius:var(--r);padding:9px 13px;font-size:12px;color:var(--sage);margin-bottom:12px;line-height:1.55}
+.recipe-desc{font-family:var(--serif);font-size:15px;font-style:italic;color:var(--ink3);margin-bottom:14px;line-height:1.55;font-weight:300}
+.db{margin-bottom:14px}
+.db h4{font-size:9.5px;font-weight:500;color:var(--ink4);text-transform:uppercase;letter-spacing:.12em;margin-bottom:8px;padding-bottom:5px;border-bottom:1px solid var(--paper2)}
+.db ul{list-style:none;font-size:13px;color:var(--ink2);line-height:1.9}
+.db ul li{padding-left:14px;position:relative}
+.db ul li::before{content:"·";position:absolute;left:3px;color:var(--ink4)}
+.db ol{list-style:none;counter-reset:st;padding:0}
+.db ol li{counter-increment:st;font-size:13px;color:var(--ink2);line-height:1.7;padding:7px 0 7px 30px;position:relative;border-bottom:1px solid var(--paper2)}
+.db ol li:last-child{border-bottom:none}
+.db ol li::before{content:counter(st);position:absolute;left:0;top:9px;font-family:var(--serif);font-size:15px;color:var(--amber);font-weight:400;width:22px;text-align:center}
 
-/* FILTER ROW */
-.filter-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 1.25rem; }
-.filter-row label { font-size: 12px; color: var(--text3); }
-.filter-row select {
-  font-size: 12px;
-  padding: 6px 10px;
-  border-radius: var(--r);
-  border: 1px solid var(--border2);
-  background: var(--bg2);
-  color: var(--text);
-  font-family: var(--sans);
-  cursor: pointer;
-}
+/* FILTER */
+.filter-bar{background:var(--white);border:1px solid var(--paper3);border-radius:var(--r-lg);padding:14px 18px;margin-bottom:1.5rem;box-shadow:var(--shadow);display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.filter-bar label{font-size:10px;color:var(--ink4);letter-spacing:.08em;text-transform:uppercase}
+.filter-bar select{font-size:12.5px;padding:7px 10px;border-radius:var(--r);border:1px solid var(--paper3);background:var(--paper);color:var(--ink2);font-family:var(--sans);cursor:pointer}
+.filter-bar select:focus{outline:2px solid var(--amber);outline-offset:2px}
+.cat-hdr{font-family:var(--serif);font-size:22px;font-weight:300;font-style:italic;color:var(--ink3);padding:18px 0 10px;margin-top:6px;border-bottom:1px solid var(--paper3);margin-bottom:12px}
+.cat-hdr:first-child{padding-top:0;margin-top:0}
 
 /* SHOPPING */
-.shop-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-top: 1rem; }
-.shop-cat {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 14px;
-}
-.shop-cat h4 { font-size: 11px; font-weight: 500; color: var(--text3); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 10px; }
-.shop-cat ul { list-style: none; font-size: 13px; line-height: 2; color: var(--text2); }
-.shop-cat ul li { display: flex; align-items: center; gap: 8px; cursor: pointer; transition: color 0.15s; }
-.shop-cat ul li:hover { color: var(--text); }
-.shop-cat ul li.checked { text-decoration: line-through; color: var(--text3); }
-.shop-cat ul li::before { content: "○"; color: var(--text3); font-size: 12px; flex-shrink: 0; }
-.shop-cat ul li.checked::before { content: "●"; color: var(--green); }
-.price-box {
-  margin-top: 1.25rem;
-  background: var(--green-bg);
-  border: 1px solid var(--green-border);
-  border-radius: var(--r);
-  padding: 12px 16px;
-  font-size: 14px;
-  color: var(--green);
-  font-weight: 500;
-}
+.shop-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.shop-cat{background:var(--white);border:1px solid var(--paper3);border-radius:var(--r-lg);padding:16px;box-shadow:var(--shadow)}
+.shop-cat h4{font-size:10px;font-weight:500;color:var(--ink4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--paper2)}
+.shop-cat ul{list-style:none;font-size:13px;line-height:2;color:var(--ink3)}
+.shop-cat ul li{cursor:pointer;transition:color .15s;display:flex;align-items:center;gap:9px}
+.shop-cat ul li:hover{color:var(--ink)}
+.shop-cat ul li.checked{text-decoration:line-through;color:var(--ink4)}
+.shop-cat ul li::before{content:'';width:15px;height:15px;border:1.5px solid var(--paper3);border-radius:4px;flex-shrink:0;transition:all .15s;background:var(--paper)}
+.shop-cat ul li.checked::before{background:var(--sage);border-color:var(--sage)}
+.price-box{margin-top:1.25rem;background:var(--amber-light);border:1px solid var(--amber-mid);border-radius:var(--r-lg);padding:16px 20px}
+.price-box .price-main{font-family:var(--serif);font-size:28px;font-weight:400;color:var(--amber);line-height:1}
+.price-box .price-sub{font-size:12px;color:var(--ink4);margin-top:3px}
 
-/* BATCH STEPS */
-.batch-progress-bar-wrap {
-  background: var(--bg3);
-  border-radius: 100px;
-  height: 4px;
-  margin-bottom: 1.25rem;
-  overflow: hidden;
-}
-.batch-progress-bar {
-  height: 100%;
-  background: var(--green);
-  border-radius: 100px;
-  transition: width 0.4s ease;
-  width: 0%;
-}
-.batch-progress-label { font-size: 12px; color: var(--text3); margin-bottom: 8px; }
-.batch-step {
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  padding: 12px 14px;
-  margin-bottom: 8px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.batch-step:hover { border-color: var(--border2); }
-.batch-step.done { opacity: 0.45; }
-.batch-step.done .step-title { text-decoration: line-through; color: var(--text3); }
-.step-check { font-size: 15px; min-width: 18px; padding-top: 1px; color: var(--text3); }
-.batch-step.done .step-check { color: var(--green); }
-.step-content .step-title { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 2px; }
-.step-content .step-desc { font-size: 12px; color: var(--text3); line-height: 1.5; }
-.batch-time { font-size: 11px; color: var(--text3); background: var(--bg3); padding: 1px 7px; border-radius: 100px; display: inline-block; margin-top: 4px; }
+/* BATCH */
+.batch-meta{font-size:12px;color:var(--ink4);margin-bottom:10px}
+.prog-wrap{background:var(--paper3);border-radius:100px;height:3px;margin-bottom:1.75rem;overflow:hidden}
+.prog-bar{height:100%;background:linear-gradient(90deg,var(--sage),var(--amber));border-radius:100px;transition:width .5s cubic-bezier(.4,0,.2,1);width:0%}
+.bstep{display:flex;gap:14px;align-items:flex-start;background:var(--white);border:1px solid var(--paper3);border-radius:var(--r-lg);padding:14px 16px;margin-bottom:8px;cursor:pointer;transition:all .2s;box-shadow:var(--shadow)}
+.bstep:hover{box-shadow:var(--shadow-md)}
+.bstep.done{opacity:.4;box-shadow:none}
+.bstep.done .step-n{color:var(--sage)}.bstep.done .stitle{text-decoration:line-through}
+.step-n{font-family:var(--serif);font-size:22px;font-weight:300;color:var(--amber);min-width:26px;line-height:1.2}
+.stitle{font-size:13px;font-weight:500;color:var(--ink);margin-bottom:3px}
+.sdesc{font-size:12px;color:var(--ink3);line-height:1.55}
+.stime{font-size:10px;color:var(--ink4);background:var(--paper2);padding:2px 9px;border-radius:100px;display:inline-block;margin-top:5px;letter-spacing:.04em}
 
-/* SECTION TITLE */
-.section-title { font-family: var(--serif); font-size: 20px; font-weight: 400; color: var(--text); margin-bottom: 1.25rem; letter-spacing: -0.02em; }
-.section-sub { font-size: 13px; color: var(--text3); margin-top: -0.75rem; margin-bottom: 1.25rem; }
+.pg-sub-note{font-size:13px;color:var(--ink3);margin-bottom:1.5rem;font-style:italic}
+.empty{font-size:13px;color:var(--ink4);padding:2rem 0;font-style:italic}
 
-/* EMPTY */
-.empty { font-size: 13px; color: var(--text3); padding: 2rem 0; }
-
-/* SCROLLBAR */
-::-webkit-scrollbar { width: 4px; height: 4px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
-
-/* MOBILE IMPROVEMENTS */
-@media (max-width: 500px) {
-  .main { padding: 1rem; }
-  .site-header { padding: 1.25rem 1rem 1rem; }
-  .nav-tabs { padding: 0 1rem; }
-  .totals { grid-template-columns: repeat(3, 1fr); }
-}
+@media(max-width:600px){.main{padding:1.5rem 1.25rem}.header-inner{padding:0 1.25rem}.nav-inner{padding:0 1.25rem}.totals{grid-template-columns:repeat(3,1fr)}.pg-title{font-size:30px}.header-pill{display:none}}
 </style>
 </head>
 <body>
 
 <header class="site-header">
   <div class="header-inner">
-    <div class="logo">
-      <h1>Batch Cooking</h1>
-      <p>Anti-inflammatoire · Mix Mat Resume + Alex PYX</p>
+    <div class="logo-group">
+      <span class="logo-name">Batch Cooking</span>
+      <span class="logo-sep">·</span>
+      <span class="logo-sub">Brice</span>
     </div>
+    <span class="header-pill">91 recettes · Mat Resume + Alex PYX</span>
   </div>
 </header>
 
-<nav class="nav-tabs">
-  <button class="nav-tab active" onclick="showTab('menu',this)">Menu 4 jours</button>
-  <button class="nav-tab" onclick="showTab('recipes',this)">Bibliothèque</button>
-  <button class="nav-tab" onclick="showTab('shopping',this)">Courses</button>
-  <button class="nav-tab" onclick="showTab('batch',this)">Batch cooking</button>
+<nav class="nav-wrap">
+  <div class="nav-inner">
+    <button class="nav-tab active" onclick="showTab('menu',this)">Menu 4 jours</button>
+    <button class="nav-tab" onclick="showTab('recipes',this)">Bibliothèque</button>
+    <button class="nav-tab" onclick="showTab('shopping',this)">Courses</button>
+    <button class="nav-tab" onclick="showTab('batch',this)">Batch cooking</button>
+  </div>
 </nav>
 
 <main class="main">
 
-  <!-- MENU TAB -->
   <section id="menu" class="section active">
+    <div class="pg-head">
+      <div class="pg-title">Mon <em>menu</em> de la semaine</div>
+      <div class="pg-sub">Tous les repas identiques × 4 jours &nbsp;·&nbsp; ~2000 kcal &nbsp;·&nbsp; 120–150g protéines</div>
+    </div>
     <div class="mode-bar">
-      <span style="font-size:12px;color:var(--text3);align-self:center;">Mode :</span>
+      <span class="mode-lbl">Mode</span>
       <button class="mode-btn active" onclick="setMode('anti',this)">Anti-inflammation max</button>
       <button class="mode-btn" onclick="setMode('mix',this)">Mix équilibré</button>
       <button class="mode-btn" onclick="setMode('proto',this)">Protéines max</button>
@@ -386,187 +200,388 @@ body {
     <button class="gen-btn" id="gen-btn" onclick="generateMenu()">
       <span class="spin">↻</span> Générer un menu
     </button>
-    <div class="totals" id="totals">
-      <div class="total-card"><div class="t-label">Calories</div><div class="t-val" id="t-kcal">—</div></div>
-      <div class="total-card"><div class="t-label">Protéines</div><div class="t-val" id="t-prot">—</div></div>
-      <div class="total-card"><div class="t-label">Glucides</div><div class="t-val" id="t-gluc">—</div></div>
-      <div class="total-card"><div class="t-label">Lipides</div><div class="t-val" id="t-lip">—</div></div>
-      <div class="total-card"><div class="t-label">Score inflam.</div><div class="t-val" id="t-ai">—</div></div>
-      <div class="total-card"><div class="t-label">Budget 4j</div><div class="t-val" id="t-budget">—</div></div>
+    <div class="totals">
+      <div class="total-card"><div class="t-lbl">Calories</div><div class="t-val" id="t-kcal">—</div></div>
+      <div class="total-card"><div class="t-lbl">Protéines</div><div class="t-val" id="t-prot">—</div></div>
+      <div class="total-card"><div class="t-lbl">Glucides</div><div class="t-val" id="t-gluc">—</div></div>
+      <div class="total-card"><div class="t-lbl">Lipides</div><div class="t-val" id="t-lip">—</div></div>
+      <div class="total-card"><div class="t-lbl">Score inflam.</div><div class="t-val" id="t-ai">—</div></div>
+      <div class="total-card"><div class="t-lbl">Budget 4j</div><div class="t-val" id="t-budget">—</div></div>
     </div>
     <div id="omega-alert"></div>
     <div class="menu-slots" id="menu-slots"></div>
+    <div class="divider"></div>
     <div id="menu-detail"></div>
   </section>
 
-  <!-- RECIPES TAB -->
   <section id="recipes" class="section">
-    <div class="filter-row">
+    <div class="pg-head">
+      <div class="pg-title">La <em>bibliothèque</em></div>
+      <div class="pg-sub">91 recettes &nbsp;·&nbsp; Filtrer, explorer, s'inspirer</div>
+    </div>
+    <div class="filter-bar">
       <label>Catégorie</label>
       <select id="cat-filter" onchange="filterRecipes()">
         <option value="all">Toutes</option>
-        <option value="matin">Jus / Matin</option>
-        <option value="dejeuner">Déjeuner</option>
-        <option value="diner">Dîner / Soupes</option>
-        <option value="souper">Souper / Plats</option>
-        <option value="collation">Collations</option>
+        <option value="matin">Jus & Matin</option>
+        <option value="dejeuner">Petit-déj & Déjeuner</option>
+        <option value="diner">Dîner & Soupes</option>
+        <option value="souper">Souper & Plats</option>
+        <option value="collation">Collations & Goûters</option>
+        <option value="apero">Apéros</option>
+        <option value="dessert">Desserts</option>
       </select>
       <label>Source</label>
       <select id="src-filter" onchange="filterRecipes()">
-        <option value="all">Les deux</option>
+        <option value="all">Les deux livres</option>
         <option value="mat">Mat Resume</option>
         <option value="pyx">Alex PYX</option>
       </select>
       <label>Anti-inflam min.</label>
       <select id="ai-filter" onchange="filterRecipes()">
-        <option value="0">Tous</option>
-        <option value="3">★★★+</option>
-        <option value="4">★★★★+</option>
-        <option value="5">★★★★★</option>
+        <option value="0">Tous les scores</option>
+        <option value="3">★★★ et plus</option>
+        <option value="4">★★★★ et plus</option>
+        <option value="5">★★★★★ seulement</option>
       </select>
     </div>
     <div id="recipe-list"></div>
   </section>
 
-  <!-- SHOPPING TAB -->
   <section id="shopping" class="section">
-    <p class="section-sub">Basé sur le menu généré. Coche les articles en magasin.</p>
-    <div id="shopping-content"><div class="empty">Génère un menu d'abord depuis l'onglet "Menu 4 jours".</div></div>
+    <div class="pg-head">
+      <div class="pg-title">Liste de <em>courses</em></div>
+    </div>
+    <div id="shopping-content"><div class="empty">Génère d'abord un menu depuis l'onglet "Menu 4 jours".</div></div>
   </section>
 
-  <!-- BATCH TAB -->
   <section id="batch" class="section">
-    <p class="section-sub">Coche les étapes au fur et à mesure — durée totale ~2h30.</p>
-    <div class="batch-progress-label" id="batch-progress-label">0/9 étapes</div>
-    <div class="batch-progress-bar-wrap"><div class="batch-progress-bar" id="batch-bar"></div></div>
-    <div id="batch-content"><div class="empty">Génère un menu d'abord depuis l'onglet "Menu 4 jours".</div></div>
+    <div class="pg-head">
+      <div class="pg-title">Session <em>batch</em></div>
+      <div class="pg-sub">Coche les étapes en cuisine &nbsp;·&nbsp; durée estimée ~2h30</div>
+    </div>
+    <div class="batch-meta" id="bpl">0 / 9 étapes</div>
+    <div class="prog-wrap"><div class="prog-bar" id="bp"></div></div>
+    <div id="batch-content"><div class="empty">Génère d'abord un menu depuis l'onglet "Menu 4 jours".</div></div>
   </section>
 
 </main>
 
 <script>
+
+
 const DB = {
 matin:[
-{id:'jus-ai',name:'Jus citron-gingembre-curcuma',src:'mat',cat:'matin',badges:['anti','gf','vegan'],ai:5,kcal:25,prot:0,gluc:6,lip:0,budget:1.5,omega3:false,
-tip:'Curcuma + poivre noir + gingembre = combo anti-inflam numéro 1 pour les articulations. La pipérine du poivre multiplie l\'absorption du curcuma par 20x.',
+{id:'jus-citron-gi',name:'Jus citron-gingembre-curcuma',src:'mat',cat:'matin',badges:['anti','gf','vegan'],ai:5,kcal:25,prot:0,gluc:6,lip:0,budget:1.5,omega3:false,
+tip:'Curcuma + poivre noir + gingembre = trio anti-inflam #1 pour les articulations. La pipérine du poivre multiplie l\'absorption du curcuma par 20x.',
 ingr:['3 citrons jaunes','2 cc gingembre en poudre','1 pincée curcuma','1 pincée poivre noir','2 cc miel acacia liquide','1 litre eau'],
 steps:['Porter 1 tasse eau + gingembre + miel à ébullition 5 min.','Laisser refroidir 15 min. Filtrer.','Verser dans carafe avec jus citron, curcuma, poivre noir et reste eau.','Conserver au frigo. Boire chaque matin à température ambiante.'],
 but:'Activation anti-inflammatoire dès le réveil — curcuma biodisponible grâce au poivre.'},
 {id:'jus-feu',name:'Fire juice orange-carotte-gingembre',src:'pyx',cat:'matin',badges:['anti','gf','vegan'],ai:5,kcal:80,prot:2,gluc:18,lip:0,budget:2,omega3:false,
 tip:'Vitamine C de l\'orange + gingembre = duo anti-oxydant puissant. Bêtacarotène des carottes soutient la réparation tissulaire.',
 ingr:['2 oranges','2 carottes','1 citron','gingembre frais râpé','eau'],
-steps:['Mixer tous les ingrédients jusqu\'à texture lisse.','Filtrer dans chinois ou torchon.','Verser dans verre ou fioles. Boire frais immédiatement.'],
+steps:['Mixer tous les ingrédients jusqu\'à texture lisse.','Filtrer dans chinois ou torchon.','Boire frais immédiatement.'],
 but:'Vitamine C, bêtacarotène, anti-inflammatoire — idéal à jeun le matin.'},
 {id:'jus-roi',name:'Potion du roi grenade-betterave',src:'pyx',cat:'matin',badges:['anti','gf','vegan'],ai:5,kcal:90,prot:2,gluc:20,lip:0,budget:3,omega3:false,
 tip:'Betterave + grenade = antioxydants qui réduisent directement les marqueurs inflammatoires CRP et IL-6.',
 ingr:['1 grenade','¼ pastèque','1 betterave crue','gingembre','½ citron','cannelle'],
-steps:['Mixer tous les ingrédients jusqu\'à texture lisse.','Filtrer avec un chinois.','Servir frais.'],
+steps:['Mixer tous les ingrédients.','Filtrer avec un chinois.','Servir frais.'],
 but:'Booste l\'énergie, supporte l\'endurance, anti-oxydant maximal.'},
 {id:'jus-acne',name:'Jus curcuma-orange-eau de coco',src:'pyx',cat:'matin',badges:['anti','gf','vegan'],ai:4,kcal:60,prot:1,gluc:14,lip:0,budget:1.8,omega3:false,
-tip:'Curcuma + poivre noir + eau de coco : anti-inflammatoire systémique, bénéfique pour les articulations et la peau.',
+tip:'Curcuma + poivre noir + eau de coco : anti-inflammatoire systémique bénéfique pour les articulations.',
 ingr:['½ citron','1 orange','gingembre','curcuma','poivre noir','eau de coco'],
 steps:['Mixer tous les ingrédients.','Filtrer et verser dans des fioles.','Consommer à jeun le matin.'],
 but:'Anti-inflammatoire, facilite la digestion, hydratation minéralisante.'},
+{id:'jus-hormonal',name:'Jus hormonal fraise-framboise-concombre',src:'pyx',cat:'matin',badges:['anti','gf','vegan'],ai:4,kcal:70,prot:1,gluc:16,lip:0,budget:2.5,omega3:false,
+tip:'Framboises + fraises = anthocyanes anti-inflammatoires. Concombre = hydratation + silice pour les articulations.',
+ingr:['100g fraises','100g framboises','½ concombre','gingembre','½ citron','miel'],
+steps:['Mixer tous les ingrédients.','Filtrer dans chinois.','Boire frais.'],
+but:'Booste l\'énergie, contribue à une bonne production hormonale, anti-inflammatoire.'},
+{id:'jus-skinglow',name:'Jus skin glow concombre-ananas',src:'pyx',cat:'matin',badges:['anti','gf','vegan'],ai:4,kcal:65,prot:1,gluc:15,lip:0,budget:2.5,omega3:false,
+tip:'Concombre + céleri + ananas = trio hydratant anti-inflammatoire. La bromélaïne de l\'ananas réduit l\'inflammation.',
+ingr:['1 concombre','½ branche céleri','½ ananas','menthe fraîche','eau'],
+steps:['Mixer tous les ingrédients.','Filtrer dans chinois.','Boire frais.'],
+but:'Hydratation, effet rajeunissant, booste la production de collagène.'},
+{id:'jus-antiage',name:'Jus anti-âge fruits rouges-ananas',src:'pyx',cat:'matin',badges:['anti','gf','vegan'],ai:5,kcal:75,prot:1,gluc:17,lip:0,budget:2.5,omega3:false,
+tip:'Fruits rouges = les antioxydants les plus puissants. Ananas = bromélaïne anti-inflammatoire. Menthe = apaisante.',
+ingr:['100g fruits rouges mélangés','100g ananas','10g menthe fraîche','eau'],
+steps:['Mixer tous les ingrédients.','Filtrer dans chinois.','Boire frais.'],
+but:'Boost d\'antioxydants, hydratant, anti-âge et anti-inflammatoire.'},
+{id:'jus-blueglow',name:'Blue glow potion spiruline-pomme verte',src:'pyx',cat:'matin',badges:['anti','gf','vegan'],ai:4,kcal:70,prot:2,gluc:15,lip:0,budget:3,omega3:false,
+tip:'Spiruline bleue = super-aliment anti-inflammatoire riche en phycocyanine. Pomme verte = vitamine C + quercétine.',
+ingr:['1 citron vert','1 concombre','1 pomme verte','10g spiruline bleue','eau'],
+steps:['Mixer tous les ingrédients.','Filtrer dans chinois.','Boire frais immédiatement.'],
+but:'Hydrate la peau, riche en vitamine C et antioxydants, soutient le collagène.'},
+{id:'mat-super-supra',name:'Mat Supra smoothie (pomme-banane-poire)',src:'mat',cat:'matin',badges:['anti','gf','vegan'],ai:3,kcal:180,prot:2,gluc:42,lip:1,budget:2,omega3:false,
+tip:'Smoothie de fruits de saison congelés — une façon simple d\'avoir des fruits anti-oxydants toute l\'année.',
+ingr:['1 pomme congelée','1 banane congelée','1 poire congelée','10 myrtilles congelées','200ml eau','200ml jus d\'orange'],
+steps:['Mettre tous les ingrédients dans mixeur.','Mixer jusqu\'à texture lisse.','Servir immédiatement.'],
+but:'Vitamines, antioxydants et énergie naturelle pour démarrer la journée.'},
+{id:'mat-mamba',name:'Mat Mamba matinal (banane-framboise-coco)',src:'mat',cat:'matin',badges:['anti','gf','vegan'],ai:4,kcal:200,prot:3,gluc:36,lip:7,budget:2.5,omega3:false,
+tip:'Lait de coco + curcuma + piment de cayenne = combo anti-inflammatoire actif. Le piment active la circulation.',
+ingr:['1 banane','Le jus d\'une orange','1 filet de citron','1 cc curcuma moulu','10 framboises','450ml lait de coco','1 pincée piment de Cayenne moulu'],
+steps:['Mettre tous les ingrédients dans mixeur.','Mixer jusqu\'à texture lisse.','Servir frais.'],
+but:'Anti-inflammatoire actif — curcuma + piment de Cayenne + fruits = réveil puissant.'},
+{id:'mat-resurrection',name:'Mat Résurrection (banane-pêche-noisette)',src:'mat',cat:'matin',badges:['anti','gf','vegan'],ai:3,kcal:190,prot:3,gluc:38,lip:5,budget:2.5,omega3:false,
+tip:'Gingembre + lait de noisette = anti-inflammatoire doux, parfait pour les matins difficiles.',
+ingr:['1 banane','4 pêches','500ml lait de noisette','½ jus de citron','½ cc gingembre moulu'],
+steps:['Mettre tous les ingrédients dans mixeur.','Mixer jusqu\'à texture lisse.','Servir frais.'],
+but:'Vitamines, énergie naturelle, anti-inflammatoire doux pour les matins calmes.'},
+{id:'limonade-matk',name:'Limonade Matkiavelique citron-gingembre',src:'mat',cat:'matin',badges:['anti','gf','vegan'],ai:4,kcal:30,prot:0,gluc:8,lip:0,budget:1.5,omega3:false,
+tip:'Citron + gingembre = duo anti-inflammatoire classique. Idéal en boisson du matin ou de la journée.',
+ingr:['1 litre eau froide','2 cc miel d\'acacia liquide','1 cs gingembre moulu','3 citrons jaunes'],
+steps:['Dans une casserole, porter 1 tasse eau + gingembre + miel à ébullition 5 min.','Laisser refroidir 15 min.','Dans carafe, ajouter sirop + jus des citrons + litre eau. Quelques glaçons.','Conserver au frigo.'],
+but:'Citron anti-oxydant anti-inflammatoire — boisson légère pour la journée.'},
 ],
 dejeuner:[
 {id:'oats-framboise',name:'Overnight oats framboise-chocolat',src:'pyx',cat:'dejeuner',badges:['proto','gf'],ai:3,kcal:470,prot:51,gluc:44,lip:10,budget:4.5,omega3:false,
-tip:'Framboises = anthocyanes anti-inflammatoires. Chocolat 70%+ = antioxydants. La whey est optionnelle — remplace par +200g fromage blanc 0%.',
+tip:'Framboises = anthocyanes anti-inflammatoires. Chocolat 70%+ = antioxydants. Whey optionnelle — remplace par +200g fromage blanc 0%.',
 ingr:['200g flocons avoine','400ml lait amande','200g framboises surgelées','120g whey vanille (ou +200g fromage blanc 0%)','sirop érable','extrait vanille','600g fromage blanc 0%','20g chocolat noir 70%+','5g huile coco'],
 steps:['Écraser les framboises. Ajouter flocons, lait amande, sirop érable, vanille. Mélanger.','Ajouter whey. Répartir en 4 boîtes. Repos 1-2h frigo.','Fondre chocolat + huile coco au bain-marie.','Ajouter fromage blanc, framboises fraîches et chocolat fondu.'],
-but:'51g protéines/portion — le meilleur déjeuner pour maintenir la masse musculaire.'},
+but:'51g protéines/portion — déjeuner protéiné préparé pour 4 jours d\'un coup.'},
 {id:'oats-banana-choco',name:'Overnight oats banane-cacao-cacahuète',src:'pyx',cat:'dejeuner',badges:['proto','gf'],ai:3,kcal:548,prot:46,gluc:53,lip:12,budget:4.5,omega3:false,
-tip:'Le cacao 70%+ est l\'un des aliments les plus riches en antioxydants. Préfère poudre cacao brut sans sucre.',
-ingr:['200g flocons avoine','120ml lait amande','1 banane écrasée','120g whey chocolat (ou +200g fromage blanc 0%)','sirop érable','extrait vanille','600g fromage blanc 0%','40g beurre cacahuète naturel (sans sel ni sucre ajouté)','20g chocolat noir 70%+'],
-steps:['Écraser banane. Ajouter flocons, whey, sirop érable, vanille, lait amande. Mélanger.','Répartir en 4 boîtes. Repos 1-2h frigo.','Mélanger fromage blanc + beurre cacahuète.','Fondre chocolat. Verser fromage blanc + chocolat fondu par-dessus.'],
-but:'Version gourmande — 46g protéines, énergie longue durée grâce au sarrasin.'},
-{id:'porridge-quinoa',name:'Mat porridge quinoa-chia-fruits rouges',src:'mat',cat:'dejeuner',badges:['anti','gf','vegan'],ai:5,kcal:380,prot:14,gluc:48,lip:12,budget:3.5,omega3:true,
-tip:'Graines de chia + lin = oméga-3 végétaux ALA actifs contre l\'inflammation articulaire. Fruits rouges = anthocyanes. Un des meilleurs déjeuners anti-inflam.',
-ingr:['40g flocons quinoa','200ml lait noisettes','1 cs graines chia','1 cs graines lin','1 banane écrasée','½ cc cannelle','½ cc poudre vanille','1 cs beurre amande','10 myrtilles','10 mûres','5 framboises','½ cc miel acacia'],
-steps:['Mélanger flocons quinoa, graines chia et lin, vanille, cannelle dans un bol.','Porter 100ml eau + 150ml lait noisettes à ébullition.','Réduire feu doux. Ajouter mélange. Remuer 4 min. Ajouter banane + reste lait 2 min.','Verser en bol. Garnir avec fruits rouges, beurre amande, miel.'],
-but:'Le meilleur déjeuner anti-inflammation — oméga-3 végétaux, antioxydants, protéines complètes.'},
-{id:'pancakes-sarrasin',name:'Mat banana pancakes sarrasin',src:'mat',cat:'dejeuner',badges:['anti','gf','vegan'],ai:4,kcal:340,prot:14,gluc:52,lip:9,budget:3,omega3:false,
-tip:'Farine de sarrasin = sans gluten, IG bas, riche en magnésium anti-inflammatoire et en rutine antioxydante.',
-ingr:['1 bol farine sarrasin complète bio','1 bol lait noisettes','1 banane écrasée','1 cc poudre à lever sans gluten','1 cc miel liquide','1 cs cacao 70%','1 cc cannelle','huile olive vierge extra','myrtilles pour servir'],
-steps:['Mélanger farine sarrasin + sel + miel + banane + cacao + cannelle + poudre à lever.','Verser progressivement lait noisettes en remuant de bas en haut pour oxygéner.','Laisser reposer minimum 2h (idéalement une nuit au frigo).','Cuire dans poêle légèrement huilée à feu vif puis moyen, ~3 min sans retourner.','Servir avec myrtilles et filet de miel.'],
-but:'Pancakes fermentés sans gluten — IG bas, magnésium, anti-inflammatoire naturel.'},
+tip:'Cacao 70%+ = l\'un des aliments les plus riches en antioxydants. Beurre de cacahuète naturel sans sucre ajouté.',
+ingr:['200g flocons avoine','120ml lait amande','1 banane écrasée','120g whey chocolat (ou +200g fromage blanc 0%)','sirop érable','extrait vanille','600g fromage blanc 0%','40g beurre cacahuète naturel','20g chocolat noir 70%+'],
+steps:['Écraser banane. Ajouter flocons, whey, sirop érable, vanille, lait amande. Mélanger.','Répartir en 4 boîtes. Repos 1-2h frigo.','Mélanger fromage blanc + beurre cacahuète.','Fondre chocolat. Verser fromage blanc + chocolat fondu.'],
+but:'Version gourmande — 46g protéines, énergie longue durée.'},
 {id:'oats-apple',name:'Overnight oats apple pie',src:'pyx',cat:'dejeuner',badges:['proto','gf'],ai:3,kcal:455,prot:33,gluc:56,lip:11,budget:4,omega3:false,
 tip:'Cannelle = puissant anti-inflammatoire naturel qui régule aussi la glycémie. Utilise-la généreusement.',
 ingr:['200g flocons avoine','120ml lait amande','200g pommes','sirop érable','cannelle généreuse','800g fromage blanc 0%','90g whey vanille (ou +200g fromage blanc)'],
-steps:['Couper pommes en cubes. Rôtir feu doux avec miel. Garder ¼ de côté.','Répartir flocons + fromage blanc + lait + pommes + sirop en 4 boîtes. Repos 1-2h.','Mélanger reste fromage blanc + whey + cannelle.','Verser sur préparation. Ajouter pommes réservées + cannelle généreuse.'],
+steps:['Couper pommes en cubes. Rôtir feu doux avec miel. Garder ¼ de côté.','Répartir flocons + fromage blanc + lait + pommes + sirop en 4 boîtes. Repos 1-2h.','Mélanger reste fromage blanc + whey + cannelle.','Verser sur préparation. Ajouter pommes + cannelle généreuse.'],
 but:'Doux, sucré, énergie longue durée — la cannelle booste l\'effet anti-inflammatoire.'},
+{id:'oats-cheesecake',name:'Overnight oats cheesecake citron',src:'pyx',cat:'dejeuner',badges:['proto','gf'],ai:3,kcal:480,prot:42,gluc:55,lip:17,budget:4.5,omega3:false,
+tip:'Citron frais = vitamine C anti-oxydante. Cream cheese + yaourt grec = texture crémeuse et protéines.',
+ingr:['200g flocons avoine','400ml lait amande','40g graines chia','120g whey vanille','40ml jus citron frais','sirop érable','zest de citron','320g yaourt grec 0%','40g chocolat blanc','80g cream cheese'],
+steps:['Ajouter flocons, graines chia, whey, jus citron, zestes, sirop érable et lait amande. Mélanger. Repos 1h frigo.','Mélanger yaourt grec + cream cheese + chocolat blanc fondu + jus citron.','Verser cette préparation sur les flocons.','Ajouter zestes de citron et chocolat blanc concassé.'],
+but:'Petit-déj cheesecake santé — 42g protéines, texture crémeuse, note acidulée.'},
+{id:'oats-carrot-cake',name:'Overnight oats carrot cake',src:'pyx',cat:'dejeuner',badges:['proto','gf'],ai:3,kcal:449,prot:40,gluc:52,lip:9,budget:4,omega3:false,
+tip:'Carottes râpées = bêtacarotène anti-oxydant. Noix de pécan = bonnes graisses. Cannelle = anti-inflammatoire.',
+ingr:['200g flocons avoine','400ml lait amande','80g carottes râpées','20g raisins secs','10g noix de pécan','sirop érable','extrait vanille','600g fromage blanc 0%','80g whey vanille','20g chocolat blanc'],
+steps:['Mélanger flocons, lait amande, carottes râpées, raisins secs, sirop érable, vanille, noix de pécan. Homogène.','Répartir en 4 boîtes. Repos 1-2h frigo.','Mélanger fromage blanc + whey. Verser par-dessus.','Fondre chocolat blanc. Verser sur fromage blanc. Ajouter noix de pécan.'],
+but:'Carrot cake version saine — 40g protéines, bêtacarotène, bons gras.'},
+{id:'oats-myrtille-blend',name:'Overnight oats myrtille blend mixé',src:'pyx',cat:'dejeuner',badges:['proto','anti','gf'],ai:4,kcal:382,prot:40,gluc:42,lip:6,budget:4,omega3:false,
+tip:'Myrtilles mixées dans la base = anthocyanes dans chaque bouchée. La version la plus anti-inflammatoire des overnight oats.',
+ingr:['400g fromage blanc 0%','200g myrtilles','320ml lait amande','200g flocons avoine','120g whey (ou 200g fromage blanc sup.)','sirop érable','extrait vanille'],
+steps:['Mettre TOUS les ingrédients dans blender. Mixer jusqu\'à texture onctueuse.','Répartir en 4 boîtes.','Ajouter quelques myrtilles fraîches et fruits secs sur le dessus.','Repos toute la nuit au frigo. Déguster le lendemain matin.'],
+but:'La version la plus anti-inflammatoire — myrtilles intégrées dans toute la base.'},
+{id:'oats-raffaello',name:'Overnight oats Raffaello coco-noisette',src:'pyx',cat:'dejeuner',badges:['proto','gf'],ai:3,kcal:525,prot:45,gluc:48,lip:17,budget:4.5,omega3:false,
+tip:'Noix de coco + purée d\'amande = bons gras saturés sains. Graines de chia = oméga-3 végétaux.',
+ingr:['200g flocons avoine','400ml lait amande','20g graines chia','20g noix de coco râpée','10g purée amande','extrait vanille','600g fromage blanc 0%','80g whey vanille','20g noix coco râpée','20g chocolat blanc','noisettes concassées'],
+steps:['Mélanger flocons, lait amande, graines chia, vanille, purée amande, noix coco. Homogène.','Répartir en 4 boîtes. Repos 1-2h frigo.','Mélanger fromage blanc + reste noix coco + whey. Verser par-dessus.','Chocolat blanc fondu + noisettes concassées par-dessus.'],
+but:'Parfum Raffaello — 45g protéines, graines de chia pour les oméga-3 végétaux.'},
+{id:'oats-snickers',name:'Overnight oats Snickers',src:'pyx',cat:'dejeuner',badges:['proto','gf'],ai:2,kcal:514,prot:40,gluc:48,lip:18,budget:4.5,omega3:false,
+tip:'Version gourmande à réserver de temps en temps. Beurre de cacahuète naturel = graisses saines mono-insaturées.',
+ingr:['200g flocons avoine','200ml lait amande','200g fromage blanc 0%','10g beurre cacahuète naturel','20g cacahuètes entières non salées','miel','600g fromage blanc 0%','30g beurre cacahuète naturel','60g whey vanille','20g chocolat noir 70%+'],
+steps:['Mélanger flocons, lait amande, 200g fromage blanc, beurre cacahuète, miel, cacahuètes.','Répartir en 4 boîtes. Repos 1-2h frigo.','Mélanger reste fromage blanc + beurre cacahuète + whey. Verser par-dessus.','Chocolat noir fondu avec huile coco + cacahuètes concassées par-dessus.'],
+but:'Version Snickers saine — 40g protéines, plaisir garanti sans culpabilité.'},
+{id:'oats-pistamat',name:'Overnight oats pistache-matcha',src:'pyx',cat:'dejeuner',badges:['proto','anti','gf'],ai:4,kcal:469,prot:40,gluc:48,lip:13,budget:5,omega3:false,
+tip:'Matcha = antioxydant très puissant (EGCG), anti-inflammatoire et boost cognitif. Pistache = bonnes graisses et magnésium.',
+ingr:['200g flocons avoine','400ml lait amande','20g pistaches concassées','20g matcha en poudre','sirop érable','extrait vanille','600g fromage blanc 0%','90g whey vanille','20g crème de pistache','20g chocolat blanc','20g pistaches concassées'],
+steps:['Mélanger flocons, lait amande, sirop érable, vanille, matcha, pistaches. Homogène.','Répartir en 4 boîtes. Repos 1-2h frigo.','Mélanger fromage blanc + whey. Verser par-dessus.','Fondre crème pistache + chocolat blanc. Verser + pistaches concassées.'],
+but:'Matcha anti-oxydant puissant + 40g protéines — le plus raffiné des overnight oats.'},
+{id:'porridge-quinoa',name:'Mat porridge quinoa-chia-fruits rouges',src:'mat',cat:'dejeuner',badges:['anti','gf','vegan'],ai:5,kcal:380,prot:14,gluc:48,lip:12,budget:3.5,omega3:true,
+tip:'Chia + lin = oméga-3 végétaux ALA actifs contre l\'inflammation articulaire. Fruits rouges = anthocyanes. UN des meilleurs déjeuners anti-inflam.',
+ingr:['40g flocons quinoa','200ml lait noisettes','1 cs graines chia','1 cs graines lin','1 banane écrasée','½ cc cannelle','½ cc poudre vanille','1 cs beurre amande','10 myrtilles','10 mûres','5 framboises','½ cc miel acacia'],
+steps:['Mélanger flocons quinoa, graines chia et lin, vanille, cannelle dans un bol.','Porter 100ml eau + 150ml lait noisettes à ébullition.','Réduire feu doux. Ajouter mélange. Remuer 4 min. Ajouter banane + reste lait 2 min.','Garnir avec fruits rouges, beurre amande, miel.'],
+but:'Le meilleur déjeuner anti-inflammation — oméga-3 végétaux, antioxydants, protéines complètes.'},
+{id:'pancakes-sarrasin',name:'Mat banana pancakes sarrasin',src:'mat',cat:'dejeuner',badges:['anti','gf','vegan'],ai:4,kcal:340,prot:14,gluc:52,lip:9,budget:3,omega3:false,
+tip:'Farine de sarrasin = sans gluten, IG bas, riche en magnésium anti-inflammatoire. La fermentation (2h repos) améliore la digestibilité.',
+ingr:['1 bol farine sarrasin complète bio','1 bol lait noisettes','1 banane écrasée','1 cc poudre à lever sans gluten','1 cc miel liquide','1 cs cacao 70%','1 cc cannelle','huile olive vierge extra','myrtilles pour servir'],
+steps:['Mélanger farine + sel + miel + banane + cacao + cannelle + poudre à lever.','Verser progressivement lait noisettes en remuant de bas en haut.','Laisser reposer minimum 2h (idéalement une nuit).','Cuire dans poêle huilée à feu vif puis moyen, ~3 min par face.','Servir avec myrtilles et filet de miel.'],
+but:'Pancakes fermentés sans gluten — IG bas, magnésium, anti-inflammatoire naturel.'},
+{id:'mat-marmelade-pancakes',name:'Mat pancakes + marmelade poires-pommes',src:'mat',cat:'dejeuner',badges:['anti','gf','vegan'],ai:4,kcal:360,prot:12,gluc:62,lip:8,budget:3.5,omega3:false,
+tip:'Gingembre + curcuma + cannelle dans la marmelade = 3 anti-inflammatoires dans une même sauce.',
+ingr:['1 bol farine sarrasin complète bio','1 bol lait noisettes','1 pincée sel','1 cc miel','1 cc poudre à lever','2 poires','2 pommes','1 poignée myrtilles surgelées','1 cc cannelle','1 pincée gingembre','1 pincée curcuma','1 cc extrait vanille'],
+steps:['Préparer pâte pancakes : mélanger sarrasin, lait noisettes, sel, miel, poudre à lever. Repos 2h.','Marmelade : éplucher et couper fruits, cuire avec épices + eau 20 min feu doux. Ajouter myrtilles 5 min.','Cuire pancakes dans poêle huilée feu vif puis moyen.','Servir avec marmelade chaude.'],
+but:'Petit-déj anti-inflammatoire gourmand — 3 anti-inflam dans la marmelade.'},
+{id:'mat-blinis-guac',name:'Mat blinis guacamole (sarrasin)',src:'mat',cat:'dejeuner',badges:['anti','gf','vegan'],ai:4,kcal:320,prot:10,gluc:38,lip:16,budget:3,omega3:false,
+tip:'Avocat = vitamine E anti-oxydante + acide oléique anti-inflammatoire. Curcuma dans le guacamole = bonus articulaire.',
+ingr:['1 bol farine sarrasin complète bio','1 bol lait amande','1 cc poudre à lever','1 cc miel liquide','huile olive','2 avocats','curcuma','citron','poivre','sel','huile noix (optionnel)'],
+steps:['Pâte blinis : mélanger sarrasin, sel, miel, poudre à lever, ajouter lait amande. Repos 2h.','Guacamole : écraser avocat avec sel, poivre, curcuma, huile olive et jus citron.','Cuire blinis dans poêle huilée feu vif puis moyen.','Tartiner les blinis de guacamole maison.'],
+but:'Blinis sans gluten + avocat anti-inflammatoire = combo matin parfait.'},
+{id:'mat-muesli',name:'Mat muesli poire-chia-fruits secs',src:'mat',cat:'dejeuner',badges:['anti','gf','vegan'],ai:4,kcal:350,prot:10,gluc:46,lip:13,budget:3,omega3:true,
+tip:'Graines de chia + graines de lin = oméga-3 végétaux. Date + figue = énergie naturelle et fibres.',
+ingr:['40g flocons avoine','1 cs graines chia','½ cc vanille en poudre','1 poire mûre','200ml lait noisettes','1 figue séchée','1 date séchée','7 myrtilles','1 cc purée de cacahuètes','6 mûres'],
+steps:['Dans un bol, mélanger flocons, graines chia, vanille.','Couper ¾ de la poire en morceaux. Ajouter au bol.','Ajouter lait noisettes. Mélanger. (Laisser reposer 2h optionnel).','Garnir avec date, figue, myrtilles, mûres, purée de cacahuètes et morceaux de poire restants.'],
+but:'Muesli anti-inflammatoire complet — oméga-3, fruits secs, IG bas.'},
+{id:'mat-pudding-matin',name:'Mat pudding chia-noix-myrtilles',src:'mat',cat:'dejeuner',badges:['anti','gf','vegan'],ai:5,kcal:310,prot:10,gluc:28,lip:18,budget:3.5,omega3:true,
+tip:'Graines de chia + graines de lin + noix du Brésil + noix de cajou = combo oméga-3 et sélénium anti-inflammatoire maximal.',
+ingr:['100ml lait noisette','1 cs noix de cajou','1 cs noix macadamia','2 cs noix entières','2 cs graines chia','2 cc graines lin','3 noix du Brésil','2 cc cannelle','15 myrtilles','15 framboises','1,5 cs cacao 70%','3 gouttes citron'],
+steps:['Mettre lait noisettes dans mixeur.','Ajouter tous les ingrédients sauf les fruits.','Ajouter 8 myrtilles, 8 framboises et citron.','Mixer 4 min jusqu\'à texture onctueuse.','Verser dans bol. Ajouter fruits restants.'],
+but:'Petit-déj ultra-concentré en oméga-3, sélénium et antioxydants — anti-inflam maximal.'},
+{id:'choco-noyade-oranges',name:'Choco noyade d\'oranges',src:'mat',cat:'dejeuner',badges:['anti','gf','vegan'],ai:3,kcal:280,prot:4,gluc:42,lip:14,budget:3,omega3:false,
+tip:'Oranges = vitamine C. Chocolat noir 70%+ = magnésium + antioxydants. Simple et délicieux.',
+ingr:['6 oranges','Le jus de 2 oranges','150g chocolat noir 70%+ sans lait'],
+steps:['Peler les oranges. Couper en tranches fines.','Verser jus d\'orange sur les tranches dans un plat creux.','Mettre au frigo 20 min.','Faire fondre chocolat dans casserole.','Disposer tranches orange dans assiette avec jus de marinade. Verser chocolat fondu.'],
+but:'Dessert-déjeuner fruité et chocolaté — vitamine C + magnésium du cacao.'},
+{id:'mat-tartare-fruite',name:'Mat tartare fruité pêche-poire-myrtilles',src:'mat',cat:'dejeuner',badges:['anti','gf','vegan'],ai:4,kcal:180,prot:2,gluc:42,lip:1,budget:3,omega3:false,
+tip:'Menthe fraîche = propriétés digestives et anti-inflammatoires légères. Fruits frais = vitamines et antioxydants naturels.',
+ingr:['3 poires','2 pêches','1 filet jus citron','2 cc miel liquide de montagne','3 feuilles menthe entières','10 myrtilles'],
+steps:['Écraser 1 pêche avec miel et menthe ciselée. Ajouter jus citron.','Éplucher et couper poires et pêche restante en petits morceaux.','Mélanger le tout délicatement.','Dans ramequins, verser tartare. Repos 30 min frigo.','Démouler et ajouter myrtilles et feuille de menthe.'],
+but:'Tartare fruité frais anti-inflammatoire — léger et bourré de vitamines.'},
 ],
 diner:[
 {id:'soupe-popeye',name:'Soupe Popeye épinards-patate douce',src:'mat',cat:'diner',badges:['anti','gf','vegan'],ai:5,kcal:220,prot:12,gluc:30,lip:5,budget:3,omega3:false,
 tip:'Épinards = magnésium + fer + vitamines anti-oxydantes. Curcuma + gingembre dans la soupe = combo optimal pour les articulations.',
 ingr:['400g épinards frais ou surgelés','1 patate douce','1 boîte haricots blancs cuits égouttés','1,5L bouillon légumes','4 gousses ail','1 oignon rouge','1 cc curcuma','1 cc gingembre','origan, laurier, persil','huile olive vierge extra'],
-steps:['Éplucher et couper oignon, ail, patate douce.','Chauffer bouillon. Ajouter légumes + curcuma + gingembre + laurier. Ébullition 25 min.','Ajouter haricots et épinards. Cuire 5 min supplémentaires.','Assaisonner. Filet huile olive. Persil ciselé. Répartir 4 portions.'],
+steps:['Éplucher et couper oignon, ail, patate douce.','Chauffer bouillon. Ajouter légumes + curcuma + gingembre + laurier. Ébullition 25 min.','Ajouter haricots et épinards. Cuire 5 min.','Assaisonner. Filet huile olive. Persil ciselé. Répartir 4 portions.'],
 but:'Dîner léger anti-inflammatoire maximal — fer, magnésium, curcuma, gingembre.'},
 {id:'soupe-carotte-coco',name:'Soupe carotte-coco-cannelle',src:'mat',cat:'diner',badges:['anti','gf','vegan'],ai:5,kcal:180,prot:3,gluc:28,lip:7,budget:2.5,omega3:false,
 tip:'Lait de coco + cumin + cannelle = trilogie anti-inflammatoire. Carottes = bêtacarotène précurseur de vitamine A réparatrice.',
 ingr:['1kg carottes','1,2L eau','3 oignons','15cl lait coco','1 cc cumin moulu','1 cc cannelle moulue','coriandre fraîche','persil','4 gouttes citron'],
-steps:['Éplucher et couper carottes en rondelles.','Cuire casserole eau + sel 35 min feu doux.','Ajouter cumin, cannelle, persil, coriandre, citron, lait coco, oignon épluché.','Mixer jusqu\'à texture lisse et onctueuse. Répartir 4 portions.'],
-but:'Soupe veloutée onctueuse, reminéralisante, anti-inflammatoire complète.'},
+steps:['Éplucher et couper carottes en rondelles.','Cuire casserole eau + sel 35 min feu doux.','Ajouter cumin, cannelle, persil, coriandre, citron, lait coco, oignon.','Mixer jusqu\'à texture lisse. Répartir 4 portions.'],
+but:'Soupe veloutée anti-inflammatoire — cumin + cannelle + lait de coco.'},
 {id:'soupe-brocoli',name:'Soupe brocoli-carotte-échalotes',src:'mat',cat:'diner',badges:['anti','gf','vegan'],ai:5,kcal:160,prot:6,gluc:22,lip:5,budget:2.5,omega3:false,
 tip:'Brocoli = sulforaphane, l\'un des composés les plus étudiés contre l\'inflammation chronique et la protection articulaire.',
 ingr:['400g brocolis','150g carottes','150g pommes de terre','3 échalotes','1L eau','huile olive vierge extra','basilic frais','citron'],
-steps:['Couper brocolis en bouquets. Éplucher carottes et pommes de terre en morceaux.','Faire revenir échalotes 6 min dans casserole huilée.','Ajouter légumes, eau, sel, basilic. Couvrir 35 min.','Mixer. Poivrer. Répartir 4 portions.'],
+steps:['Couper brocolis en bouquets. Éplucher carottes et pommes de terre.','Faire revenir échalotes 6 min dans casserole huilée.','Ajouter légumes, eau, sel, basilic. Couvrir 35 min.','Mixer. Poivrer. Répartir 4 portions.'],
 but:'Sulforaphane du brocoli = anti-inflammatoire puissant et protecteur articulaire.'},
 {id:'soupe-potiron',name:'Soupe potiron-gingembre-curcuma',src:'mat',cat:'diner',badges:['anti','gf','vegan'],ai:5,kcal:170,prot:3,gluc:30,lip:5,budget:3,omega3:false,
-tip:'Potiron + curcuma + gingembre + cannelle = 4 anti-inflammatoires dans un seul bol. La combinaison est plus efficace que chaque ingrédient seul.',
-ingr:['1,5kg potiron','2 oignons','1 échalote','1 cc gingembre moulu','1 cc curcuma','1 cc poivre noir','0,75L eau','1 cc cannelle','1 cc huile noix vierge','basilic'],
-steps:['Éplucher potiron, couper chair en morceaux.','Faire revenir oignons + échalote + gingembre + curcuma dans casserole huilée 4 min.','Ajouter potiron 5 min, puis eau + sel + basilic + cannelle. Couvrir 20 min.','Ajouter huile noix + poivre noir + citron. Mixer jusqu\'à texture onctueuse.'],
+tip:'Potiron + curcuma + gingembre + cannelle = 4 anti-inflammatoires dans un seul bol.',
+ingr:['1,5kg potiron','2 oignons','1 échalote','1 cc gingembre','1 cc curcuma','1 cc poivre noir','0,75L eau','1 cc cannelle','1 cc huile noix vierge','basilic'],
+steps:['Éplucher potiron, couper chair en morceaux.','Faire revenir oignons + échalote + gingembre + curcuma dans casserole huilée 4 min.','Ajouter potiron 5 min, puis eau + sel + basilic + cannelle. Couvrir 20 min.','Ajouter huile noix + poivre noir + citron. Mixer.'],
 but:'4 anti-inflammatoires dans un bol — bêtacarotène, curcuma, gingembre, cannelle.'},
 {id:'soupe-chou',name:'Soupe chou-fleur-gingembre-curcuma',src:'mat',cat:'diner',badges:['anti','gf','vegan'],ai:4,kcal:140,prot:5,gluc:20,lip:4,budget:2.5,omega3:false,
 tip:'Chou-fleur riche en vitamine C naturelle qui soutient la synthèse de collagène et la réparation des tissus articulaires.',
 ingr:['1 tête chou-fleur','3 carottes','1 oignon rouge','1 gousse ail','1L bouillon légumes','1 cc curcuma','1 cc gingembre','épinards','basilic','jus citron'],
-steps:['Laver et couper chou-fleur en fleurettes, carottes en rondelles.','Faire bouillir bouillon avec tous légumes 25 min couverts.','Mixer avec curcuma, gingembre, sel, poivre.','Ajouter basilic ciselé. Répartir 4 portions.'],
-but:'Vitamine C pour la réparation articulaire + curcuma + gingembre — soupe légère.'},
+steps:['Couper chou-fleur en fleurettes, carottes en rondelles.','Faire bouillir bouillon avec tous légumes 25 min couverts.','Mixer avec curcuma, gingembre, sel, poivre.','Ajouter basilic ciselé. Répartir 4 portions.'],
+but:'Vitamine C pour la réparation articulaire + curcuma + gingembre.'},
+{id:'soupe-betterave',name:'Soupe betterave-orange-crème coco',src:'mat',cat:'diner',badges:['anti','gf','vegan'],ai:5,kcal:150,prot:3,gluc:28,lip:4,budget:3,omega3:false,
+tip:'Betterave = nitrates qui réduisent l\'inflammation vasculaire. Orange = vitamine C. Crème coco = acide laurique anti-inflammatoire.',
+ingr:['5 betteraves crues','7 échalotes','1L eau','1 cc miel liquide','Le jus de 3 oranges','Le jus d\'1 citron','20cl crème coco','2 feuilles persil'],
+steps:['Peler et couper betteraves. Couper échalotes.','Cuire casserole eau + betteraves + échalotes 35 min feu moyen.','Retirer du feu. Mixer tout.','Ajouter jus orange, miel, citron, sel, poivre. Mixer à nouveau.','Mettre au frigo 45 min. Ajouter crème coco et persil avant de servir.'],
+but:'Soupe froide ou chaude anti-inflammatoire — betterave + orange + crème coco.'},
+{id:'soupe-champi',name:'Soupe champignon-shiitaké-gingembre',src:'mat',cat:'diner',badges:['anti','gf','vegan'],ai:4,kcal:130,prot:5,gluc:14,lip:6,budget:3,omega3:false,
+tip:'Shiitaké = champignon anti-inflammatoire japonais riche en lentinane qui booste le système immunitaire.',
+ingr:['1 oignon','1 échalote','1 cs huile olive','1 gousse ail','1 cc gingembre moulu','2 tasses lait épeautre ou amande','1 tasse champignons de Paris','½ tasse shiitaké','1 feuille laurier','1 cs persil ciselé'],
+steps:['Éplucher et couper ail, échalote, oignon.','Faire revenir oignon + échalote + ail dans huile olive 5 min.','Laver champignons et shiitaké. Ajouter à la poêle.','Ajouter gingembre, lait, laurier. Mijoter 3 min. Ajouter persil.','Poivrer. C\'est prêt.'],
+but:'Soupe réconfortante — shiitaké anti-inflammatoire + immunostimulant.'},
+{id:'soupe-matador-lentilles',name:'Soupe Matador lentilles-patate douce',src:'mat',cat:'diner',badges:['anti','gf','vegan'],ai:4,kcal:240,prot:14,gluc:40,lip:4,budget:3,omega3:false,
+tip:'Lentilles = protéines végétales + fer. Cumin = anti-inflammatoire digestif. Patate douce = bêtacarotène.',
+ingr:['500g lentilles','2 oignons','2 cs huile olive','1L eau','3 feuilles épinard','1L boisson riz','Le jus d\'un citron','bouquet coriandre','10 feuilles persil','5 feuilles menthe','2 patates douces','1 cc cumin','1 carotte'],
+steps:['Laver et cuire lentilles 23 min dans casserole.','Éplucher et couper oignons et carotte. Cuire oignons 6 min à feu moyen.','Éplucher et couper patates douces. Cuire 20 min.','Ajouter citron, oignons, carotte, boisson riz, coriandre, persil, menthe, cumin aux patates.','Ajouter sel, poivre et filet huile olive. Servir.'],
+but:'Soupe repas protéinée — lentilles + patate douce + cumin anti-inflammatoire.'},
+{id:'gazpacho',name:'Gazpamatcho (gaspacho frais)',src:'mat',cat:'diner',badges:['anti','gf','vegan'],ai:4,kcal:120,prot:3,gluc:18,lip:6,budget:3,omega3:false,
+tip:'Tomate = lycopène anti-oxydant puissant. Concombre = hydratation et silice. Ail = allicine anti-inflammatoire. Excellent pour l\'été.',
+ingr:['4 oignons','2 gousses ail','1 poivron rouge','1 concombre','1kg tomates pelées','½ cc miel liquide','5 feuilles basilic','3 cs huile olive','2 cs citron','15cl eau','3 gouttes tabasco'],
+steps:['Laver et éplucher légumes sauf concombre.','Couper poivron en morceaux, retirer graines. Épépiner tomates.','Dans saladier, mettre tous légumes + sel + poivre + huile + citron + 3 feuilles basilic.','Mixer jusqu\'à texture lisse. Ajouter tabasco, miel. Remixer.','Servir avec feuilles basilic ciselées.'],
+but:'Gaspacho frais anti-oxydant — lycopène, ail, tomate = anti-inflammatoire.'},
+{id:'matgic-chili',name:'Matgic chili haricots-champignons',src:'mat',cat:'diner',badges:['anti','gf','vegan'],ai:3,kcal:290,prot:14,gluc:46,lip:6,budget:3.5,omega3:false,
+tip:'Haricots rouges + lentilles = protéines végétales complètes. Curcuma + basilic = anti-inflammatoires synergiques.',
+ingr:['400ml bouillon légumes','1 poivron rouge','2 gousses ail','1 pincée curcuma','1 petite tasse haricots rouges cuits','1/3 tasse lentilles','1 poignée champignons','3 pommes de terre','1 cs beurre cacahuète','concentré tomates','5 feuilles basilic'],
+steps:['Laver lentilles. Cuire 23 min dans casserole eau bouillante.','Chauffer bouillon. Éplucher et couper oignon, patates, ail. Ajouter au bouillon.','Ajouter champignons lavés, sel, 4 cs concentré tomate, basilic, curcuma, poivron. Cuire 20 min.','Ajouter haricots + lentilles + beurre cacahuète. Cuire 5 min en remuant.'],
+but:'Chili végétarien protéiné — curcuma + légumineuses + champignons.'},
+{id:'salade-betteraves',name:'Salade betteraves-avocat-épinards',src:'mat',cat:'diner',badges:['anti','gf','vegan'],ai:4,kcal:200,prot:5,gluc:22,lip:12,budget:4,omega3:false,
+tip:'Betterave + épinards + avocat = trio anti-inflammatoire de premier ordre. Curcuma dans la vinaigrette = bonus.',
+ingr:['6 betteraves cuites','15 rondelles radis','1 avocat','20 feuilles épinards','Le jus d\'un citron','1 pincée curcuma','3 feuilles persil','4 cs huile olive vierge extra','1 oignon','1 échalote'],
+steps:['Couper avocat en tranches. Éplucher et couper betteraves si besoin.','Couper radis en rondelles. Hacher oignon et échalote.','Dans grand bol, mélanger épinards + betterave + échalote + oignon + huile + citron + curcuma + sel + poivre.','Disposer dans assiette. Déposer tranches avocat et radis.'],
+but:'Salade anti-inflammatoire complète — betterave + avocat + épinards + curcuma.'},
+{id:'salade-patates-crevettes',name:'Salade patates douces-crevettes',src:'mat',cat:'diner',badges:['anti','omega','gf'],ai:4,kcal:320,prot:24,gluc:34,lip:9,budget:5,omega3:true,
+tip:'Crevettes = oméga-3 + sélénium antioxydant. Patate douce = bêtacarotène anti-inflammatoire.',
+ingr:['500g patates douces','25 crevettes décortiquées','3 cs huile olive vierge extra','sel, poivre'],
+steps:['Éplucher et couper patates douces en rondelles. Cuire 20 min eau bouillante salée.','Faire sauter patates dans poêle huilée 7 min à feu vif jusqu\'à dorées.','Décortiquer crevettes si besoin.','Dans bol, mélanger crevettes + patates + sel + poivre + huile olive.'],
+but:'Salade protéinée avec oméga-3 des crevettes et bêtacarotène des patates douces.'},
 ],
 souper:[
 {id:'saumon-panko',name:'Saumon panko riz-concombre',src:'pyx',cat:'souper',badges:['proto','anti','omega'],ai:5,kcal:602,prot:48,gluc:62,lip:18,budget:8,omega3:true,
-tip:'Saumon = meilleure source d\'oméga-3 EPA/DHA → réduit directement les prostaglandines inflammatoires. Priorité absolue pour l\'épaule. Viser 2x/semaine minimum.',
+tip:'Saumon = meilleure source d\'oméga-3 EPA/DHA → réduit directement les prostaglandines inflammatoires. PRIORITÉ pour l\'épaule. Viser 2x/semaine minimum.',
 ingr:['600g saumon frais ou surgelé','ail en poudre, paprika','40g chapelure panko','400g concombre','vinaigre riz, sauce soja sans gluten, miel, purée piment','50g sriracha','50g mayo allégée','100g fromage blanc 0%','20ml jus citron vert','600g riz complet cuit'],
 steps:['Couper saumon en cubes. Assaisonner paprika + ail. Rouler dans chapelure panko.','Cuire four 180°C, 10-12 min.','Couper concombre très fin. Mélanger avec sauce soja + miel + vinaigre riz + piment.','Mélanger sauce : sriracha + mayo + fromage blanc + citron vert.','Répartir riz + concombre + saumon + sauce en 4 boîtes.'],
 but:'PRIORITÉ épaule — oméga-3 EPA/DHA du saumon = anti-inflammatoire articulaire direct.'},
 {id:'maquereau-legumes',name:'Maquereau & légumes poêlés',src:'mat',cat:'souper',badges:['anti','omega','gf'],ai:5,kcal:450,prot:35,gluc:18,lip:20,budget:6,omega3:true,
-tip:'Maquereau = petit poisson gras riche en oméga-3, moins contaminé que le thon. Combo idéal épaule + budget raisonnable.',
+tip:'Maquereau = petit poisson gras riche en oméga-3, moins contaminé que le thon. Idéal pour l\'épaule + budget raisonnable.',
 ingr:['3 maquereaux vidés (ou 4 filets de maquereau)','1 poireau','1 oignon','8 feuilles épinards','2 échalotes','10cl crème coco','5 cs huile olive vierge extra','aneth','gros sel','poivre du moulin'],
 steps:['Préchauffer four 160°C. Couper maquereaux en gros morceaux. Enduire huile olive + sel.','Enfourner 9 min.','Couper poireau en rondelles. Blanchir 4 min eau bouillante.','Préparer sauce : échalotes + oignon dorés à la poêle, ajouter crème coco, sel, poivre, réduire 8 min.','Wok : légumes + morceaux maquereau + sauce. Cuire 10 min feu doux. Aneth + citron.'],
 but:'Oméga-3 du maquereau + légumes verts = combo anti-inflammation articulaire.'},
+{id:'matajine-sardines',name:'Matajine de sardines (tomates-pommes de terre)',src:'mat',cat:'souper',badges:['anti','omega','gf'],ai:5,kcal:420,prot:34,gluc:38,lip:14,budget:5,omega3:true,
+tip:'Sardines = oméga-3 + calcium + protéines. Petit poisson = moins de mercure que thon. Curcuma + cumin = anti-inflam.',
+ingr:['10 sardines vidées (par le poissonnier)','7 tomates','2 cc gingembre','1 oignon','1 échalote','1kg pommes de terre','1 cc paprika','1 cc curcuma','1 cc cumin','¼ bouquet persil','½ bouquet coriandre','2 cs huile olive','5 gouttes citron'],
+steps:['Préparer tomates : blanchir 40s, retirer peau et pépins, couper en morceaux.','Éplucher pommes de terre en rondelles. Couper oignon et échalote.','Cuire oignon + échalote dans casserole huilée. Ajouter tomates + épices 8 min.','Ajouter pommes de terre + eau mi-hauteur. Cuire 50 min.','Farcir sardines avec persil + coriandre + citron. Ajouter au tajine. Cuire 25 min.'],
+but:'Oméga-3 sardines + curcuma + cumin = anti-inflammatoire et savoureux.'},
 {id:'chicken-spicy',name:'Spicy chicken riz curcuma',src:'pyx',cat:'souper',badges:['proto','gf'],ai:4,kcal:526,prot:53,gluc:57,lip:3,budget:6,omega3:false,
-tip:'Curcuma + poivre noir dans la marinade pour un effet anti-inflammatoire maximal. Poulet fermier = protéines maigres sans graisses saturées.',
+tip:'Curcuma + poivre noir dans la marinade = effet anti-inflammatoire maximal. Poulet fermier = protéines maigres.',
 ingr:['800g blancs poulet fermier','paprika, piment doux, ail en poudre, curcuma, poivre noir','huile olive vierge extra','600g riz complet cuit','120g yaourt grec 0%','80g mayo allégée','jus citron','miel'],
 steps:['Mariner poulet avec épices + curcuma + poivre noir 30 min minimum.','Cuire poulet poêle bien chaude jusqu\'à belle coloration.','Cuire riz complet avec curcuma + paprika.','Mixer yaourt + mayo + citron + miel + ail pour la sauce.','Répartir riz + poulet en 4 boîtes. Sauce généreuse.'],
 but:'53g protéines/portion — le plus protéiné, curcuma + poivre pour l\'épaule.'},
 {id:'chicken-bbq',name:'Chicken BBQ gingembre riz-concombre',src:'pyx',cat:'souper',badges:['proto','gf'],ai:3,kcal:486,prot:49,gluc:50,lip:10,budget:6,omega3:false,
-tip:'Gingembre frais dans la marinade renforce l\'effet anti-inflammatoire. Aussi puissant que l\'ibuprofène selon certaines études.',
+tip:'Gingembre frais dans la marinade = aussi puissant que l\'ibuprofène selon certaines études pour réduire l\'inflammation.',
 ingr:['800g blancs poulet','gingembre frais râpé, ail','25g sriracha','40ml sauce soja sans gluten','graines sésame','400g concombre','miel, vinaigre riz, piment doux','600g riz complet cuit'],
-steps:['Assaisonner poulet. Mariner 1h frigo (gingembre frais, ail, sauce soja, sriracha).','Préparer salade concombre : tranches fines + ail + sriracha + soja + miel + vinaigre riz.','Cuire poulet poêle bien chaude. Ajouter sauce soja fin de cuisson.','Répartir riz + poulet + concombre en 4 boîtes. Graines sésame.'],
-but:'49g protéines, saveur intense — gingembre frais pour l\'effet articulaire.'},
+steps:['Assaisonner poulet. Mariner 1h frigo (gingembre frais, ail, sauce soja, sriracha).','Préparer salade concombre : tranches fines + ail + sriracha + soja + miel + vinaigre riz.','Cuire poulet poêle bien chaude. Ajouter sauce soja fin.','Répartir riz + poulet + concombre en 4 boîtes. Graines sésame.'],
+but:'49g protéines, gingembre frais pour l\'effet articulaire.'},
+{id:'hawaii-chicken',name:'Hawaii chicken ananas-riz',src:'pyx',cat:'souper',badges:['proto','gf'],ai:3,kcal:445,prot:48,gluc:52,lip:5,budget:6.5,omega3:false,
+tip:'Ananas = bromélaïne anti-inflammatoire naturel. Gingembre dans la sauce = synergique.',
+ingr:['800g blancs poulet','sel, poivre, ail, paprika, poudre chili','200ml jus orange','50ml sauce soja','20g miel','10g maïzena','50ml eau','10ml jus citron','10g purée piment','600g riz cuit','80g ananas','persil, graines sésame'],
+steps:['Couper poulet en cubes. Assaisonner. Cuire poêle bien chaude jusqu\'à dorés.','Dans même poêle, ajouter ingrédients sauce. Mélanger jusqu\'à texture onctueuse.','Remettre poulet dans poêle. Enrober de sauce.','Ajouter ananas. Couvrir 5 min.','Répartir riz + poulet en 4 boîtes.'],
+but:'Bromélaïne de l\'ananas + sauce orange-gingembre = anti-inflammatoire savoureux.'},
 {id:'pad-thai-tofu',name:'Pad Thaï tofu-brocoli-curcuma',src:'mat',cat:'souper',badges:['anti','gf','vegan'],ai:4,kcal:480,prot:26,gluc:55,lip:16,budget:5,omega3:false,
-tip:'Tofu = protéines végétales complètes + isoflavones aux propriétés anti-inflammatoires. Brocoli = sulforaphane protecteur articulaire.',
+tip:'Tofu = protéines végétales complètes + isoflavones anti-inflammatoires. Brocoli = sulforaphane protecteur articulaire.',
 ingr:['400g tofu ferme','300g pâtes de riz','2 carottes','1 brocoli','2 échalotes','3 gousses ail','4 cs beurre cacahuète naturel','3 cs sauce soja sans gluten','jus citron','curcuma, gingembre','huile olive vierge extra','persil frais'],
-steps:['Couper tofu en cubes. Dorer 10 min poêle huilée.','Éplucher échalote, ail. Râper carottes. Couper brocoli en bouquets.','Ajouter brocoli + échalote + ail + curcuma + gingembre à la poêle 6 min.','Cuire pâtes de riz selon paquet.','Sauce : beurre cacahuète + sauce soja + 80ml eau. Mélanger énergiquement.','Assembler : pâtes + sauce + poêle. Citron, persil. Répartir 4 boîtes.'],
+steps:['Couper tofu en cubes. Dorer 10 min poêle huilée.','Râper carottes. Couper brocoli en bouquets.','Ajouter brocoli + échalote + ail + curcuma + gingembre à la poêle 6 min.','Cuire pâtes de riz selon paquet.','Sauce : beurre cacahuète + sauce soja + 80ml eau. Mélanger énergiquement.','Assembler : pâtes + sauce + poêle. Citron, persil. Répartir 4 boîtes.'],
 but:'Tofu + brocoli + curcuma + gingembre = plat vegan anti-inflammatoire complet.'},
 {id:'poke-bowl',name:'Poke bowl riz complet-avocat-edamame',src:'mat',cat:'souper',badges:['anti','gf','vegan'],ai:4,kcal:440,prot:18,gluc:52,lip:16,budget:5.5,omega3:false,
-tip:'Avocat = acide oléique + vitamine E = graisses saines anti-inflammatoires. Huile sésame = oméga en petite quantité ok.',
+tip:'Avocat = acide oléique + vitamine E = graisses saines anti-inflammatoires. Edamame = oméga-3 végétaux.',
 ingr:['1 tasse riz complet','1,5 tasse edamame','2 avocats','1 carotte','1 oignon','1 cs graines sésame','sauce soja sans gluten','gingembre frais','huile sésame','vinaigre riz','coriandre fraîche','épinards frais'],
 steps:['Cuire riz complet 30 min. Égoutter.','Couper avocats en cubes. Râper carotte. Hacher oignon.','Marinade : huile sésame + vinaigre riz + gingembre + coriandre + soja.','Mélanger oignon + carotte + avocat dans marinade.','Bols : riz + mélange + edamame + épinards + coriandre + citron.'],
-but:'Bons gras de l\'avocat + oméga-3 végétaux edamame + gingembre = anti-inflam complet.'},
+but:'Avocat + edamame + gingembre = poke bowl anti-inflammatoire complet.'},
+{id:'matgret-canard',name:'Matgret de canard & purée maison',src:'mat',cat:'souper',badges:['anti','gf'],ai:3,kcal:550,prot:42,gluc:38,lip:22,budget:9,omega3:false,
+tip:'Canard = fer + vitamines B + protéines maigres. La purée au lait végétal (épeautre ou riz) = sans lactose.',
+ingr:['1 gros magret de canard','700g pommes de terre','4 feuilles basilic','5 cs huile olive','1 cs crème coco','sel, poivre'],
+steps:['Éplucher et couper pommes de terre. Cuire dans casserole eau + sel 20 min.','Égoutter. Écraser avec pilon. Ajouter crème coco + huile olive + poivre. Texture onctueuse.','Quadriller la graisse du magret avec couteau.','Préchauffer four 180°C. Saisir magret 3 min/face poêle sans huile à feu vif.','Enfourner 10 min pour saignant. Couper en tranches. Servir avec purée et basilic.'],
+but:'Magret de canard classique revisité — 42g protéines, purée sans lactose.'},
+{id:'chicken-salade-cesar',name:'Chicken salade César',src:'pyx',cat:'souper',badges:['proto','gf'],ai:3,kcal:526,prot:70,gluc:21,lip:18,budget:7,omega3:false,
+tip:'70g protéines en un repas — le plat le plus protéiné du livre. Sauce maison sans conservateurs.',
+ingr:['225g blanc poulet','250g salade romaine','100g fromage blanc 0%','30g parmesan','30ml jus citron','10g ail en poudre','10ml huile olive','5g moutarde','sel, poivre'],
+steps:['Assaisonner blancs de poulet. Dorer à la poêle avec matière grasse.','Mixer fromage blanc + parmesan + jus citron + ail + huile olive + moutarde + sel + poivre. Sauce onctueuse.','Couper grossièrement la salade. Émincer le poulet.','Dans saladier, mélanger salade + poulet + sauce. Bien remuer avant de servir.'],
+but:'70g protéines — le repas le plus protéiné, parfait pour maintenir la masse musculaire.'},
 {id:'pasta-bolo',name:'Pasta bœuf bolognaise cottage cheese',src:'pyx',cat:'souper',badges:['proto'],ai:2,kcal:479,prot:48,gluc:47,lip:11,budget:6.5,omega3:false,
-tip:'Viande hachée 5% MG = protéines sans excès de graisses saturées. Préfère pâtes de légumineuses pour réduire le gluten.',
+tip:'Viande hachée 5% MG = protéines sans graisses saturées inflammatoires. Préfère pâtes complètes ou légumineuses.',
 ingr:['800g viande hachée 5% MG','ail, oignon','paprika, sel, poivre','250g sauce tomate','200ml bouillon bœuf','200g cottage cheese','40g parmesan','herbes italiennes','600g pâtes complètes cuites'],
 steps:['Mélanger viande hachée + épices. Cuire poêle chaude.','Ajouter sauce tomate + bouillon + cottage cheese + parmesan + herbes. Mijoter 30 min feu doux.','Cuire pâtes. Mélanger dans la poêle.','Répartir en 4 boîtes.'],
-but:'48g protéines/portion — plaisir garanti, à équilibrer avec repas plus anti-inflam.'},
+but:'48g protéines/portion — plaisir garanti, à associer avec repas plus anti-inflam.'},
+{id:'sweet-potatoes-veggie',name:'Sweet potatoes veggie (patate douce-cottage)',src:'pyx',cat:'souper',badges:['proto','anti','gf'],ai:4,kcal:300,prot:19,gluc:29,lip:12,budget:5,omega3:false,
+tip:'Patate douce = bêtacarotène anti-inflammatoire + IG bas. Cottage cheese + beurre cacahuète = protéines végétales complètes.',
+ingr:['800g patates douces','400g cottage cheese','40g beurre cacahuète naturel','huile olive','paprika','jus de citron','40g fêta','persil'],
+steps:['Couper patates douces en tranches. Disposer sur plaque. Épices + huile olive. Four 180°C, 30 min.','Mixer cottage cheese + beurre cacahuète + jus citron + épices + huile olive. Texture homogène.','Répartir sauce en 4 boîtes. Disposer tranches patate douce par-dessus.','Émietter fêta + parsemer persil ciselé.'],
+but:'Plat végétarien équilibré — patate douce anti-inflam + protéines cottage cheese.'},
+{id:'aubergines-farcies',name:'Aubergines mat farcies (patate douce-tomates)',src:'mat',cat:'souper',badges:['anti','gf','vegan'],ai:4,kcal:320,prot:8,gluc:40,lip:14,budget:5,omega3:false,
+tip:'Aubergine = antioxydants cardiovasculaires. Curcuma + cumin dans la farce = anti-inflammatoire. Tomates = lycopène.',
+ingr:['3 aubergines','½ bouquet persil','2 tomates mûres','1 oignon rouge','2 échalotes','3 gousses ail','4 cs huile olive vierge extra','1 patate douce','1 poivron vert','1 cc curcuma','6 gouttes citron','8 feuilles basilic'],
+steps:['Couper aubergines en longueur. Cuire 12 min dans poêle huilée en retournant.','Cuire rondelles patate douce 25 min eau bouillante. Couper en petits morceaux.','Mélanger persil + tomates + oignon + échalote + ail + curcuma + poivron + huile + citron. Sauter 5 min.','Farcir aubergines avec le mélange. Ajouter morceaux patate douce autour.','Cuire feu doux 25 min (ou four).'],
+but:'Aubergines farcies anti-inflammatoires — curcuma + tomate + légumes de saison.'},
+{id:'bouillon-terroir',name:'Mat bouillon terroir haricots-potiron',src:'mat',cat:'souper',badges:['anti','gf','vegan'],ai:4,kcal:350,prot:16,gluc:52,lip:8,budget:4,omega3:false,
+tip:'Haricots blancs + lentilles = protéines végétales + fer. Purée de sésame = sésamine anti-inflammatoire. Potimarron = bêtacarotène.',
+ingr:['1 tasse haricots blancs cuits','½ tasse lentilles','2 patates douces','1 oignon','2 gousses ail','1 échalote','2 cs concentré tomate','persil, aneth','1/3 potiron','2 cs purée sésame','3 cs huile olive','3 gouttes citron'],
+steps:['Rincer lentilles. Plonger dans eau bouillante.','Éplucher et couper patates douces, oignon, échalote, ail, potiron en morceaux.','Faire revenir ail + échalote + oignon 4 min dans marmite huilée. Ajouter reste ingrédients.','Ajouter eau (4 tasses). Cuire 30 min.','Sel, poivre, filet huile olive, purée sésame, gouttes citron.'],
+but:'Bouillon complet protéiné végétarien — haricots + lentilles + potiron + purée sésame.'},
+{id:'bouillon-brocoli',name:'Mat bouillon brocoli-haricots-cajou',src:'mat',cat:'souper',badges:['anti','gf','vegan'],ai:4,kcal:380,prot:18,gluc:50,lip:12,budget:4,omega3:false,
+tip:'Brocoli + haricots blancs + curcuma = trio anti-inflammatoire avec protéines végétales complètes.',
+ingr:['1 tasse haricots blancs cuits','1 brocoli','1 gousse ail','7 pommes de terre','1 oignon','jus citron','10 noix cajou','1 cs curcuma','5 tasses bouillon légumes','2 échalotes','3 carottes','basilic, aneth','4 cs purée cacahuètes'],
+steps:['Éplucher et couper légumes.','Dans marmite, faire revenir ail + échalote + oignon 4 min dans huile olive.','Ajouter haricots, pommes de terre, bouillon. Cuire 30 min.','Ajouter sel, poivre, curcuma, huile olive, purée cacahuètes.'],
+but:'Bouillon copieux anti-inflammatoire — brocoli + curcuma + haricots blancs.'},
+{id:'matgic-patates',name:'Matgic patates douces-haricots blancs',src:'mat',cat:'souper',badges:['anti','gf','vegan'],ai:4,kcal:360,prot:14,gluc:58,lip:8,budget:3.5,omega3:false,
+tip:'Patate douce + haricots blancs = duo anti-inflammatoire + énergie longue durée. Gingembre + citron = anti-inflam.',
+ingr:['2 patates douces','2 cs huile olive','1 oignon','1 gousse ail','1 échalote','½ bouquet aneth','1 pincée gingembre','5 gouttes citron','3 feuilles persil','¼ bouquet ciboulette','1 tasse haricots blancs cuits'],
+steps:['Éplucher et couper patates en rondelles. Cuire 30 min eau bouillante.','Dans poêle huilée, faire revenir oignons + échalote + ail épluché et haché 5 min.','Ajouter rondelles patate, haricots, gingembre, ciboulette, persil, citron, sel, aneth.','Remuer régulièrement 8 min. Filet huile olive et poivre avant de servir.'],
+but:'Plat complet végétarien — patate douce + haricots + gingembre = anti-inflammatoire.'},
+{id:'mat-rizzz',name:'Matgic Rizzz (riz méditerranéen)',src:'mat',cat:'souper',badges:['anti','gf','vegan'],ai:3,kcal:380,prot:10,gluc:62,lip:10,budget:3.5,omega3:false,
+tip:'Riz complet + légumes + huile olive = base méditerranéenne anti-inflammatoire classique.',
+ingr:['2 tasses riz complet','1 poivron rouge','1 tomate','1 oignon','2 gousses ail','épinards','curcuma, cumin, paprika','huile olive vierge extra','bouillon légumes','persil, basilic'],
+steps:['Cuire riz dans bouillon légumes avec curcuma, cumin, paprika.','Couper et faire revenir poivron, tomate, oignon, ail dans poêle huilée 8 min.','Ajouter épinards 2 min.','Mélanger riz + légumes. Ajouter persil et basilic ciselés.'],
+but:'Riz méditerranéen complet — curcuma + légumes colorés + huile olive.'},
+{id:'galette-champi',name:'Galette sarrasin champignons-artichaut',src:'mat',cat:'souper',badges:['anti','gf','vegan'],ai:4,kcal:320,prot:12,gluc:38,lip:14,budget:5,omega3:false,
+tip:'Farine de sarrasin = sans gluten + magnésium. Shiitaké = anti-inflammatoire immunostimulant. Artichaut = cynarine détoxifiante.',
+ingr:['3 œufs','125g farine sarrasin bio complète','30cl eau','2 cs huile tournesol','1 cc poudre à lever','100g champignons de Paris','100g shiitaké','1 échalote','1 cs crème coco','huile olive','½ bouquet persil','8 fonds d\'artichaut','jus citron'],
+steps:['Pâte galettes : mélanger sarrasin + sel + poivre + œufs + eau + huile. Laisser reposer 12h.','Laver et couper champignons, shiitaké, échalote. Hacher.','Dans poêle : cuire échalotes + champignons dans huile olive. Ajouter crème coco + persil.','Cuire fonds d\'artichaut 30 min eau bouillante. Couper en morceaux.','Cuire galettes. Garnir avec champignons, shiitaké, artichaut, persil, sel, poivre.'],
+but:'Galette bretonne anti-inflammatoire — shiitaké + artichaut + sarrasin sans gluten.'},
 ],
 collation:[
 {id:'smoothie-myrtilles',name:'Smoothie myrtilles-lin-amande',src:'mat',cat:'collation',badges:['anti','gf','vegan'],ai:5,kcal:280,prot:8,gluc:32,lip:10,budget:2.5,omega3:true,
-tip:'Myrtilles = anthocyanes anti-inflammatoires articulaires. Graines de lin = oméga-3 végétaux ALA. Noix = anti-inflammatoire prouvé. Meilleure collation pour l\'épaule.',
-ingr:['2 tasses myrtilles surgelées','1 banane','2 cs beurre amande naturel','1 tasse framboises surgelées','1 cs graines lin','400ml lait noisettes','1 poignée noix (à manger à côté)'],
+tip:'Myrtilles = anthocyanes anti-inflammatoires articulaires. Graines de lin = oméga-3 végétaux ALA. Noix = anti-inflammatoire prouvé.',
+ingr:['2 tasses myrtilles surgelées','1 banane','2 cs beurre amande naturel','1 tasse framboises surgelées','1 cs graines lin','400ml lait noisettes','1 poignée noix (à côté)'],
 steps:['Mettre tous les ingrédients sauf noix dans mixeur.','Verser lait progressivement jusqu\'à texture souhaitée.','Répartir en portions. Servir avec poignée de noix.'],
 but:'Meilleure collation anti-inflammation — anthocyanes + oméga-3 végétaux + noix.'},
 {id:'smoothie-choco-pb',name:'Smoothie choco-cacahuète post-effort',src:'pyx',cat:'collation',badges:['proto','gf'],ai:3,kcal:766,prot:53,gluc:53,lip:38,budget:3,omega3:false,
-tip:'53g protéines en collation — très calorique. Réserve ça pour les jours les plus actifs ou quand tu reprends le sport.',
+tip:'53g protéines en collation — très calorique. Réserver aux jours les plus actifs ou quand tu reprends le sport.',
 ingr:['200ml lait amande','120g fromage blanc 0%','30g flocons avoine','30g beurre cacahuète naturel','30g chocolat noir 70%+','cacao brut','30g whey chocolat (optionnel)','sirop érable'],
 steps:['Mettre tous les ingrédients dans blender avec glaçons.','Mixer 2 min jusqu\'à texture onctueuse.','Verser dans grand verre. Saupoudrer cacao brut.'],
 but:'Collation récupération maximale — 53g protéines, réservée aux jours actifs.'},
@@ -575,239 +590,270 @@ tip:'Myrtilles + banane + fromage blanc = anti-oxydants + protéines. Version l�
 ingr:['80g banane','80g myrtilles surgelées','30g whey vanille (ou 100g fromage blanc 0%)','50g fromage blanc 0%','100ml lait amande','20g flocons avoine'],
 steps:['Mettre tous les ingrédients dans blender avec glaçons.','Mixer 2 min.','Verser dans grand verre. Ajouter quelques myrtilles fraîches.'],
 but:'Smoothie équilibré — antioxydants + protéines + glucides pour la récupération.'},
+{id:'smoothie-apple-pie',name:'Apple pie smoothie cannelle',src:'pyx',cat:'collation',badges:['proto','gf'],ai:3,kcal:420,prot:30,gluc:45,lip:10,budget:2.5,omega3:false,
+tip:'Cannelle = anti-inflammatoire + régulateur glycémique. Pomme congelée = fibres et vitamine C concentrées.',
+ingr:['1 pomme Granny Smith congelée','100ml lait amande','30g whey vanille (ou fromage blanc 0%)','50g fromage blanc 0%','miel','cannelle généreuse','extrait vanille','20g flocons avoine','4 glaçons'],
+steps:['Mettre tous les ingrédients dans blender avec glaçons.','Mixer 2 min.','Verser dans grand verre. Saupoudrer cannelle.'],
+but:'Smoothie dessert sain — cannelle anti-inflammatoire + protéines + fibres.'},
+{id:'smoothie-banane-cannelle',name:'Smoothie banane-cannelle',src:'pyx',cat:'collation',badges:['proto','gf'],ai:3,kcal:332,prot:42,gluc:38,lip:1,budget:2,omega3:false,
+tip:'42g protéines dans un smoothie léger sans matières grasses. La cannelle régule la glycémie.',
+ingr:['200ml lait amande','100g fromage blanc 0%','100g banane','5g cannelle','30g whey vanille (ou fromage blanc 0%)','sirop érable'],
+steps:['Mettre tous les ingrédients dans blender avec glaçons.','Mixer 2 min.','Verser dans grand verre. Saupoudrer cannelle.'],
+but:'42g protéines — smoothie léger et cannelle anti-inflammatoire.'},
+{id:'smoothie-fraise',name:'Smoothie fraise-cream cheese',src:'pyx',cat:'collation',badges:['proto','gf'],ai:3,kcal:319,prot:29,gluc:38,lip:7,budget:2.5,omega3:false,
+tip:'Fraises = vitamine C + anthocyanes anti-inflammatoires. Cream cheese = protéines + texture crémeuse.',
+ingr:['200ml lait amande','100g fromage blanc 0%','100g fraises fraîches ou surgelées','30g cream cheese allégé','30g whey vanille (ou fromage blanc sup.)','sirop agave'],
+steps:['Mettre tous les ingrédients dans blender avec glaçons.','Mixer 2 min.','Verser dans grand verre.'],
+but:'Smoothie fraise-cream cheese — vitamine C + anthocyanes + protéines.'},
+{id:'mat-smoothie-myrtilles-amande',name:'Myrtilles Mat smoothie (noix-framboises)',src:'mat',cat:'collation',badges:['anti','gf','vegan'],ai:5,kcal:310,prot:7,gluc:34,lip:14,budget:2.5,omega3:true,
+tip:'Beurre d\'amande + graines de lin = oméga-3 végétaux. Myrtilles + framboises = anthocyanes anti-inflammatoires articulaires.',
+ingr:['2 tasses myrtilles surgelées','1 banane','2 cs beurre amande','1 cs graines lin','1 tasse framboise','2 tasses eau ou lait noisette','poignée noix entières'],
+steps:['Dans mixeur, mélanger tous les ingrédients en versant progressivement l\'eau ou lait noisette.','Mixer jusqu\'à texture lisse.','Servir avec poignée de noix entières.'],
+but:'Anti-inflammatoire maximal — beurre amande + graines lin + myrtilles + noix.'},
 {id:'granola-prote',name:'Granola protéiné cacao-amande maison',src:'pyx',cat:'collation',badges:['proto','gf'],ai:3,kcal:402,prot:28,gluc:43,lip:12,budget:3,omega3:false,
-tip:'Ajoute noix et graines de lin au granola pour booster les oméga-3 anti-inflammatoires. Conservation 4 jours en boîte hermétique.',
-ingr:['150g flocons avoine','60g whey chocolat (ou +50g flocons avoine)','10g miel','10g huile coco','10g beurre cacahuète naturel','10g pépites chocolat 70%+','noix concassées (optionnel)'],
-steps:['Mélanger flocons avoine + whey.','Ajouter progressivement huile coco + miel + beurre cacahuète.','Émietter avec les mains en morceaux. Étaler sur papier sulfurisé.','Four 200°C, 10 min. Surveiller. Laisser refroidir. Ajouter pépites + noix.'],
+tip:'Ajoute noix et graines de lin pour booster les oméga-3. Conservation 4 jours en boîte hermétique.',
+ingr:['150g flocons avoine','60g whey chocolat (ou +50g flocons)','10g miel','10g huile coco','10g beurre cacahuète naturel','10g pépites chocolat 70%+','noix concassées (optionnel)'],
+steps:['Mélanger flocons avoine + whey.','Ajouter progressivement huile coco + miel + beurre cacahuète.','Émietter avec les mains. Étaler sur papier sulfurisé.','Four 200°C, 10 min. Surveiller. Laisser refroidir. Ajouter pépites + noix.'],
 but:'Granola croustillant maison — 28g protéines/100g, se conserve 4 jours.'},
 {id:'cookie-prote',name:'Cookies protéinés poudre amande (x10)',src:'pyx',cat:'collation',badges:['proto','gf'],ai:3,kcal:132,prot:9,gluc:5,lip:8,budget:3,omega3:false,
-tip:'Poudre d\'amande = vitamine E anti-oxydant + graisses saines insaturées. Snack sans sucre raffiné, sans gluten.',
+tip:'Poudre d\'amande = vitamine E anti-oxydant + graisses saines. Snack sans sucre raffiné, sans gluten.',
 ingr:['1 œuf','10g huile coco','10g sirop agave','10g purée amande','100g poudre amande','60g whey vanille (ou 60g flocons avoine mixés)','50g flocons avoine','10g pépites chocolat 70%+','5g levure chimique','extrait vanille'],
-steps:['Mélanger tous les ingrédients dans saladier jusqu\'à homogène.','Étaler en petits cookies sur papier cuisson à la cuillère.','Four 180°C, 10-12 min.','Déguster chaud ou froid. Conservation 2 jours.'],
-but:'9g protéines par cookie — snack sain sans sucre raffiné, vitamine E anti-oxydant.'},
+steps:['Mélanger tous les ingrédients dans saladier.','Étaler en petits cookies sur papier cuisson.','Four 180°C, 10-12 min.','Déguster chaud ou froid. Conservation 2 jours.'],
+but:'9g protéines par cookie — snack sain sans sucre raffiné.'},
 {id:'banana-bread',name:'Banana bread protéiné avoine-noix',src:'pyx',cat:'collation',badges:['proto','gf'],ai:3,kcal:345,prot:22,gluc:44,lip:9,budget:3,omega3:false,
-tip:'Ajoute noix concassées dans la pâte pour les oméga-3. Banane + avoine + cannelle = énergie lente + anti-inflammatoire.',
-ingr:['2 bananes bien mûres','160g flocons avoine','60g whey vanille (ou +100g fromage blanc 0%)','10g levure chimique','extrait vanille','100ml lait amande','cannelle généreuse','1 banane pour décoration','chocolat noir 70%+'],
-steps:['Préchauffer four 180°C.','Mixer tous les ingrédients jusqu\'à préparation lisse.','Verser dans moule huilé. Ajouter toppings (banane, chocolat noir, cannelle).','Enfourner 20-25 min. Laisser refroidir. Couper en parts.'],
-but:'Snack doux et énergisant — 22g protéines, se conserve 3 jours.'},
+tip:'Ajoute noix concassées dans la pâte pour les oméga-3. Banane + avoine + cannelle = énergie lente.',
+ingr:['2 bananes bien mûres','160g flocons avoine','60g whey vanille (ou +100g fromage blanc 0%)','10g levure chimique','extrait vanille','100ml lait amande','cannelle généreuse','1 banane décoration','chocolat noir 70%+'],
+steps:['Préchauffer four 180°C.','Mixer tous les ingrédients jusqu\'à préparation lisse.','Verser dans moule huilé. Ajouter toppings.','Four 20-25 min. Laisser refroidir. Couper en parts.'],
+but:'Snack doux — 22g protéines, se conserve 3 jours.'},
+{id:'mat-the-glace',name:'Mathé glacé maison (thé vert-pêche-menthe)',src:'mat',cat:'collation',badges:['anti','gf','vegan'],ai:5,kcal:40,prot:0,gluc:10,lip:0,budget:1.5,omega3:false,
+tip:'Thé vert = EGCG, l\'antioxydant le plus puissant connu. Menthe + camomille = anti-inflammatoires apaisants.',
+ingr:['feuilles menthe fraîche','1 cc menthe séchée','1 cc camomille séchée','3 pêches mûres','quelques glaçons','1 cs miel liquide','1 zeste citron vert','feuilles verveine','1 cs thé vert (ou noir)','1 litre eau'],
+steps:['Faire bouillir eau dans casserole.','Infuser thé + menthe + camomille + verveine 5 min.','Ajouter miel + zeste citron + 4 quartiers pêche.','Laisser refroidir 2h au frigo.','Servir avec glaçons et feuilles menthe pour décorer.'],
+but:'Thé glacé anti-inflammatoire — thé vert EGCG + menthe + pêche.'},
+{id:'fondue-chocomat',name:'Fondue Chocomat (chocolat-fruits)',src:'mat',cat:'collation',badges:['anti','gf','vegan'],ai:3,kcal:320,prot:4,gluc:40,lip:16,budget:4,omega3:false,
+tip:'Chocolat noir 70%+ = magnésium + antioxydants. Fruits frais = vitamines naturelles. Crème coco = acide laurique anti-inflam.',
+ingr:['100g noix de coco râpée','200g chocolat noir sans lait 70%+','1 cc extrait vanille','fruits de saison (poires, pommes, bananes)','2 cs lait noisette','1 cs crème coco'],
+steps:['Éplucher et couper fruits en tranches. Filet jus citron sur les fruits.','Dans petite casserole, faire fondre lait noisettes + chocolat en morceaux à feu doux.','Une fois fondu, ajouter crème coco + vanille. Mélanger bien.','Plonger les fruits dans la fondue de chocolat.'],
+but:'Dessert anti-oxydant — chocolat 70%+ + fruits frais + crème coco.'},
+{id:'blueberry-bread',name:'Blueberry protein bread (x7 parts)',src:'pyx',cat:'collation',badges:['proto','anti','gf'],ai:4,kcal:238,prot:20,gluc:26,lip:6,budget:4,omega3:false,
+tip:'Myrtilles = anthocyanes anti-inflammatoires intégrées dans le pain. Fromage blanc = protéines maigres.',
+ingr:['180g farine','90g whey vanille (ou +100g fromage blanc)','20g sirop agave','5g levure chimique','3 œufs','220g fromage blanc 0%','20ml huile coco','200g myrtilles'],
+steps:['Mélanger tous les ingrédients secs. Ajouter œufs.','Incorporer fromage blanc + huile coco. Mélanger jusqu\'à homogène.','Ajouter myrtilles. Mélanger.','Verser dans moule huilé. Four 160°C, 1 heure.','Laisser refroidir. Couper en 7 parts.'],
+but:'Pain protéiné aux myrtilles — 20g protéines/part, anthocyanes anti-inflammatoires.'},
+],
+apero:[
+{id:'mat-houmous',name:'Mat houmous (pois chiches-sésame)',src:'mat',cat:'apero',badges:['anti','gf','vegan'],ai:4,kcal:180,prot:8,gluc:22,lip:8,budget:2,omega3:false,
+tip:'Pois chiches = protéines végétales + fibres. Purée de sésame = sésamine anti-inflammatoire. Cumin + paprika = épices anti-inflam.',
+ingr:['800g pois chiches cuits égouttés','3 gousses ail','4 cs huile olive','100g purée sésame (tahini)','15cl jus citron','15 brins persil','gros sel','poivre','1 pincée coriandre','1 pincée paprika','1 pincée cumin'],
+steps:['Mixer pois chiches 5 min.','Ajouter huile, ail en purée, tahini, citron, paprika, coriandre, cumin. Mixer jusqu\'à onctueux.','Si besoin, ajouter un peu de jus des pois chiches pour lisser.','Mettre dans bol. Ajouter persil, filet huile olive, coriandre, paprika.'],
+but:'Houmous maison anti-inflammatoire — tahini + cumin + paprika + citron.'},
+{id:'mat-guacamole',name:'Matgic guacamole (avocat-curcuma)',src:'mat',cat:'apero',badges:['anti','gf','vegan'],ai:5,kcal:160,prot:2,gluc:8,lip:14,budget:2.5,omega3:false,
+tip:'Avocat = vitamine E anti-oxydante + acide oléique anti-inflammatoire. Curcuma = bonus articulaire.',
+ingr:['2 avocats mûrs','huile olive vierge extra','1 citron','curcuma','poivre','sel','huile noix vierge extra (optionnel)'],
+steps:['Couper avocats, prélever chair à la cuillère.','Mixer avec sel, poivre, curcuma, huile olive (ou noix) et jus citron.','Ajouter piment et poivrons en petits morceaux si souhaité.','Servir immédiatement avec blinis ou tranches de pain de seigle.'],
+but:'Guacamole anti-inflammatoire — avocat + curcuma + huile olive.'},
+{id:'mat-sardines-apero',name:'Mat sardines poêlées (olives-basilic)',src:'mat',cat:'apero',badges:['anti','omega','gf'],ai:5,kcal:280,prot:28,gluc:2,lip:18,budget:4,omega3:true,
+tip:'Sardines fraîches = oméga-3 + calcium + protéines. Moins de mercure que thon. Un des meilleurs poissons pour l\'inflammation.',
+ingr:['600g sardines fraîches vidées par poissonnier','5 feuilles persil','5 feuilles basilic','5 cs huile olive','60g olives fraîches sans noyau','sel, poivre du moulin'],
+steps:['Laver sardines à l\'eau froide. Couper olives en petits morceaux.','Chauffer huile olive dans poêle. Saisir sardines.','Ajouter olives, sel, persil et basilic. Remuer.','Mettre sardines dans beau plat. Servir chaud ou froid.'],
+but:'Oméga-3 + protéines — les sardines fraîches sont parmi les meilleurs aliments anti-inflam.'},
+{id:'mat-crevettes-orange',name:'Mat crevettes à l\'orange',src:'mat',cat:'apero',badges:['anti','omega','gf'],ai:4,kcal:180,prot:20,gluc:6,lip:9,budget:5,omega3:true,
+tip:'Crevettes = sélénium anti-oxydant + oméga-3. Orange = vitamine C. Curcuma + coriandre = anti-inflammatoires.',
+ingr:['400g crevettes','jus ½ orange','jus ½ citron','1 gousse ail','1 pincée curcuma','1 pincée coriandre','2 cs huile olive vierge extra','5 feuilles persil','3 feuilles basilic','sel, poivre'],
+steps:['Cuire crevettes à la poêle dans huile olive 10 min à feu moyen.','Décortiquer crevettes. Mettre dans un plat.','Mélanger jus orange + citron + ail écrasé + persil + basilic + sel + poivre + curcuma + coriandre + huile.','Verser sur crevettes. Réserver au frigo 30 min.'],
+but:'Crevettes marinées anti-inflammatoires — oméga-3 + sélénium + curcuma.'},
+{id:'tartare-tomates',name:'Tartare de tomata (mozzarella-basilic)',src:'mat',cat:'apero',badges:['gf'],ai:3,kcal:200,prot:10,gluc:8,lip:15,budget:4,omega3:false,
+tip:'Tomates cerises = lycopène anti-oxydant. Basilic = propriétés anti-inflammatoires légères. Mozzarella di bufala = bien tolérée.',
+ingr:['600g tomates cerises','300g mozzarella di bufala','2 cs huile olive','1 bouquet basilic','sel, poivre du moulin','curcuma'],
+steps:['Laver et couper tomates cerises en petits morceaux. Retirer pépins.','Mettre dans ramequins.','Mélanger huile + petits morceaux mozzarella + ⅓ basilic + sel. Verser sur tomates.','Ajouter feuilles basilic et curcuma.'],
+but:'Tartare de tomates simple et frais — lycopène + basilic + mozzarella di bufala.'},
+{id:'tartare-concombre',name:'Matartare concombre-aneth',src:'mat',cat:'apero',badges:['anti','gf','vegan'],ai:4,kcal:120,prot:2,gluc:10,lip:8,budget:2,omega3:false,
+tip:'Concombre = antioxydants anti-inflammatoires pour la peau et les articulations. Aneth = propriétés digestives.',
+ingr:['1 concombre biologique','1 tomate','1 échalote','2 brins aneth','1 cs citron','4 cs huile olive vierge extra','2 fonds artichaut','4 feuilles basilic','sel, poivre'],
+steps:['Couper ½ concombre en rondelles très fines. Saler. Laisser dégorger dans passoire.','Couper autre ½ concombre en petits morceaux sans pépins. Saler. Passoire.','Dans assiette creuse, disposer rondelles. Mélanger sauce : jus citron + huile + échalote + sel + poivre.','Couper tomates en petits morceaux. Mélanger avec morceaux concombre. Disposer sur rondelles. Ajouter sauce, aneth, basilic.'],
+but:'Tartare frais estival — concombre anti-inflammatoire + aneth + artichaut.'},
+{id:'mat-saint-jacq',name:'Saint-Matjack noix de Saint-Jacques marinées',src:'mat',cat:'apero',badges:['anti','omega','gf'],ai:5,kcal:200,prot:24,gluc:8,lip:8,budget:8,omega3:true,
+tip:'Saint-Jacques = 9 acides aminés essentiels + oméga-3. Gingembre + citronnelle = anti-inflammatoires puissants.',
+ingr:['15 noix Saint-Jacques','1 pincée gingembre','3 cs huile olive','3 feuilles citronnelle','2 feuilles persil','10 gouttes citron','2 mandarines','sel, poivre du moulin'],
+steps:['Faire mariner saint-jacques avec persil + citronnelle + gingembre + 1 cs huile olive.','Éplucher mandarines. Réserver les quartiers.','Cuire saint-jacques 2 min 30s de chaque côté dans poêle huilée.','Chauffer quartiers mandarine dans poêle.','Servir avec feuilles persil + citronnelle + gouttes citron.'],
+but:'Saint-Jacques = oméga-3 + 9 acides aminés — apéro anti-inflammatoire premium.'},
+{id:'tartare-maquereau',name:'Matartare de maquereau fumé',src:'mat',cat:'apero',badges:['anti','omega','gf'],ai:5,kcal:220,prot:20,gluc:2,lip:14,budget:4,omega3:true,
+tip:'Maquereau fumé = oméga-3 concentrés. Yaourt coco = probiotiques + acide laurique anti-inflammatoire.',
+ingr:['3 filets maquereau fumés','Le jus d\'un citron','½ bouquet persil','1 bouquet ciboulette','1,5 yaourt lait coco','poivre'],
+steps:['Rincer filets de maquereau. Enlever peau. Couper en petits morceaux.','Écraser morceaux avec pilon ou cuillère.','Dans bol, mélanger persil + citron + yaourt coco + ciboulette + poivre.','Mélanger avec maquereau. Conserver au frigo jusqu\'au service.'],
+but:'Tartare maquereau fumé anti-inflammatoire — oméga-3 concentrés + yaourt coco.'},
+{id:'mat-caviar-aubergines',name:'Mat caviar d\'aubergines',src:'mat',cat:'apero',badges:['anti','gf','vegan'],ai:4,kcal:120,prot:3,gluc:12,lip:7,budget:2.5,omega3:false,
+tip:'Aubergine = antioxydants nasunine protégeant les lipides des membranes cellulaires. Ail = allicine anti-inflammatoire.',
+ingr:['3 aubergines','3 gousses ail','1 cs huile olive','Le jus d\'un citron','1 pincée cumin','4 feuilles persil','1 feuille basilic','sel, poivre'],
+steps:['Préchauffer four 190°C. Poser aubergines sur plaque. Griller en retournant 2 fois.','Couper en deux. Prélever chair dans bol sans la peau.','Écraser ail avec pilon. Ajouter huile olive + citron. Mélanger.','Mixer chair aubergines. Ajouter sauce ail + persil + cumin. Mixer à nouveau.','Ajouter persil + basilic + sel + poivre.'],
+but:'Caviar d\'aubergines anti-inflammatoire — nasunine + ail + cumin.'},
+{id:'bruschetta-tomata',name:'Bruschetta di Tomata (pain seigle)',src:'mat',cat:'apero',badges:['anti'],ai:3,kcal:240,prot:10,gluc:28,lip:12,budget:4,omega3:false,
+tip:'Pain de seigle au levain = moins de gluten, plus digeste. Tomates = lycopène. Mozzarella di bufala = mieux tolérée.',
+ingr:['9 tranches pain tourte seigle levain','7 cs huile olive vierge extra','650g tomates fraîches','1 boule mozzarella di bufala','sel, poivre','1 cc curcuma','15 feuilles basilic'],
+steps:['Préchauffer four 180°C. Enduire tranches pain d\'huile olive (un côté). Cuire 6 min.','Couper tomates en quartiers, retirer pépins. Couper mozzarella en 9 tranches. Hacher basilic.','Faire revenir tomates dans poêle huilée. Quand tendres, saler, poivrer.','Répartir tomates sur pain. Ajouter tranche mozzarella. Poivrer. Basilic.','Griller à nouveau 6 min à 180°C.'],
+but:'Bruschetta anti-inflammatoire — curcuma + tomates + mozzarella di bufala.'},
+{id:'verrine-mozzamat',name:'Verrine mozzamat (mozzarella-tapenade)',src:'mat',cat:'apero',badges:['gf'],ai:3,kcal:220,prot:10,gluc:8,lip:17,budget:5,omega3:false,
+tip:'Mozzarella di bufala + pistou = sources de bonnes graisses. Tapenade d\'olives = polyphénols anti-inflammatoires.',
+ingr:['2 boules mozzarella di bufala','50g tapenade d\'olives','5 tomates en grappes','50g tomates séchées','50g pistou','5 feuilles basilic','10 gouttes citron'],
+steps:['Laver et couper tomates en petits dés.','Mixer tomates séchées jusqu\'à purée. Mélanger avec tomates fraîches.','Couper mozzarella en tranches fines en cercle de la taille des verrines.','Dans verrines : couche tomate, mozzarella, tapenade, mozzarella, pistou. 2 gouttes citron.'],
+but:'Verrine festive — tapenade polyphénols + mozzarella di bufala.'},
+{id:'mozza-figues',name:'Mat mozza figues fraîches',src:'mat',cat:'apero',badges:['gf'],ai:3,kcal:260,prot:12,gluc:20,lip:16,budget:6,omega3:false,
+tip:'Figues fraîches = fibres + antioxydants sélénium + flavonoïdes. Huile de noix = oméga-3 et oméga-6 équilibrés.',
+ingr:['700g figues fraîches','300g mozzarella di bufala','3 cs huile olive','2 cs huile noix','15 feuilles basilic','10 feuilles persil','1 gousse ail','Le jus d\'un citron','sel, poivre'],
+steps:['Couper mozzarella en rondelles fines. Étaler dans plat creux.','Mélanger jus citron + huiles + sel + ail + poivre. Verser sur mozzarella. Frigo 2h minimum.','Avant service, couper figues en rondelles. Déposer sur mozzarella.','Ajouter feuilles persil et basilic.'],
+but:'Mozzarella marinée aux figues fraîches — antioxydants + huile noix oméga-3.'},
+],
+dessert:[
+{id:'mousse-chocomat',name:'Mousse Chocomat (aquafaba-chocolat)',src:'mat',cat:'dessert',badges:['anti','gf','vegan'],ai:4,kcal:220,prot:6,gluc:28,lip:12,budget:3,omega3:false,
+tip:'Chocolat noir 70%+ = magnésium + antioxydants. Aquafaba (jus pois chiches) = mousse végane sans œuf.',
+ingr:['300g jus de pois chiche (aquafaba)','300g chocolat noir sans lait 70%+','6 cc miel liquide acacia'],
+steps:['Monter aquafaba en chantilly au batteur électrique.','Faire fondre chocolat à feu doux dans casserole.','Attendre 10 min que chocolat refroidisse un peu.','Incorporer délicatement aquafaba dans chocolat fondu avec spatule.','Verser dans grand bol. Repos frigo 6h minimum.'],
+but:'Mousse au chocolat vegan anti-oxydante — magnésium du cacao + aquafaba.'},
+{id:'mat-banana-ice-cream',name:'Mat banana ice cream (myrtilles-amande)',src:'mat',cat:'dessert',badges:['anti','gf','vegan'],ai:4,kcal:280,prot:5,gluc:52,lip:10,budget:3,omega3:false,
+tip:'Bananes congelées = texture glacée naturelle sans additifs. Myrtilles = anthocyanes anti-inflammatoires.',
+ingr:['6 bananes congelées en morceaux','3 cs beurre amande','½ tasse mûres','½ tasse myrtilles','1 cc extrait vanille'],
+steps:['Dans mixeur, mettre bananes congelées en morceaux.','Ajouter beurre amande, myrtilles, mûres et vanille.','Mixer jusqu\'à texture lisse.','Mettre dans récipient hermétique en verre. Congeler 1h minimum.'],
+but:'Glace saine naturelle — banane + myrtilles anti-inflammatoires + beurre amande.'},
+{id:'crumble-mat-pommes',name:'Crumble Mat pommes-fruits rouges',src:'mat',cat:'dessert',badges:['anti','gf','vegan'],ai:4,kcal:260,prot:5,gluc:48,lip:9,budget:4,omega3:false,
+tip:'Pommes + fruits rouges + myrtilles = cocktail d\'antioxydants. Flocons avoine + noix + beurre amande = crumble sans beurre saturé.',
+ingr:['6 pommes','125g myrtilles','60g framboises','60g mûres','8 cc miel liquide','Le jus d\'un citron','1 cc cannelle','30g noix fragmentées','30g flocons avoine','1 cs beurre amande'],
+steps:['Éplucher et couper pommes en dés. Cuire dans casserole avec huile olive + 4 cs miel + citron 10 min feu doux.','Cuire fruits rouges dans casserole avec citron 3 min feu doux.','Dans mixeur, ajouter flocons avoine + 2 cs miel + noix + beurre amande + cannelle. Mixer.','Préchauffer four 180°C. Dans plat à gratin, verser compote pommes + fruits rouges. Couvrir de crumble avoine-noix.','Ajouter flocons avoine par-dessus. Cuire 25 min.'],
+but:'Crumble anti-inflammatoire — pommes + fruits rouges + crumble sans beurre saturé.'},
+{id:'crepe-mat-choco-poire',name:'Crêpe Mat sarrasin-chocolat-poire',src:'mat',cat:'dessert',badges:['anti','gf','vegan'],ai:3,kcal:310,prot:8,gluc:48,lip:12,budget:3.5,omega3:false,
+tip:'Farine de sarrasin = sans gluten + IG bas + magnésium. Chocolat noir 70%+ = antioxydants. Fermentation longue = meilleure digestibilité.',
+ingr:['300g farine sarrasin bio','8g gros sel','70cl eau froide','1 œuf + 1 jaune','huile tournesol','chocolat noir sans lait 70%+','4 poires'],
+steps:['Mélanger farine sarrasin + sel. Ajouter eau progressivement en fouettant. Ajouter œufs. Remuer de haut en bas.','Laisser reposer minimum 4h (idéalement 24h).','Faire fondre chocolat dans casserole avec 1 cc eau à feu doux.','Éplucher et couper poires en tranches.','Cuire crêpes dans poêle huilée feu vif, ~1 min d\'un seul côté.','Garnir avec dés de poire et chocolat fondu versé par-dessus.'],
+but:'Crêpe sarrasin fermentée + chocolat + poire — IG bas, magnésium, anti-oxydant.'},
+{id:'mat-pudding-dessert',name:'Mat pudding chia myrtilles-framboises',src:'mat',cat:'dessert',badges:['anti','gf','vegan'],ai:5,kcal:200,prot:5,gluc:30,lip:7,budget:3,omega3:true,
+tip:'Graines de chia = oméga-3 + calcium + fibres. Myrtilles + framboises = anthocyanes anti-inflammatoires. Dessert idéal pour l\'épaule.',
+ingr:['3 tasses lait noisettes','1 cs miel liquide montagne','1 cc cannelle','5 gouttes citron','2 tasses myrtilles','1 tasse framboises','3 cs graines chia','1 cc extrait vanille'],
+steps:['Verser lait noisettes dans bol. Ajouter miel, vanille, cannelle, citron, graines chia. Mélanger.','Laisser reposer 1h. Texture plus consistante.','Mixer myrtilles + framboises.','Dans verrines, verser coulis fruits rouges au fond. Verser pudding par-dessus.','Ajouter framboise et menthe pour décorer.'],
+but:'Dessert anti-inflammatoire optimal — chia oméga-3 + anthocyanes myrtilles.'},
+{id:'marmelade-rouge',name:'Mat marmelade rouge (fruits rouges)',src:'mat',cat:'dessert',badges:['anti','gf','vegan'],ai:5,kcal:160,prot:2,gluc:38,lip:1,budget:3,omega3:false,
+tip:'Mûres + myrtilles + fraises + framboises = la plus haute concentration d\'anthocyanes anti-inflammatoires possible.',
+ingr:['3 poires','2 pommes','200g mûres','200g fraises','200g myrtilles','2 cs sirop érable','Le jus d\'1 citron','3 cc miel liquide'],
+steps:['Éplucher et couper pommes et poires en dés. Ajouter jus citron.','Dans wok ou casserole, cuire pommes + poires + citron 10 min feu doux.','Ajouter myrtilles + mûres. Porter à ébullition 30s. Ajouter reste citron. Mélanger délicatement.','Verser dans saladier. Ajouter sirop érable + miel avant de servir.'],
+but:'Marmelade anti-inflammatoire maximale — 4 types de fruits rouges + poires + pommes.'},
+{id:'matartare-framboises',name:'Matartare framboises-poire-basilic',src:'mat',cat:'dessert',badges:['anti','gf','vegan'],ai:4,kcal:150,prot:2,gluc:30,lip:7,budget:3,omega3:false,
+tip:'Framboises = anthocyanes anti-inflammatoires articulaires. Basilic = antioxydants. Huile olive = acide oléique anti-inflammatoire.',
+ingr:['400g framboises','1 poire','6 feuilles basilic','2 cc miel liquide','1 cc cannelle','3 cs huile olive','Le jus d\'½ citron'],
+steps:['Laver framboises et couper en petits morceaux.','Éplucher et couper poire en petits morceaux. Ajouter un peu de jus citron dessus.','Dans bol, mélanger miel + basilic ciselé + huile olive + cannelle.','Verser sur framboises et morceaux poire délicatement.','Dans 3 verres, verser tartare. Ajouter citron et basilic.'],
+but:'Dessert frais anti-inflammatoire — framboises + basilic + cannelle + huile olive.'},
 ]
 };
 
-let mode = 'anti';
-let currentMenu = null;
-let shopChecked = new Set();
 
-function showTab(name, el){
-  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  el.classList.add('active');
-  document.getElementById(name).classList.add('active');
-}
+let mode='anti',currentMenu=null;
 
-function setMode(m, el){
-  mode = m;
-  document.querySelectorAll('.mode-btn').forEach(b=>b.classList.remove('active'));
-  el.classList.add('active');
-  generateMenu();
-}
+function showTab(n,el){document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));el.classList.add('active');document.getElementById(n).classList.add('active')}
+function setMode(m,el){mode=m;document.querySelectorAll('.mode-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');generateMenu()}
 
-function weightedPick(arr){
-  if(mode === 'mix'){
-    return arr[Math.floor(Math.random()*arr.length)];
-  }
-  const sorted = [...arr].sort((a,b) => mode==='proto' ? b.prot-a.prot : b.ai-a.ai);
-  const topScore = mode==='proto' ? sorted[0].prot : sorted[0].ai;
-  const pool = sorted.filter(r => (mode==='proto' ? r.prot : r.ai) >= topScore - 1);
+function pick(arr){
+  if(mode==='mix')return arr[Math.floor(Math.random()*arr.length)];
+  const sorted=[...arr].sort((a,b)=>mode==='proto'?b.prot-a.prot:b.ai-a.ai);
+  const top=mode==='proto'?sorted[0].prot:sorted[0].ai;
+  const pool=sorted.filter(r=>(mode==='proto'?r.prot:r.ai)>=top-1);
   return pool[Math.floor(Math.random()*pool.length)];
 }
 
 function generateMenu(){
-  const btn = document.getElementById('gen-btn');
+  const btn=document.getElementById('gen-btn');
   btn.classList.add('loading');
   setTimeout(()=>{
-    const m = {
-      matin: weightedPick(DB.matin),
-      dejeuner: weightedPick(DB.dejeuner),
-      diner: weightedPick(DB.diner),
-      souper: weightedPick(DB.souper),
-      collation: weightedPick(DB.collation)
-    };
-    currentMenu = m;
-    renderMenu(m);
-    buildShopping(m);
-    buildBatch(m);
-    btn.classList.remove('loading');
-  }, 200);
+    const m={matin:pick(DB.matin),dejeuner:pick(DB.dejeuner),diner:pick(DB.diner),souper:pick(DB.souper),collation:pick(DB.collation)};
+    currentMenu=m;renderMenu(m);buildShopping(m);buildBatch(m);btn.classList.remove('loading');
+  },250);
 }
 
 function renderMenu(m){
-  const slots = {matin:'🌅 Matin',dejeuner:'🥣 Déjeuner',diner:'🍵 Dîner',souper:'🍗 Souper',collation:'🍫 Collation'};
-  const all = Object.values(m);
-  const totK = all.reduce((s,r)=>s+r.kcal,0);
-  const totP = all.reduce((s,r)=>s+r.prot,0);
-  const totG = all.reduce((s,r)=>s+r.gluc,0);
-  const totL = all.reduce((s,r)=>s+r.lip,0);
-  const totAI = Math.round(all.reduce((s,r)=>s+r.ai,0)/all.length*10)/10;
-  const budget4 = Math.round(all.reduce((s,r)=>s+r.budget,0)*4);
-  const hasOmega = all.some(r=>r.omega3);
-
-  document.getElementById('t-kcal').textContent = Math.round(totK)+' kcal';
-  const pEl = document.getElementById('t-prot');
-  pEl.textContent = Math.round(totP)+'g';
-  pEl.className = 't-val'+(totP>=120?' good':totP<100?' warn':'');
-  document.getElementById('t-gluc').textContent = Math.round(totG)+'g';
-  document.getElementById('t-lip').textContent = Math.round(totL)+'g';
-  const aiEl = document.getElementById('t-ai');
-  aiEl.textContent = totAI.toFixed(1)+'/5';
-  aiEl.className = 't-val'+(totAI>=4?' good':totAI<3?' warn':'');
-  document.getElementById('t-budget').textContent = '~'+Math.round(budget4*0.9)+'–'+budget4+'€';
-
-  document.getElementById('omega-alert').innerHTML = hasOmega
-    ? '<div class="alert green">✓ Ce menu contient une source d\'oméga-3 — essentiel pour réduire l\'inflammation de l\'épaule.</div>'
-    : '<div class="alert amber">⚠ Ce menu ne contient pas d\'oméga-3. Régénère ou inclus saumon/maquereau en souper cette semaine.</div>';
-
-  document.getElementById('menu-slots').innerHTML = Object.entries(m).map(([slot,r])=>`
-    <div class="meal-slot${r.omega3?' has-omega':''}">
-      <h3>${slots[slot]}</h3>
-      <p>${r.name}</p>
-      <div class="macro-mini">${r.kcal} kcal · ${r.prot}g prot</div>
-    </div>`).join('');
-
-  document.getElementById('menu-detail').innerHTML = Object.entries(m).map(([slot,r])=>recipeCard(r, slots[slot])).join('');
+  const icons={matin:'☀',dejeuner:'🌿',diner:'🍵',souper:'🫙',collation:'✦'};
+  const labels={matin:'Matin',dejeuner:'Déjeuner',diner:'Dîner',souper:'Souper',collation:'Collation'};
+  const all=Object.values(m);
+  const totK=all.reduce((s,r)=>s+r.kcal,0),totP=all.reduce((s,r)=>s+r.prot,0),totG=all.reduce((s,r)=>s+r.gluc,0),totL=all.reduce((s,r)=>s+r.lip,0);
+  const totAI=Math.round(all.reduce((s,r)=>s+r.ai,0)/all.length*10)/10;
+  const budget4=Math.round(all.reduce((s,r)=>s+r.budget,0)*4);
+  const hasOmega=all.some(r=>r.omega3);
+  document.getElementById('t-kcal').textContent=Math.round(totK)+' kcal';
+  const pEl=document.getElementById('t-prot');pEl.textContent=Math.round(totP)+'g';pEl.className='t-val'+(totP>=120?' good':totP<100?' warn':'');
+  document.getElementById('t-gluc').textContent=Math.round(totG)+'g';
+  document.getElementById('t-lip').textContent=Math.round(totL)+'g';
+  const aiEl=document.getElementById('t-ai');aiEl.textContent=totAI.toFixed(1)+'/5';aiEl.className='t-val'+(totAI>=4?' good':totAI<3?' warn':'');
+  document.getElementById('t-budget').textContent='~'+Math.round(budget4*.9)+'–'+budget4+'€';
+  document.getElementById('omega-alert').innerHTML=hasOmega?'<div class="alert green">✓ Ce menu contient des oméga-3 — essentiel pour réduire l'inflammation de l'épaule.</div>':'<div class="alert amber">⚠ Pas d'oméga-3 dans ce menu. Régénère ou ajoute saumon / maquereau / sardines cette semaine.</div>';
+  document.getElementById('menu-slots').innerHTML=Object.entries(m).map(([slot,r])=>`<div class="meal-slot${r.omega3?' has-omega':''}"><span class="slot-ico">${icons[slot]}</span><div class="slot-cat">${labels[slot]}</div><div class="slot-name">${r.name}</div><div class="slot-macro">${r.kcal} kcal · ${r.prot}g prot</div></div>`).join('');
+  document.getElementById('menu-detail').innerHTML=Object.entries(m).map(([slot,r])=>rcCard(r,labels[slot])).join('');
 }
 
-function recipeCard(r, slotLabel){
-  const badgeMap = {anti:'Anti-inflam',proto:'Protéiné',vegan:'Vegan',omega:'Oméga-3',gf:'Sans gluten'};
-  return `<div class="recipe-card${r.omega3?' omega':''}">
-    <div class="card-top">
-      <div class="card-meta">
-        ${slotLabel ? `<div class="card-slot-label">${slotLabel}</div>` : ''}
-        <div class="card-name">${r.name}</div>
-        <div class="badges">${r.badges.map(b=>`<span class="badge ${b}">${badgeMap[b]||b}</span>`).join('')}</div>
-        <div class="ai-dots">
-          ${[1,2,3,4,5].map(i=>`<div class="dot${i<=r.ai?' on':''}"></div>`).join('')}
-          <span class="label">${r.src==='mat'?'Mat Resume':'Alex PYX'}</span>
-        </div>
-        <div class="card-macros"><b>${r.kcal}</b> kcal · Prot <b>${r.prot}g</b> · Gluc <b>${r.gluc}g</b> · Lip <b>${r.lip}g</b></div>
-      </div>
-      <button class="expand-btn" onclick="toggleCard(this)">Voir ▾</button>
-    </div>
-    <div class="recipe-detail">
-      <div class="ai-tip-box">💡 ${r.tip}</div>
-      <div class="recipe-but">${r.but}</div>
-      <div class="detail-block"><h4>Ingrédients</h4><ul>${r.ingr.map(i=>`<li>${i}</li>`).join('')}</ul></div>
-      <div class="detail-block"><h4>Préparation</h4><ol>${r.steps.map(s=>`<li>${s}</li>`).join('')}</ol></div>
-    </div>
-  </div>`;
+function rcCard(r,lbl){
+  const bm={anti:'Anti-inflam',proto:'Protéiné',vegan:'Vegan',omega:'Oméga-3',gf:'Sans gluten',dessert:'Dessert',apero:'Apéro'};
+  return`<div class="rc${r.omega3?' omega':''}"><div class="card-top"><div class="card-meta">${lbl?`<div class="card-cat-lbl">${lbl}</div>`:''}<div class="card-name">${r.name}</div><div class="badges">${r.badges.map(b=>`<span class="badge ${b}">${bm[b]||b}</span>`).join('')}</div><div class="ai-row">${[1,2,3,4,5].map(i=>`<div class="dot${i<=r.ai?' on':''}"></div>`).join('')}<span class="ai-src">${r.src==='mat'?'Mat Resume':'Alex PYX'}</span></div><div class="card-macros"><b>${r.kcal}</b> kcal · Prot <b>${r.prot}g</b> · Gluc <b>${r.gluc}g</b> · Lip <b>${r.lip}g</b></div></div><button class="expand-btn" onclick="toggleCard(this)">Voir la recette ↓</button></div><div class="rd"><div class="tip-box">💡 ${r.tip}</div><div class="recipe-desc">${r.but}</div><div class="db"><h4>Ingrédients</h4><ul>${r.ingr.map(i=>`<li>${i}</li>`).join('')}</ul></div><div class="db"><h4>Préparation</h4><ol>${r.steps.map(s=>`<li>${s}</li>`).join('')}</ol></div></div></div>`;
 }
 
-function toggleCard(btn){
-  const d = btn.closest('.recipe-card').querySelector('.recipe-detail');
-  const open = d.classList.toggle('open');
-  btn.textContent = open ? 'Masquer ▴' : 'Voir ▾';
-}
+function toggleCard(btn){const d=btn.closest('.rc').querySelector('.rd');const open=d.classList.toggle('open');btn.textContent=open?'Masquer ↑':'Voir la recette ↓'}
 
 function buildShopping(menu){
-  const cats = {
-    '🐟 Protéines & poissons':[],
-    '🥦 Légumes & fruits':[],
-    '🌾 Féculents & céréales':[],
-    '🥛 Produits frais & laits végétaux':[],
-    '❄️ Surgelés':[],
-    '🧂 Épicerie & condiments':[]
-  };
-  const seen = new Set();
-  Object.values(menu).forEach(r=>{
-    r.ingr.forEach(i=>{
-      const key = i.toLowerCase().replace(/[\d,\.]+\s*[gclm]+\s*/g,'').trim().split(' ').slice(0,4).join(' ');
-      if(seen.has(key)) return;
-      seen.add(key);
-      const il = i.toLowerCase();
-      if(/saumon|maquereau|sardine|poulet|viande|tofu/.test(il)) cats['🐟 Protéines & poissons'].push(i);
-      else if(/surgelé|surgel/.test(il)) cats['❄️ Surgelés'].push(i);
-      else if(/riz|avoine|pâtes|farine|sarrasin|quinoa|flocons|panko/.test(il)) cats['🌾 Féculents & céréales'].push(i);
-      else if(/lait|amande|noisette|fromage|yaourt|cottage|whey|crème coco|beurre amande|beurre cacah/.test(il)) cats['🥛 Produits frais & laits végétaux'].push(i);
-      else if(/carotte|épinard|brocoli|patate|oignon|ail|citron|orange|banane|pomme|poire|concombre|tomate|avocat|betterave|potiron|grenade|pastèque|framboise|myrtille|fraise|coriandre|persil|basilic|gingembre frais/.test(il)) cats['🥦 Légumes & fruits'].push(i);
-      else cats['🧂 Épicerie & condiments'].push(i);
-    });
-  });
-  const budget4 = Math.round(Object.values(menu).reduce((s,r)=>s+r.budget,0)*4);
-  shopChecked = new Set();
-  document.getElementById('shopping-content').innerHTML =
-    `<div class="shop-grid">${Object.entries(cats).filter(([,v])=>v.length>0).map(([cat,items])=>`
-      <div class="shop-cat">
-        <h4>${cat}</h4>
-        <ul>${items.map((item,idx)=>`<li onclick="toggleShop(this)" data-id="${cat}-${idx}">${item}</li>`).join('')}</ul>
-      </div>`).join('')}</div>
-    <div class="price-box">Budget estimé 4 jours (Colruyt) : ~${Math.round(budget4*0.9)} – ${budget4} €</div>`;
-}
-
-function toggleShop(el){
-  el.classList.toggle('checked');
+  const cats={'🐟 Protéines & poissons':[],'🥦 Légumes & fruits':[],'🌾 Féculents & céréales':[],'🥛 Produits frais & laits végétaux':[],'❄️ Surgelés':[],'🧂 Épicerie & condiments':[]};
+  const seen=new Set();
+  Object.values(menu).forEach(r=>r.ingr.forEach(i=>{
+    const k=i.toLowerCase().replace(/[\d,\.]+\s*[gclm]+\s*/g,'').trim().split(' ').slice(0,4).join(' ');
+    if(seen.has(k))return;seen.add(k);
+    const il=i.toLowerCase();
+    if(/saumon|maquereau|sardine|poulet|viande|tofu|crevettes|saint-jacques/.test(il))cats['🐟 Protéines & poissons'].push(i);
+    else if(/surgelé|surgel/.test(il))cats['❄️ Surgelés'].push(i);
+    else if(/riz|avoine|pâtes|farine|sarrasin|quinoa|flocons|panko/.test(il))cats['🌾 Féculents & céréales'].push(i);
+    else if(/lait|amande|noisette|fromage|yaourt|cottage|whey|crème coco|beurre amande|beurre cacah|cream cheese/.test(il))cats['🥛 Produits frais & laits végétaux'].push(i);
+    else if(/carotte|épinard|brocoli|patate|oignon|ail|citron|orange|banane|pomme|poire|concombre|tomate|avocat|betterave|potiron|grenade|pastèque|framboise|myrtille|fraise|coriandre|persil|basilic|gingembre frais|aubergine|champignon/.test(il))cats['🥦 Légumes & fruits'].push(i);
+    else cats['🧂 Épicerie & condiments'].push(i);
+  }));
+  const budget4=Math.round(Object.values(menu).reduce((s,r)=>s+r.budget,0)*4);
+  const hasOmega=Object.values(menu).some(r=>r.omega3);
+  document.getElementById('shopping-content').innerHTML=`${hasOmega?'<div class="alert green" style="margin-bottom:1.5rem">✓ Ce menu contient des oméga-3 — essentiel pour l'épaule.</div>':'<div class="alert amber" style="margin-bottom:1.5rem">⚠ Pas d'oméga-3. Pense à ajouter saumon ou maquereau cette semaine.</div>'}<div class="shop-grid">${Object.entries(cats).filter(([,v])=>v.length>0).map(([cat,items])=>`<div class="shop-cat"><h4>${cat}</h4><ul>${items.map(item=>`<li onclick="this.classList.toggle('checked')">${item}</li>`).join('')}</ul></div>`).join('')}</div><div class="price-box"><div class="price-main">~${Math.round(budget4*.9)}–${budget4} €</div><div class="price-sub">Budget estimé 4 jours · Colruyt</div></div>`;
 }
 
 function buildBatch(menu){
-  const m = menu;
-  const steps = [
-    {t:'Veille au soir (5 min)', d:'Préparer la pâte à pancakes OU les overnight oats si applicable. Mélanger, couvrir, laisser au frigo toute la nuit.', time:'5 min'},
-    {t:'Démarrer le four si besoin', d:'Si le souper nécessite le four (saumon, chicken tenders...) — préchauffer à la bonne température maintenant.', time:'2 min'},
-    {t:`Jus du matin — ${m.matin.name}`, d:'Préparer la boisson matinale. Conserver en carafe au frigo pour les 4 jours.', time:'15 min'},
-    {t:`Soupe / dîner — ${m.diner.name}`, d:'Lancer la soupe en premier — elle cuit seule. Répartir en 4 boîtes hermétiques une fois prête.', time:'35 min'},
-    {t:`Déjeuner — ${m.dejeuner.name}`, d:'Pendant la cuisson de la soupe : finaliser le déjeuner / overnight oats. Répartir en 4 boîtes.', time:'20 min'},
-    {t:'Préparer les protéines du souper', d:`Couper, mariner ou assaisonner les protéines pour "${m.souper.name}".`, time:'20 min'},
-    {t:`Cuire & assembler — ${m.souper.name}`, d:'Cuire et assembler le plat principal. Répartir en 4 boîtes hermétiques.', time:'25 min'},
-    {t:`Collation — ${m.collation.name}`, d:'Préparer la collation. Conserver en boîtes ou au frigo selon la recette.', time:'15 min'},
-    {t:'Mise en boîtes finale & étiquetage', d:'Étiqueter toutes les boîtes J1/J2/J3/J4. Vérifier fermetures. J3-J4 des soupes au congélateur si possible.', time:'10 min'},
+  const m=menu;
+  const steps=[
+    {t:'Veille au soir — préparer la base',d:'Préparer la pâte à pancakes OU les overnight oats. Mélanger, couvrir, laisser au frigo toute la nuit.',time:'5 min'},
+    {t:'Démarrer le four si besoin',d:'Si le souper nécessite le four (saumon, poulet, patates douces...) — préchauffer maintenant.',time:'2 min'},
+    {t:m.matin.name,d:'Préparer la boisson ou le jus matinal. Conserver en carafe au frigo pour les 4 jours.',time:'15 min'},
+    {t:m.diner.name,d:'Lancer la soupe ou le dîner en premier — il cuit seul. Répartir en 4 boîtes hermétiques une fois prêt.',time:'35 min'},
+    {t:m.dejeuner.name,d:'Pendant la cuisson du dîner : finaliser le déjeuner. Répartir en 4 boîtes.',time:'20 min'},
+    {t:'Préparer les protéines du souper',d:`Couper, mariner ou assaisonner les protéines pour « ${m.souper.name} ».`,time:'20 min'},
+    {t:m.souper.name,d:'Cuire et assembler le plat principal. Répartir en 4 boîtes hermétiques.',time:'25 min'},
+    {t:m.collation.name,d:'Préparer la collation. Conserver en boîtes ou au frigo selon la recette.',time:'15 min'},
+    {t:'Mise en boîtes & étiquetage',d:'Étiqueter toutes les boîtes J1/J2/J3/J4. Vérifier fermetures. J3-J4 des soupes au congélateur si possible.',time:'10 min'},
   ];
-  const total = steps.length;
-  document.getElementById('batch-content').innerHTML = steps.map((s,i)=>`
-    <div class="batch-step" id="bst-${i}" onclick="toggleBatch(${i},${total})">
-      <span class="step-check">○</span>
-      <div class="step-content">
-        <div class="step-title">${i+1}. ${s.t}</div>
-        <div class="step-desc">${s.d}</div>
-        <span class="batch-time">${s.time}</span>
-      </div>
-    </div>`).join('');
-  updateBatchProgress(0, total);
+  const total=steps.length;
+  document.getElementById('batch-content').innerHTML=steps.map((s,i)=>`<div class="bstep" id="bst-${i}" onclick="toggleBatch(${i},${total})"><div class="step-n">${i+1}</div><div><div class="stitle">${s.t}</div><div class="sdesc">${s.d}</div><span class="stime">${s.time}</span></div></div>`).join('');
+  updateBP(0,total);
 }
 
-function toggleBatch(i, total){
-  const el = document.getElementById('bst-'+i);
-  el.classList.toggle('done');
-  el.querySelector('.step-check').textContent = el.classList.contains('done') ? '●' : '○';
-  const done = document.querySelectorAll('.batch-step.done').length;
-  updateBatchProgress(done, total);
+function toggleBatch(i,total){
+  const el=document.getElementById('bst-'+i);el.classList.toggle('done');
+  updateBP(document.querySelectorAll('.bstep.done').length,total);
 }
 
-function updateBatchProgress(done, total){
-  const pct = Math.round(done/total*100);
-  document.getElementById('batch-bar').style.width = pct+'%';
-  document.getElementById('batch-progress-label').textContent = `${done}/${total} étapes complétées${done===total?' — Batch cooking terminé 🎉':''}`;
+function updateBP(done,total){
+  const pct=Math.round(done/total*100);
+  document.getElementById('bp').style.width=pct+'%';
+  document.getElementById('bpl').textContent=`${done} / ${total} étapes${done===total?' — Session terminée 🎉':''}`;
 }
 
 function filterRecipes(){
-  const cat = document.getElementById('cat-filter').value;
-  const src = document.getElementById('src-filter').value;
-  const minAI = parseInt(document.getElementById('ai-filter').value)||0;
-  let all = [];
-  Object.entries(DB).forEach(([c,recipes])=>{
-    if(cat==='all'||cat===c){
-      recipes.forEach(r=>{
-        if((src==='all'||src===r.src)&&r.ai>=minAI) all.push(r);
-      });
-    }
-  });
+  const cat=document.getElementById('cat-filter').value;
+  const src=document.getElementById('src-filter').value;
+  const minAI=parseInt(document.getElementById('ai-filter').value)||0;
+  let all=[];
+  Object.entries(DB).forEach(([c,recipes])=>{if(cat==='all'||cat===c)recipes.forEach(r=>{if((src==='all'||src===r.src)&&r.ai>=minAI)all.push(r);});});
   all.sort((a,b)=>b.ai-a.ai);
-  if(!all.length){
-    document.getElementById('recipe-list').innerHTML='<div class="empty">Aucune recette pour ces filtres.</div>';
-    return;
-  }
-  document.getElementById('recipe-list').innerHTML = all.map(r=>recipeCard(r,null)).join('');
+  if(!all.length){document.getElementById('recipe-list').innerHTML='<div class="empty">Aucune recette pour ces filtres.</div>';return;}
+  const catLabels={matin:'Jus & Matin',dejeuner:'Petit-déj & Déjeuner',diner:'Dîner & Soupes',souper:'Souper & Plats',collation:'Collations & Goûters',apero:'Apéros',dessert:'Desserts'};
+  let html='',lastCat='';
+  all.forEach(r=>{if(cat==='all'&&r.cat!==lastCat){html+=`<div class="cat-hdr">${catLabels[r.cat]||r.cat}</div>`;lastCat=r.cat;}html+=rcCard(r,null);});
+  document.getElementById('recipe-list').innerHTML=html;
 }
 
-filterRecipes();
-generateMenu();
+filterRecipes();generateMenu();
 </script>
 </body>
 </html>
