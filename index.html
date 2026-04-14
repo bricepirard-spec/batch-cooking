@@ -13,7 +13,7 @@
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html{scroll-behavior:smooth}
 body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.65;min-height:100vh}
-
+ 
 /* HEADER */
 .site-header{background:var(--ink);position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(255,255,255,0.05)}
 .header-inner{max-width:980px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;height:62px}
@@ -22,7 +22,7 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:
 .logo-sep{color:rgba(255,255,255,0.2);font-size:14px}
 .logo-sub{font-size:11px;color:var(--ink4);letter-spacing:0.1em;text-transform:uppercase}
 .header-pill{font-size:10.5px;padding:4px 12px;border-radius:100px;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.35);letter-spacing:0.05em}
-
+ 
 /* NAV */
 .nav-wrap{background:var(--ink2);position:sticky;top:62px;z-index:99;overflow-x:auto;-ms-overflow-style:none;scrollbar-width:none}
 .nav-wrap::-webkit-scrollbar{display:none}
@@ -30,43 +30,43 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:
 .nav-tab{padding:12px 20px;font-size:12px;font-weight:400;color:rgba(255,255,255,0.4);cursor:pointer;border:none;background:none;white-space:nowrap;border-bottom:2px solid transparent;transition:all .2s;font-family:var(--sans);letter-spacing:0.05em;text-transform:uppercase}
 .nav-tab:hover{color:rgba(255,255,255,0.7)}
 .nav-tab.active{color:var(--paper);border-bottom-color:var(--amber-mid)}
-
+ 
 /* MAIN */
 .main{max-width:980px;margin:0 auto;padding:2.5rem 2rem}
 .section{display:none}.section.active{display:block}
-
+ 
 /* PAGE HEADER */
 .pg-head{margin-bottom:2rem}
 .pg-title{font-family:var(--serif);font-size:42px;font-weight:300;color:var(--ink);letter-spacing:-.01em;margin-bottom:4px;line-height:1.15}
 .pg-title em{font-style:italic;color:var(--ink3)}
 .pg-sub{font-size:13px;color:var(--ink4)}
-
+ 
 /* MODE BAR */
 .mode-bar{display:flex;gap:6px;margin-bottom:1.5rem;flex-wrap:wrap;align-items:center}
 .mode-lbl{font-size:10px;color:var(--ink4);letter-spacing:.1em;text-transform:uppercase;margin-right:2px;align-self:center}
 .mode-btn{padding:6px 16px;border-radius:100px;border:1.5px solid var(--paper3);background:transparent;font-size:12px;color:var(--ink3);cursor:pointer;transition:all .2s;font-family:var(--sans)}
 .mode-btn:hover{border-color:var(--ink3);color:var(--ink)}
 .mode-btn.active{background:var(--ink);border-color:var(--ink);color:var(--paper)}
-
+ 
 /* GEN BUTTON */
 .gen-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 24px;border-radius:var(--r);border:none;background:var(--amber);color:var(--white);font-size:13px;font-weight:500;cursor:pointer;margin-bottom:2rem;transition:all .25s;font-family:var(--sans);letter-spacing:.02em;box-shadow:0 2px 10px rgba(184,104,32,.35)}
 .gen-btn:hover{background:#a05a18;box-shadow:0 4px 20px rgba(184,104,32,.45);transform:translateY(-1px)}
 .gen-btn:active{transform:translateY(0)}
 .gen-btn.loading .spin{animation:spin .5s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-
+ 
 /* TOTALS */
 .totals{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:1.5rem}
 .total-card{background:var(--white);border:1px solid var(--paper3);border-radius:var(--r-lg);padding:14px 16px;box-shadow:var(--shadow)}
 .t-lbl{font-size:10px;color:var(--ink4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px}
 .t-val{font-family:var(--serif);font-size:24px;font-weight:400;color:var(--ink);line-height:1}
 .t-val.good{color:var(--sage)}.t-val.warn{color:var(--amber)}
-
+ 
 /* ALERTS */
 .alert{padding:10px 14px;border-radius:var(--r);font-size:12.5px;margin-bottom:1.5rem;display:flex;align-items:flex-start;gap:8px;line-height:1.5}
 .alert.green{background:var(--sage-light);border:1px solid var(--sage-mid);color:var(--sage)}
 .alert.amber{background:var(--amber-light);border:1px solid var(--amber-mid);color:var(--amber)}
-
+ 
 /* MENU SLOTS */
 .menu-slots{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:2rem}
 @media(max-width:700px){.menu-slots{grid-template-columns:1fr 1fr}}
@@ -77,10 +77,10 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:
 .slot-cat{font-size:9px;font-weight:500;color:var(--ink4);text-transform:uppercase;letter-spacing:.12em;margin-bottom:4px}
 .slot-name{font-size:12px;color:var(--ink);line-height:1.4}
 .slot-macro{font-size:11px;color:var(--ink4);margin-top:4px}
-
+ 
 /* DIVIDER */
 .divider{height:1px;background:linear-gradient(to right,var(--paper3),transparent);margin:1.75rem 0}
-
+ 
 /* RECIPE CARDS */
 .rc{background:var(--white);border:1px solid var(--paper3);border-radius:var(--r-lg);padding:1.1rem 1.25rem;margin-bottom:10px;box-shadow:var(--shadow);transition:box-shadow .2s}
 .rc:hover{box-shadow:var(--shadow-md)}
@@ -120,7 +120,7 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:
 .db ol li{counter-increment:st;font-size:13px;color:var(--ink2);line-height:1.7;padding:7px 0 7px 30px;position:relative;border-bottom:1px solid var(--paper2)}
 .db ol li:last-child{border-bottom:none}
 .db ol li::before{content:counter(st);position:absolute;left:0;top:9px;font-family:var(--serif);font-size:15px;color:var(--amber);font-weight:400;width:22px;text-align:center}
-
+ 
 /* FILTER */
 .filter-bar{background:var(--white);border:1px solid var(--paper3);border-radius:var(--r-lg);padding:14px 18px;margin-bottom:1.5rem;box-shadow:var(--shadow);display:flex;gap:14px;flex-wrap:wrap;align-items:center}
 .filter-bar label{font-size:10px;color:var(--ink4);letter-spacing:.08em;text-transform:uppercase}
@@ -128,7 +128,7 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:
 .filter-bar select:focus{outline:2px solid var(--amber);outline-offset:2px}
 .cat-hdr{font-family:var(--serif);font-size:22px;font-weight:300;font-style:italic;color:var(--ink3);padding:18px 0 10px;margin-top:6px;border-bottom:1px solid var(--paper3);margin-bottom:12px}
 .cat-hdr:first-child{padding-top:0;margin-top:0}
-
+ 
 /* SHOPPING */
 .shop-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
 .shop-cat{background:var(--white);border:1px solid var(--paper3);border-radius:var(--r-lg);padding:16px;box-shadow:var(--shadow)}
@@ -142,7 +142,7 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:
 .price-box{margin-top:1.25rem;background:var(--amber-light);border:1px solid var(--amber-mid);border-radius:var(--r-lg);padding:16px 20px}
 .price-box .price-main{font-family:var(--serif);font-size:28px;font-weight:400;color:var(--amber);line-height:1}
 .price-box .price-sub{font-size:12px;color:var(--ink4);margin-top:3px}
-
+ 
 /* BATCH */
 .batch-meta{font-size:12px;color:var(--ink4);margin-bottom:10px}
 .prog-wrap{background:var(--paper3);border-radius:100px;height:3px;margin-bottom:1.75rem;overflow:hidden}
@@ -155,15 +155,15 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:
 .stitle{font-size:13px;font-weight:500;color:var(--ink);margin-bottom:3px}
 .sdesc{font-size:12px;color:var(--ink3);line-height:1.55}
 .stime{font-size:10px;color:var(--ink4);background:var(--paper2);padding:2px 9px;border-radius:100px;display:inline-block;margin-top:5px;letter-spacing:.04em}
-
+ 
 .pg-sub-note{font-size:13px;color:var(--ink3);margin-bottom:1.5rem;font-style:italic}
 .empty{font-size:13px;color:var(--ink4);padding:2rem 0;font-style:italic}
-
+ 
 @media(max-width:600px){.main{padding:1.5rem 1.25rem}.header-inner{padding:0 1.25rem}.nav-inner{padding:0 1.25rem}.totals{grid-template-columns:repeat(3,1fr)}.pg-title{font-size:30px}.header-pill{display:none}}
 </style>
 </head>
 <body>
-
+ 
 <header class="site-header">
   <div class="header-inner">
     <div class="logo-group">
@@ -174,7 +174,7 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:
     <span class="header-pill">91 recettes · Mat Resume + Alex PYX</span>
   </div>
 </header>
-
+ 
 <nav class="nav-wrap">
   <div class="nav-inner">
     <button class="nav-tab active" onclick="showTab('menu',this)">Menu 4 jours</button>
@@ -183,9 +183,9 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:
     <button class="nav-tab" onclick="showTab('batch',this)">Batch cooking</button>
   </div>
 </nav>
-
+ 
 <main class="main">
-
+ 
   <section id="menu" class="section active">
     <div class="pg-head">
       <div class="pg-title">Mon <em>menu</em> de la semaine</div>
@@ -213,7 +213,7 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:
     <div class="divider"></div>
     <div id="menu-detail"></div>
   </section>
-
+ 
   <section id="recipes" class="section">
     <div class="pg-head">
       <div class="pg-title">La <em>bibliothèque</em></div>
@@ -247,14 +247,14 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:
     </div>
     <div id="recipe-list"></div>
   </section>
-
+ 
   <section id="shopping" class="section">
     <div class="pg-head">
       <div class="pg-title">Liste de <em>courses</em></div>
     </div>
     <div id="shopping-content"><div class="empty">Génère d'abord un menu depuis l'onglet "Menu 4 jours".</div></div>
   </section>
-
+ 
   <section id="batch" class="section">
     <div class="pg-head">
       <div class="pg-title">Session <em>batch</em></div>
@@ -264,12 +264,12 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:
     <div class="prog-wrap"><div class="prog-bar" id="bp"></div></div>
     <div id="batch-content"><div class="empty">Génère d'abord un menu depuis l'onglet "Menu 4 jours".</div></div>
   </section>
-
+ 
 </main>
-
+ 
 <script>
-
-
+ 
+ 
 const DB = {
 matin:[
 {id:'jus-citron-gi',name:'Jus citron-gingembre-curcuma',src:'mat',cat:'matin',badges:['anti','gf','vegan'],ai:5,kcal:25,prot:0,gluc:6,lip:0,budget:1.5,omega3:false,
@@ -741,13 +741,13 @@ steps:['Laver framboises et couper en petits morceaux.','Éplucher et couper poi
 but:'Dessert frais anti-inflammatoire — framboises + basilic + cannelle + huile olive.'},
 ]
 };
-
-
+ 
+ 
 let mode='anti',currentMenu=null;
-
+ 
 function showTab(n,el){document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));el.classList.add('active');document.getElementById(n).classList.add('active')}
 function setMode(m,el){mode=m;document.querySelectorAll('.mode-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');generateMenu()}
-
+ 
 function pick(arr){
   if(mode==='mix')return arr[Math.floor(Math.random()*arr.length)];
   const sorted=[...arr].sort((a,b)=>mode==='proto'?b.prot-a.prot:b.ai-a.ai);
@@ -755,7 +755,7 @@ function pick(arr){
   const pool=sorted.filter(r=>(mode==='proto'?r.prot:r.ai)>=top-1);
   return pool[Math.floor(Math.random()*pool.length)];
 }
-
+ 
 function generateMenu(){
   const btn=document.getElementById('gen-btn');
   btn.classList.add('loading');
@@ -764,7 +764,7 @@ function generateMenu(){
     currentMenu=m;renderMenu(m);buildShopping(m);buildBatch(m);btn.classList.remove('loading');
   },250);
 }
-
+ 
 function renderMenu(m){
   const icons={matin:'☀',dejeuner:'🌿',diner:'🍵',souper:'🫙',collation:'✦'};
   const labels={matin:'Matin',dejeuner:'Déjeuner',diner:'Dîner',souper:'Souper',collation:'Collation'};
@@ -783,14 +783,14 @@ function renderMenu(m){
   document.getElementById('menu-slots').innerHTML=Object.entries(m).map(([slot,r])=>`<div class="meal-slot${r.omega3?' has-omega':''}"><span class="slot-ico">${icons[slot]}</span><div class="slot-cat">${labels[slot]}</div><div class="slot-name">${r.name}</div><div class="slot-macro">${r.kcal} kcal · ${r.prot}g prot</div></div>`).join('');
   document.getElementById('menu-detail').innerHTML=Object.entries(m).map(([slot,r])=>rcCard(r,labels[slot])).join('');
 }
-
+ 
 function rcCard(r,lbl){
   const bm={anti:'Anti-inflam',proto:'Protéiné',vegan:'Vegan',omega:'Oméga-3',gf:'Sans gluten',dessert:'Dessert',apero:'Apéro'};
   return`<div class="rc${r.omega3?' omega':''}"><div class="card-top"><div class="card-meta">${lbl?`<div class="card-cat-lbl">${lbl}</div>`:''}<div class="card-name">${r.name}</div><div class="badges">${r.badges.map(b=>`<span class="badge ${b}">${bm[b]||b}</span>`).join('')}</div><div class="ai-row">${[1,2,3,4,5].map(i=>`<div class="dot${i<=r.ai?' on':''}"></div>`).join('')}<span class="ai-src">${r.src==='mat'?'Mat Resume':'Alex PYX'}</span></div><div class="card-macros"><b>${r.kcal}</b> kcal · Prot <b>${r.prot}g</b> · Gluc <b>${r.gluc}g</b> · Lip <b>${r.lip}g</b></div></div><button class="expand-btn" onclick="toggleCard(this)">Voir la recette ↓</button></div><div class="rd"><div class="tip-box">💡 ${r.tip}</div><div class="recipe-desc">${r.but}</div><div class="db"><h4>Ingrédients</h4><ul>${r.ingr.map(i=>`<li>${i}</li>`).join('')}</ul></div><div class="db"><h4>Préparation</h4><ol>${r.steps.map(s=>`<li>${s}</li>`).join('')}</ol></div></div></div>`;
 }
-
+ 
 function toggleCard(btn){const d=btn.closest('.rc').querySelector('.rd');const open=d.classList.toggle('open');btn.textContent=open?'Masquer ↑':'Voir la recette ↓'}
-
+ 
 function buildShopping(menu){
   const cats={'🐟 Protéines & poissons':[],'🥦 Légumes & fruits':[],'🌾 Féculents & céréales':[],'🥛 Produits frais & laits végétaux':[],'❄️ Surgelés':[],'🧂 Épicerie & condiments':[]};
   const seen=new Set();
@@ -809,7 +809,7 @@ function buildShopping(menu){
   const hasOmega=Object.values(menu).some(r=>r.omega3);
   document.getElementById('shopping-content').innerHTML=`${hasOmega?'<div class="alert green" style="margin-bottom:1.5rem">✓ Ce menu contient des oméga-3 — essentiel pour l'épaule.</div>':'<div class="alert amber" style="margin-bottom:1.5rem">⚠ Pas d'oméga-3. Pense à ajouter saumon ou maquereau cette semaine.</div>'}<div class="shop-grid">${Object.entries(cats).filter(([,v])=>v.length>0).map(([cat,items])=>`<div class="shop-cat"><h4>${cat}</h4><ul>${items.map(item=>`<li onclick="this.classList.toggle('checked')">${item}</li>`).join('')}</ul></div>`).join('')}</div><div class="price-box"><div class="price-main">~${Math.round(budget4*.9)}–${budget4} €</div><div class="price-sub">Budget estimé 4 jours · Colruyt</div></div>`;
 }
-
+ 
 function buildBatch(menu){
   const m=menu;
   const steps=[
@@ -827,18 +827,18 @@ function buildBatch(menu){
   document.getElementById('batch-content').innerHTML=steps.map((s,i)=>`<div class="bstep" id="bst-${i}" onclick="toggleBatch(${i},${total})"><div class="step-n">${i+1}</div><div><div class="stitle">${s.t}</div><div class="sdesc">${s.d}</div><span class="stime">${s.time}</span></div></div>`).join('');
   updateBP(0,total);
 }
-
+ 
 function toggleBatch(i,total){
   const el=document.getElementById('bst-'+i);el.classList.toggle('done');
   updateBP(document.querySelectorAll('.bstep.done').length,total);
 }
-
+ 
 function updateBP(done,total){
   const pct=Math.round(done/total*100);
   document.getElementById('bp').style.width=pct+'%';
   document.getElementById('bpl').textContent=`${done} / ${total} étapes${done===total?' — Session terminée 🎉':''}`;
 }
-
+ 
 function filterRecipes(){
   const cat=document.getElementById('cat-filter').value;
   const src=document.getElementById('src-filter').value;
@@ -852,7 +852,7 @@ function filterRecipes(){
   all.forEach(r=>{if(cat==='all'&&r.cat!==lastCat){html+=`<div class="cat-hdr">${catLabels[r.cat]||r.cat}</div>`;lastCat=r.cat;}html+=rcCard(r,null);});
   document.getElementById('recipe-list').innerHTML=html;
 }
-
+ 
 filterRecipes();generateMenu();
 </script>
 </body>
