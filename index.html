@@ -209,15 +209,7 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:
 .batch-meta{font-size:12px;color:var(--ink4);margin-bottom:10px}
 .prog-wrap{background:var(--paper3);border-radius:100px;height:3px;margin-bottom:1.75rem;overflow:hidden}
 .prog-bar{height:100%;background:linear-gradient(90deg,var(--sage),var(--amber));border-radius:100px;transition:width .5s ease;width:0%}
-.bstep{display:flex;gap:14px;align-items:flex-start;background:var(--white);border:1px solid var(--paper3);border-radius:var(--r-lg);padding:14px 16px;margin-bottom:8px;cursor:pointer;transition:all .2s;box-shadow:var(--shadow)}
-.bstep:hover{box-shadow:var(--shadow-md)}
-.bstep.done{opacity:.4;box-shadow:none}
-.bstep.done .step-n{color:var(--sage)}
-.bstep.done .stitle{text-decoration:line-through}
-.step-n{font-family:var(--serif);font-size:22px;font-weight:300;color:var(--amber);min-width:26px;line-height:1.2}
-.stitle{font-size:13px;font-weight:500;color:var(--ink);margin-bottom:3px}
-.sdesc{font-size:12px;color:var(--ink3);line-height:1.55}
-.stime{font-size:10px;color:var(--ink4);background:var(--paper2);padding:2px 9px;border-radius:100px;display:inline-block;margin-top:5px}
+
 
 .empty{font-size:13px;color:var(--ink4);padding:2rem 0;font-style:italic}
 
@@ -228,6 +220,42 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:
   .totals{grid-template-columns:repeat(3,1fr)}
   .pg-title{font-size:32px}
 }
+
+/* DAYS SELECTOR */
+.days-selector{display:flex;align-items:center;gap:8px}
+.days-lbl{font-size:11px;color:var(--ink4);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+.days-btns{display:flex;gap:4px}
+.day-btn{padding:6px 12px;border-radius:100px;border:1.5px solid var(--paper3);background:transparent;font-size:12px;color:var(--ink3);cursor:pointer;transition:all .2s;font-family:var(--sans);font-weight:500}
+.day-btn:hover{border-color:var(--ink3);color:var(--ink)}
+.day-btn.active{background:var(--amber);border-color:var(--amber);color:white}
+
+/* BATCH ACCORDION */
+.bstep{display:block;background:var(--white);border:1px solid var(--paper3);border-radius:var(--r-lg);margin-bottom:8px;box-shadow:var(--shadow);overflow:hidden;transition:box-shadow .2s}
+.bstep:hover{box-shadow:var(--shadow-md)}
+.bstep.done{opacity:.45;box-shadow:none}
+.bstep.done .stitle{text-decoration:line-through;color:var(--ink4)}
+.bstep.done .step-n{color:var(--sage)}
+.step-header{display:flex;gap:14px;align-items:center;padding:14px 16px;cursor:pointer;user-select:none}
+.step-n{font-family:var(--serif);font-size:22px;font-weight:300;color:var(--amber);min-width:26px;line-height:1;flex-shrink:0}
+.step-header-content{flex:1;min-width:0}
+.stitle{font-size:13px;font-weight:500;color:var(--ink);margin-bottom:2px}
+.step-meta{display:flex;align-items:center;gap:10px;margin-top:2px}
+.stime{font-size:10px;color:var(--ink4);background:var(--paper2);padding:2px 9px;border-radius:100px;letter-spacing:.04em;white-space:nowrap}
+.step-check{width:22px;height:22px;border:1.5px solid var(--paper3);border-radius:6px;flex-shrink:0;transition:all .2s;background:var(--paper);display:flex;align-items:center;justify-content:center;font-size:12px;color:transparent}
+.bstep.done .step-check{background:var(--sage);border-color:var(--sage);color:white}
+.step-arrow{font-size:11px;color:var(--ink4);transition:transform .2s;flex-shrink:0;margin-left:4px}
+.step-body{display:none;padding:0 16px 14px 56px;animation:fd .2s ease}
+.step-body.open{display:block}
+.step-body-inner{border-top:1px solid var(--paper2);padding-top:12px}
+.step-instructions{font-size:13px;color:var(--ink2);line-height:1.7;margin-bottom:10px}
+.step-tasks{list-style:none;padding:0}
+.step-tasks li{display:flex;align-items:flex-start;gap:9px;font-size:13px;color:var(--ink2);padding:6px 0;border-bottom:1px solid var(--paper2);line-height:1.5;cursor:pointer;transition:color .15s}
+.step-tasks li:last-child{border-bottom:none}
+.step-tasks li:hover{color:var(--ink)}
+.step-tasks li.task-done{text-decoration:line-through;color:var(--ink4)}
+.task-box{width:16px;height:16px;border:1.5px solid var(--paper3);border-radius:4px;flex-shrink:0;margin-top:2px;transition:all .15s;background:var(--paper)}
+.step-tasks li.task-done .task-box{background:var(--sage);border-color:var(--sage)}
+.step-note{font-size:12px;color:var(--sage);background:var(--sage-light);border:1px solid var(--sage-mid);border-radius:var(--r);padding:8px 12px;margin-top:8px;line-height:1.5}
 </style>
 </head>
 <body>
@@ -267,9 +295,22 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:
       <button class="mode-btn" onclick="setMode('mix',this)">Mix équilibré</button>
       <button class="mode-btn" onclick="setMode('proto',this)">Protéines max</button>
     </div>
-    <button class="gen-btn" id="gen-btn" onclick="generateMenu()">
-      <span class="spin">↻</span> Générer un menu
-    </button>
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:2rem;flex-wrap:wrap">
+      <button class="gen-btn" id="gen-btn" onclick="generateMenu()" style="margin-bottom:0">
+        <span class="spin">↻</span> Générer un menu
+      </button>
+      <div class="days-selector">
+        <span class="days-lbl">Batch pour</span>
+        <div class="days-btns" id="days-btns">
+          <button class="day-btn" onclick="setDays(2,this)">2 j</button>
+          <button class="day-btn" onclick="setDays(3,this)">3 j</button>
+          <button class="day-btn active" onclick="setDays(4,this)">4 j</button>
+          <button class="day-btn" onclick="setDays(5,this)">5 j</button>
+          <button class="day-btn" onclick="setDays(6,this)">6 j</button>
+          <button class="day-btn" onclick="setDays(7,this)">7 j</button>
+        </div>
+      </div>
+    </div>
     <div class="totals">
       <div class="total-card"><div class="t-lbl">Calories</div><div class="t-val" id="t-kcal">—</div><div class="t-bar"><div class="t-bar-fill" id="bar-kcal" style="width:0%"></div></div></div>
       <div class="total-card"><div class="t-lbl">Protéines</div><div class="t-val" id="t-prot">—</div><div class="t-bar"><div class="t-bar-fill" id="bar-prot" style="width:0%"></div></div></div>
@@ -477,6 +518,7 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:
   </section>
 
 </main>
+
 <script>
 const DB = {
 matin:[
@@ -1163,7 +1205,6 @@ function getPortionMultiplier() {
 // ============================================================
 // CORE APP
 // ============================================================
-
 var mode = 'anti';
 var currentMenu = null;
 
@@ -1227,7 +1268,7 @@ function renderMenu(m) {
   var totG = all.reduce(function(s, r) { return s + r.gluc; }, 0);
   var totL = all.reduce(function(s, r) { return s + r.lip; }, 0);
   var totAI = Math.round(all.reduce(function(s, r) { return s + r.ai; }, 0) / all.length * 10) / 10;
-  var budget4 = Math.round(all.reduce(function(s, r) { return s + r.budget; }, 0) * 4);
+  var budget4 = Math.round(all.reduce(function(s, r) { return s + r.budget; }, 0) * batchDays);
   var hasOmega = all.some(function(r) { return r.omega3; });
 
   var targets = calcTargets();
@@ -1253,7 +1294,7 @@ function renderMenu(m) {
   var aiEl = document.getElementById('t-ai');
   aiEl.textContent = totAI.toFixed(1) + '/5';
   aiEl.className = 't-val' + (totAI >= 4 ? ' good' : totAI < 3 ? ' warn' : '');
-  document.getElementById('t-budget').textContent = '~' + Math.round(budget4 * .9) + '-' + budget4 + 'EUR';
+  document.getElementById('t-budget').textContent = '~' + Math.round(budget4 * .9) + '-' + budget4 + ' EUR';
 
   // Omega alert
   var alerts = [];
@@ -1374,152 +1415,1117 @@ function buildShopping(menu) {
   document.getElementById('shopping-content').innerHTML = html;
 }
 
+
+
+// days selector
+var batchDays = 4;
+
+function setDays(n, el) {
+  batchDays = n;
+  document.querySelectorAll('.day-btn').forEach(function(b) { b.classList.remove('active'); });
+  el.classList.add('active');
+  // Update totals budget
+  if (currentMenu) {
+    var budget = Object.values(currentMenu).reduce(function(s, r) { return s + r.budget; }, 0);
+    document.getElementById('t-budget').textContent = '~' + Math.round(budget * batchDays * .9) + '-' + Math.round(budget * batchDays) + ' EUR';
+  }
+  // Rebuild batch and refresh budget if menu exists
+  if (currentMenu) {
+    renderMenu(currentMenu);
+    buildBatch(currentMenu);
+  }
+}
+
 function buildBatch(menu) {
   var m = menu;
+  var days = batchDays;
+
+  // Update batch sub-title
+  var sub = document.getElementById('batch-sub');
+  if (sub) sub.textContent = 'Coche les etapes en cuisine · ' + days + ' jours · durée estimée ~2h30';
+
+  // -------------------------------------------------------
+  // PER-RECIPE detailed task lists
+  // Each entry: { prep: 'global description', tasks: ['task1','task2',...], note: 'optional tip', time: 'Xmin' }
+  // -------------------------------------------------------
   var batchGuide = {
-    'jus-citron-gi': { prep: 'Porter 1 tasse eau + 2cc gingembre + 2cc miel a ebullition 5 min. Laisser refroidir 15 min. Verser dans carafe 1L avec jus des 3 citrons + 1 pincee curcuma + 1 pincee poivre noir + reste eau froide. Frigo.', time: '15 min' },
-    'jus-feu': { prep: 'Eplucher 2 carottes, presser 2 oranges et 1 citron. Mixer avec gingembre rape et eau. Filtrer dans chinois. Verser en carafe. Frigo.', time: '10 min' },
-    'jus-roi': { prep: 'Eplucher betterave crue, couper en morceaux. Epepiner grenade. Couper pastaque. Mixer tout avec gingembre + 1/2 citron + cannelle. Filtrer dans chinois. Carafe. Frigo.', time: '12 min' },
-    'jus-acne': { prep: 'Presser 1/2 citron + 1 orange. Mixer avec gingembre + curcuma + poivre noir + eau de coco. Filtrer. Carafe. Frigo.', time: '8 min' },
-    'jus-hormonal': { prep: 'Mixer fraises + framboises + 1/2 concombre + gingembre + 1/2 citron + miel. Filtrer. Carafe. Frigo. A consommer dans les 3 jours.', time: '8 min' },
-    'jus-skinglow': { prep: 'Couper 1 concombre + 1/2 celeri + 1/2 ananas. Mixer avec menthe et eau. Filtrer dans chinois. Carafe. Frigo.', time: '8 min' },
-    'jus-antiage': { prep: 'Mixer 100g fruits rouges + 100g ananas + menthe fraiche + eau. Filtrer. Carafe. Frigo. Consommer dans les 2 jours.', time: '8 min' },
-    'jus-blueglow': { prep: 'Mixer 1 concombre + 1 pomme verte + citron vert + 10g spiruline bleue + eau. Filtrer soigneusement. Carafe. Frigo.', time: '10 min' },
-    'mat-super-supra': { prep: 'Sortir fruits congeles 5 min avant. Mixer pomme + banane + poire + myrtilles congelees avec eau + jus orange. Repartir en 4 portions. Frigo ou congelateur.', time: '8 min' },
-    'mat-mamba': { prep: 'Mixer banane + jus orange + citron + curcuma + framboises + lait coco + pincee piment Cayenne. Repartir en 4 portions. Frigo — 2 jours max.', time: '8 min' },
-    'limonade-matk': { prep: 'Porter 1 tasse eau + gingembre + miel a ebullition 5 min. Refroidir 15 min. Dans carafe : sirop + jus 3 citrons + 1L eau froide. Frigo. Dure 4 jours.', time: '15 min' },
-    'mat-resurrection': { prep: 'Mixer banane + 4 peches + 500ml lait noisette + 1/2 jus citron + gingembre. Repartir en 4 portions. Frigo 2 jours max.', time: '8 min' },
-    'oats-framboise': { prep: 'Dans grand saladier : ecraser 200g framboises. Ajouter 200g flocons avoine + 400ml lait amande + sirop erable + vanille + whey. Bien melanger. Repartir en 4 boites. Fondre 20g chocolat 70%+ avec huile coco. Dans chaque boite : 150g fromage blanc + framboises fraiches + chocolat fondu. Frigo — pret des le lendemain matin.', time: '20 min' },
-    'oats-banana-choco': { prep: 'Ecraser 1 banane. Ajouter flocons avoine + whey + sirop erable + vanille + lait amande. Melanger. Repartir en 4 boites. Melanger 600g fromage blanc + 40g beurre cacahuete. Fondre 20g chocolat noir. Dans chaque boite : creme fromage blanc-cacahuete + filet chocolat fondu. Frigo.', time: '20 min' },
-    'oats-apple': { prep: 'Eplucher et couper 200g pommes en cubes. Rotir 8 min a feu doux avec miel. Garder 1/4 de cote. Dans 4 boites : 50g flocons + fromage blanc + lait amande + pommes + sirop erable. Melanger. Melanger reste fromage blanc + whey + cannelle. Verser par-dessus + pommes reservees + cannelle. Frigo.', time: '25 min' },
-    'oats-cheesecake': { prep: 'Dans grand bol : flocons avoine + graines chia + whey + jus citron + zestes + sirop erable + lait amande. Repartir en 4 boites. Repos 1h frigo. Melanger yaourt grec + cream cheese + chocolat blanc fondu + jus citron. Verser par-dessus. Zestes et copeaux chocolat blanc. Frigo.', time: '20 min' },
-    'oats-carrot-cake': { prep: 'Raper 80g carottes. Melanger flocons avoine + lait amande + carottes + raisins secs + sirop erable + vanille + noix de pecan. Repartir en 4 boites. Repos 1h frigo. Fondre chocolat blanc. Melanger fromage blanc + whey. Verser + chocolat blanc fondu + noix de pecan. Frigo.', time: '20 min' },
-    'oats-myrtille-blend': { prep: 'Tout dans le blender : fromage blanc + myrtilles + lait amande + flocons avoine + whey + sirop erable + vanille. Mixer 2 min. Repartir en 4 boites. Ajouter myrtilles fraiches. Frigo. VERSION LA PLUS SIMPLE ET MEILLEURE POUR L\'EPAULE.', time: '10 min' },
-    'oats-raffaello': { prep: 'Melanger flocons avoine + lait amande + graines chia + vanille + puree amande + 20g noix coco rapee. Repartir en 4 boites. Repos 1h frigo. Fondre chocolat blanc. Melanger fromage blanc + reste noix coco + whey. Verser + chocolat blanc fondu + noisettes concassees. Frigo.', time: '20 min' },
-    'oats-snickers': { prep: 'Melanger flocons avoine + lait amande + 200g fromage blanc + beurre cacahuete + miel + cacahuetes. Repartir en 4 boites. Repos 1h. Melanger 600g fromage blanc + beurre cacahuete + whey. Fondre chocolat. Verser creme sur flocons. Finir avec chocolat fondu + cacahuetes concassees. Frigo.', time: '20 min' },
-    'oats-pistamat': { prep: 'Melanger flocons avoine + lait amande + sirop erable + vanille + matcha + pistaches. Repartir en 4 boites. Repos 1h. Melanger fromage blanc + whey. Fondre creme pistache + chocolat blanc. Verser fromage blanc puis melange pistache-chocolat fondu. Pistaches concassees. Frigo.', time: '20 min' },
-    'porridge-quinoa': { prep: 'Melanger flocons quinoa + graines chia + graines lin + vanille + cannelle. Porter 100ml eau + 150ml lait noisettes a ebullition. Feu doux, ajouter melange quinoa-chia, remuer 4 min. Ajouter banane ecrasee + 50ml lait restant, remuer 2 min. Repartir en 4 bols. Garnir : fruits rouges + beurre amande + miel. Film. Frigo. Rechauffer legerement le matin ou manger froid.', time: '20 min' },
-    'pancakes-sarrasin': { prep: 'VEILLE AU SOIR : melanger 1 bol farine sarrasin + sel + miel + banane ecrasee + cacao + cannelle + poudre a lever. Verser progressivement lait noisettes en remuant de bas en haut. Couvrir, frigo toute la nuit. // MATIN DU BATCH : sortir la pate. Poele huilee feu vif. Verser petite louche, reduire feu moyen, cuire 3 min sans retourner. Empiler les pancakes avec papier cuisson entre chaque. Boite hermetique.', time: '25 min' },
-    'mat-marmelade-pancakes': { prep: 'MARMELADE (30 min avant) : eplucher et couper poires + pommes. Cuire avec eau + cannelle + gingembre + curcuma + vanille 20 min feu doux. Ajouter myrtilles 5 dernieres minutes. Bocal. // PANCAKES : preparer pate sarrasin veille. Cuire pancakes le matin du batch. Repartir en 4 portions avec papier cuisson.', time: '35 min' },
-    'mat-blinis-guac': { prep: 'PATE BLINIS (veille) : sarrasin + sel + miel + poudre a lever + lait amande. Repos frigo toute la nuit. // GUACAMOLE (jour J) : ecraser 2 avocats + sel + poivre + curcuma + huile olive + jus citron. Petit pot hermetique avec filet citron pour ne pas noircir. Frigo. // Cuire blinis dans poele huilee. Repartir en 4 portions.', time: '25 min' },
-    'mat-muesli': { prep: 'Dans 4 bols : 40g flocons avoine + graines chia + vanille. Couper 3/4 de la poire en morceaux. Ajouter. Verser 200ml lait noisettes. Melanger. Film. Frigo min 2h. Petit pot separe avec date + figue + myrtilles + mures + puree cacahuete pour la garniture.', time: '15 min' },
-    'mat-pudding-matin': { prep: 'Dans mixeur : lait noisettes + noix cajou + noix macadamia + noix entieres + graines chia + graines lin + noix Bresil + cannelle + cacao + citron + 8 myrtilles + 8 framboises. Mixer 4 min. Repartir en 4 bols. Fruits restants par-dessus. Film. Frigo.', time: '15 min' },
-    'choco-noyade-oranges': { prep: 'Peler 6 oranges, couper en tranches fines. Verser jus de 2 oranges. Film, frigo 20 min. Faire fondre 150g chocolat. Verser sur les tranches d\'orange juste avant de servir. Preparer les fruits a l\'avance, fondre le chocolat chaque soir.', time: '20 min' },
-    'mat-tartare-fruite': { prep: 'Ecraser 1 peche avec miel + menthe ciselee + citron. Eplucher et couper poires + peche restante en petits cubes. Melanger delicatement. Repartir en 4 ramequins. Film. Frigo 30 min minimum. Myrtilles fraiches + feuille menthe au moment de servir.', time: '15 min' },
-    'soupe-popeye': { prep: 'Eplucher et couper oignon + 4 gousses ail + patate douce en des. Dans grande casserole : chauffer 1,5L bouillon. Ajouter tous les legumes + curcuma + gingembre + laurier. Ebullition, cuire 25 min couverts. Ajouter haricots blancs egouttees + 400g epinards. Cuire 5 min. Saler, poivrer, huile olive, persil cise. Gouter et ajuster. Repartir en 4 boites. Refroidir avant de fermer. Frigo 4 jours ou congeler J3-J4.', time: '40 min' },
-    'soupe-carotte-coco': { prep: 'Eplucher 1kg carottes, couper en rondelles. Dans grande casserole : carottes + 1,2L eau + sel. Cuire 35 min feu doux. Hors du feu : ajouter 3 oignons + cumin + cannelle + persil + coriandre + citron + lait coco. Mixer au mixeur plongeant. Gouter, ajuster sel. Repartir en 4 portions. Refroidir avant frigo.', time: '45 min' },
-    'soupe-brocoli': { prep: 'Couper 400g brocolis en bouquets + 150g carottes + 150g pommes de terre. Faire revenir 3 echalotes 6 min dans casserole huilee. Ajouter legumes + 1L eau + sel + basilic. Couvrir, cuire 35 min. Mixer. Poivrer. Repartir en 4 portions. Refroidir avant frigo.', time: '45 min' },
-    'soupe-potiron': { prep: 'Eplucher 1,5kg potiron, couper chair en morceaux. Dans casserole huilee : oignons + echalote + gingembre + curcuma 4 min. Ajouter potiron 5 min, puis eau + sel + basilic + cannelle. Couvrir 20 min. Ajouter huile noix + poivre noir + citron. Mixer. Repartir en 4 portions. Refroidir avant frigo.', time: '40 min' },
-    'soupe-chou': { prep: 'Couper chou-fleur en fleurettes + carottes en rondelles. Faire bouillir bouillon legumes avec tous les legumes 25 min couverts. Mixer avec curcuma + gingembre + sel + poivre. Basilic cise. Repartir en 4 portions. Refroidir avant frigo.', time: '35 min' },
-    'soupe-betterave': { prep: 'Peler 5 betteraves crues, couper en des. Couper 7 echalotes. Casserole : betteraves + echalotes + 1L eau. Cuire 35 min feu moyen. Mixer. Ajouter jus 3 oranges + miel + jus citron + sel + poivre. Remixer. Frigo 45 min. Crème coco + persil au moment de servir.', time: '50 min' },
-    'soupe-champi': { prep: 'Emincer oignon + echalote + ail + champignons + shiitake. Dans casserole huilee : oignon + echalote + ail 5 min. Ajouter champignons + shiitake. Cuire 5 min. Ajouter gingembre + lait + laurier. Mijoter 3 min. Persil + poivre. Repartir en 4 portions. Frigo.', time: '25 min' },
-    'soupe-matador-lentilles': { prep: 'Rincer lentilles, cuire 23 min. Eplucher et couper oignons + carotte + patates douces. Revenir oignons 6 min. Cuire patates 20 min. Rassembler dans grande marmite : lentilles + oignons + carotte + patates + eau + boisson riz + citron + coriandre + persil + menthe + cumin. Cuire 10 min. Sel + poivre + huile olive. Repartir. Frigo.', time: '45 min' },
-    'gazpacho': { prep: 'Blanchir tomates 40s, retirer peau + pepins. Couper poivron. Dans saladier : tomates + concombre + oignons + ail + sel + poivre + huile olive + citron + basilic. Mixer. Ajouter tabasco + miel. Remixer. Repartir en 4 portions. Frigo min 2h. Servir froid.', time: '25 min' },
-    'matgic-chili': { prep: 'Rincer lentilles, cuire 23 min. Chauffer bouillon. Couper oignon + patates + ail. Ajouter au bouillon avec champignons + concentre tomate + basilic + curcuma + poivron + sel. Cuire 20 min. Ajouter haricots + lentilles + beurre cacahuete. Cuire 5 min. Repartir. Frigo.', time: '40 min' },
-    'salade-betteraves': { prep: 'Si betteraves crues : cuire 40 min eau bouillante. Couper avocat en tranches. Laver epinards. Couper radis. Hacher oignon + echalote. Dans grand saladier : epinards + betterave + oignon + echalote + huile olive + citron + curcuma + sel + poivre. Repartir en 4 boites. Avocat + radis par-dessus. Frigo. Consommer dans les 2 jours.', time: '20 min' },
-    'salade-patates-crevettes': { prep: 'Eplucher et couper 500g patates douces en rondelles. Cuire 20 min eau bouillante salee. Egoutter. Dans poele huilee feu vif : faire sauter les patates 7 min jusqu\'a dorees. Saler, poivrer. Dans bol : crevettes + patates + huile olive + sel + poivre. Repartir en 4 boites. Frigo.', time: '35 min' },
-    'saumon-panko': { prep: 'Couper 600g saumon en cubes 3cm. Melanger panko + ail + paprika. Rouler chaque cube. Disposer sur plaque. Four 180C, 10-12 min. // CONCOMBRE : couper 400g concombre en fines tranches. Dans bol : sauce soja + miel + vinaigre riz + piment. Ajouter concombre. // SAUCE : sriracha + mayo + fromage blanc + jus citron vert. // Cuire 600g riz complet (30 min). Repartir en 4 boites : riz + concombre + saumon + sauce. Frigo.', time: '45 min' },
-    'maquereau-legumes': { prep: 'Four 160C. Couper maquereaux en gros morceaux, enduire huile olive + gros sel. Enfourner 9 min. // Couper poireau en rondelles. Blanchir 4 min. // Dans poele : dorer 2 echalotes + oignon. Ajouter creme coco + sel + poivre. Reduire 8 min. // Wok : legumes + maquereau + sauce. Cuire 10 min feu doux. Aneth + citron. Repartir en 4 boites. Frigo.', time: '45 min' },
-    'matajine-sardines': { prep: 'Blanchir tomates 40s, retirer peau + pepins, couper. Eplucher pommes de terre en rondelles. Couper oignon + echalote. Dans grande casserole huilee : oignon + echalote jusqu\'a tendres. Tomates + paprika + curcuma + cumin + gingembre. Remuer 8 min. Ajouter pommes de terre + eau mi-hauteur. Cuire 50 min. Farcir sardines avec persil + coriandre + citron. Ajouter. Cuire 25 min. Refroidir. Repartir en 4 boites. Frigo.', time: '90 min' },
-    'chicken-spicy': { prep: 'Couper 800g poulet en lanieres. Marinade : paprika + piment + ail + curcuma + poivre noir + huile olive. Enrober. Mariner 30 min frigo minimum. // RIZ : cuire 600g riz complet avec curcuma + paprika (30 min). // SAUCE : mixer yaourt grec + mayo + citron + miel + ail. // Cuire poulet dans poele bien chaude 8 min. Repartir en 4 boites : riz + poulet + sauce. Frigo.', time: '50 min' },
-    'chicken-bbq': { prep: 'Couper 800g poulet. Marinade : gingembre rape + ail + sauce soja + sriracha. Enrober. Mariner 1h frigo. // CONCOMBRE : tranches fines + ail + sriracha + soja + miel + vinaigre riz. // Cuire 600g riz complet. // Cuire poulet poele bien chaude. Ajouter sauce soja en fin. Repartir en 4 boites : riz + poulet + concombre + graines sesame. Frigo.', time: '50 min' },
-    'hawaii-chicken': { prep: 'Couper poulet en cubes. Assaisonner. Cuire poele jusqu\'a dores. Dans meme poele : jus orange + sauce soja + miel + maizena + eau + citron + piment + ail + gingembre. Sauce onctueuse. Remettre poulet. Ajouter ananas. Couvrir 5 min. Cuire riz. Repartir en 4 boites. Frigo.', time: '45 min' },
-    'pad-thai-tofu': { prep: 'Couper 400g tofu en cubes 2cm. Dorer 10 min dans poele huilee. Raper 2 carottes. Couper brocoli en bouquets. Hacher echalotes + ail. Ajouter brocoli + echalote + ail + curcuma + gingembre a la poele 6 min. Cuire pates de riz 4-5 min. SAUCE : beurre cacahuete + sauce soja + 80ml eau. Energiquement jusqu\'a onctueux. Egoutter pates. Ajouter carottes 1 min. Assembler pates + sauce + poele. Citron + persil. Repartir en 4 boites. Frigo.', time: '35 min' },
-    'poke-bowl': { prep: 'Cuire 1 tasse riz complet 30 min. Egoutter. Couper 2 avocats en cubes. Raper 1 carotte. Hacher 1 oignon. MARINADE : huile sesame + vinaigre riz + gingembre rape + coriandre + sauce soja. Ajouter oignon + carotte + avocat. Melanger. Cuire edamame. Repartir en 4 bols : riz + melange marine + edamame + epinards + coriandre + citron. Frigo.', time: '40 min' },
-    'matgret-canard': { prep: 'PUREE : eplucher + couper 700g pommes de terre. Cuire 20 min eau salee. Egoutter. Ecraser au pilon + creme coco + huile olive + poivre + eau cuisson. Onctueux. // MAGRET : quadriller la graisse. Four 180C. Dans poele sans huile, saisir magret 3 min cote gras, 3 min cote chair feu vif. Saler. Enfourner 10 min pour saignant. Laisser reposer 5 min. Couper en tranches. Repartir en 4 boites : puree + tranches magret + basilic. Frigo. Rechauffer doucement.', time: '40 min' },
-    'chicken-salade-cesar': { prep: 'Assaisonner 225g blanc poulet. Cuire dans poele avec huile. Refroidir 5 min, emincer. SAUCE : mixer fromage blanc + parmesan + jus citron + ail + huile olive + moutarde + sel + poivre. Couper 250g salade romaine grossierement. Dans saladier : salade + poulet + sauce. Repartir en 4 boites. Frigo. Consommer dans les 2 jours.', time: '25 min' },
-    'pasta-bolo': { prep: 'Hacher oignon + ail. Dans grande poele : revenir oignon + ail dans huile olive 3 min. Ajouter 800g viande hachee + paprika + sel + poivre. Cuire 8 min en miettant. Ajouter sauce tomate + bouillon + cottage cheese + parmesan + herbes italiennes. Mijoter 30 min feu doux. Cuire pates completes. Melanger pates dans la poele. Gouter, ajuster sel. Repartir en 4 boites. Frigo.', time: '50 min' },
-    'sweet-potatoes-veggie': { prep: 'Eplucher et couper 800g patates douces en tranches 1cm. Plaque four : sel + paprika + huile olive. Four 180C, 30 min jusqu\'a dorees. // SAUCE : mixer cottage cheese + beurre cacahuete + jus citron + paprika + huile olive jusqu\'a homogene. // Repartir sauce en 4 boites. Patates douces par-dessus. Feta emietee + persil cise. Frigo.', time: '40 min' },
-    'aubergines-farcies': { prep: 'Couper 3 aubergines en longueur. Dans poele huilee : cuire 12 min en retournant. Eplucher 1 patate douce en rondelles. Cuire 25 min eau bouillante. Couper en petits morceaux. // FARCE : persil cise + 2 tomates en des + oignon rouge + 2 echalotes + 3 gousses ail + curcuma + poivron vert + huile olive + citron. Sauter 5 min. Farcir aubergines. Patate douce autour. Cuire feu doux 25 min. Repartir en 4 boites. Frigo.', time: '60 min' },
-    'bouillon-terroir': { prep: 'Rincer lentilles. Eplucher et couper patates douces + oignon + echalote + ail + potiron. Dans grande marmite huilee : revenir ail + echalote + oignon 4 min. Ajouter tous les legumes + haricots blancs + concentre tomate + persil + aneth. Couvrir 4 tasses eau. Ajouter lentilles. Cuire 30 min. Assaisonner : sel + poivre + huile olive + puree sesame + citron. Repartir en 4 boites. Frigo.', time: '45 min' },
-    'galette-champi': { prep: 'PATE (12h avant) : 125g farine sarrasin + sel + poivre + 3 oeufs + 30cl eau + huile tournesol + poudre a lever. Repos frigo 12h. // GARNITURE : laver champignons + shiitake. Hacher. Dans poele huilee : echalote + champignons 8 min. Creme coco + persil + sel + poivre. // ARTICHAUTS : cuire 8 fonds 30 min eau bouillante. Egoutter, couper en morceaux. // Cuire galettes poele huilee feu vif 1 min. Garnir : champignons + artichaut + persil. Repartir en 4 portions. Frigo.', time: '50 min' },
-    'smoothie-myrtilles': { prep: 'Sortir myrtilles + framboises du congelateur 5 min. Dans blender : myrtilles + banane + beurre amande + framboises + graines lin + lait noisettes. Mixer 2 min. Repartir en 4 portions. Frigo 2 jours. Faire en 2 batches. Preparer 4 petits sachets de noix entieres separes.', time: '10 min' },
-    'smoothie-choco-pb': { prep: 'Dans blender : lait amande + fromage blanc + flocons avoine + beurre cacahuete + chocolat noir + cacao + whey + sirop erable + glaçons. Mixer 2 min. Servir immediatement — ne pas batchez ce smoothie, il se prepare a la demande.', time: '5 min' },
-    'smoothie-myrtille-pyx': { prep: 'Dans blender : banane + myrtilles congelees + whey + fromage blanc + lait amande + flocons avoine + glaçons. Mixer 2 min. Repartir en 4 portions. Frigo 2 jours.', time: '8 min' },
-    'smoothie-apple-pie': { prep: 'Sortir 4 pommes Granny congelees 5 min avant. Dans blender : pomme congelee + lait amande + whey + fromage blanc + miel + cannelle + vanille + flocons avoine + glaçons. Mixer 2 min. Saupoudrer cannelle. Consommer le jour-meme ou frigo 24h max.', time: '5 min' },
-    'smoothie-banane-cannelle': { prep: 'Dans blender : lait amande + fromage blanc + banane + cannelle + whey + sirop erable + glaçons. Mixer 2 min. Repartir en 4 verres. Saupoudrer cannelle. Frigo 2 jours.', time: '5 min' },
-    'smoothie-fraise': { prep: 'Dans blender : lait amande + fromage blanc + fraises + cream cheese + whey + sirop agave + glaçons. Mixer 2 min. Repartir en 4 verres. Frigo 2 jours.', time: '5 min' },
-    'mat-smoothie-myrtilles-amande': { prep: 'Dans blender : myrtilles + banane + beurre amande + graines lin + framboises + eau ou lait noisette. Mixer. Repartir en 4 portions. Frigo 2 jours. Preparer 4 sachets de noix.', time: '10 min' },
-    'granola-prote': { prep: 'Four 200C. Dans grand bol : flocons avoine + whey. Ajouter huile coco + miel + beurre cacahuete. Melanger a la main en formant grumeaux. Etaler sur plaque papier sulfurise. Four 10 min — surveiller ! Retourner a mi-cuisson. Refroidir completement. Ajouter pepites chocolat + noix. Boite hermetique 4 jours.', time: '20 min' },
-    'cookie-prote': { prep: 'Four 180C. Dans saladier : oeuf + huile coco + sirop agave + puree amande + poudre amande + whey + flocons avoine + levure + vanille + pepites chocolat. Melanger. Sur plaque papier cuisson : 10 petits tas, aplatir. Enfourner 10-12 min. Laisser refroidir. Boite hermetique 2 jours.', time: '25 min' },
-    'banana-bread': { prep: 'Four 180C. Huiler moule a cake. Dans blender : 2 bananes tres mures + flocons avoine + whey + levure + vanille + lait amande + cannelle. Mixer. Verser dans moule. Decorer : banane coupee en 2 + carreaux chocolat noir + cannelle. Enfourner 20-25 min. Cure-dent doit ressortir propre. Refroidir 10 min. Couper en 4-6 parts. Boite hermetique 3 jours.', time: '35 min' },
-    'mat-the-glace': { prep: 'Ebullition 1L eau. Hors du feu : infuser the vert + menthe fraiche + menthe sechee + camomille + verveine 5 min. Filtrer dans carafe. Ajouter miel + zeste citron vert + 4 quartiers peche. Refroidir 30 min T ambiante, puis 1h frigo. Servir avec glacons + menthe fraiche. Se conserve 4 jours au frigo.', time: '15 min' },
-    'fondue-chocomat': { prep: 'Eplucher et couper fruits de saison en tranches. Filet citron. Mettre en assiettes au frigo. Dans petite casserole feu tres doux : fondre lait noisettes + chocolat noir 70%+ en morceaux. Remuer. Une fois fondu, ajouter creme coco + vanille. Servir immediatement avec fruits. Fondre le chocolat au moment de servir chaque soir — les fruits se preparent a l\'avance.', time: '15 min' },
-    'blueberry-bread': { prep: 'Four 160C. Huiler moule a cake. Dans saladier : farine + whey + sirop agave + levure. Ajouter 3 oeufs. Incorporer fromage blanc + huile coco. Melanger. Ajouter delicatement myrtilles. Verser dans moule. Enfourner 1 heure. Tester avec cure-dent. Refroidir completement avant de couper en 7 parts. Boite hermetique 3 jours.', time: '70 min' }
+    'jus-citron-gi': {
+      prep: 'Jus anti-inflammatoire · ' + days + ' portions',
+      tasks: [
+        'Porter 1 tasse eau + 2cc gingembre + 2cc miel a ebullition 5 min',
+        'Laisser refroidir 15 min, filtrer',
+        'Presser les ' + Math.ceil(days * 0.75) + ' citrons',
+        'Dans carafe : sirop + jus citrons + 1 pincee curcuma + 1 pincee poivre noir + reste eau froide',
+        'Fermer la carafe et mettre au frigo'
+      ],
+      note: 'Curcuma + poivre noir = combo anti-inflam #1. Se conserve 4 jours.',
+      time: '15 min'
+    },
+    'jus-feu': {
+      prep: 'Fire juice · ' + days + ' portions',
+      tasks: [
+        'Eplucher ' + Math.ceil(days * 0.5) + ' carottes et les couper en morceaux',
+        'Presser ' + days + ' oranges et ' + Math.ceil(days * 0.25) + ' citron(s)',
+        'Mixer carottes + jus orange + jus citron + gingembre rape + eau jusqu\'a texture lisse',
+        'Filtrer dans un chinois ou torchon propre en pressant bien',
+        'Verser en carafe et mettre au frigo'
+      ],
+      note: 'Se conserve 3 jours. Agiter avant de servir.',
+      time: '10 min'
+    },
+    'jus-roi': {
+      prep: 'Potion du roi · ' + days + ' portions',
+      tasks: [
+        'Eplucher la betterave crue et la couper en petits morceaux',
+        'Epepiner la grenade et en extraire les grains',
+        'Couper ' + Math.ceil(days * 0.25) + ' tranche(s) de pasteque',
+        'Mixer tout avec gingembre + 1/2 citron + cannelle',
+        'Filtrer dans un chinois',
+        'Verser en carafe et mettre au frigo'
+      ],
+      note: 'Se conserve 3 jours. Tres riche en antioxydants.',
+      time: '12 min'
+    },
+    'jus-acne': {
+      prep: 'Jus curcuma · ' + days + ' portions',
+      tasks: [
+        'Presser 1/2 citron et 1 orange',
+        'Raper le gingembre frais',
+        'Mixer jus + gingembre + curcuma + poivre noir + eau de coco',
+        'Filtrer et verser en carafe au frigo'
+      ],
+      time: '8 min'
+    },
+    'jus-hormonal': {
+      prep: 'Jus hormonal · ' + days + ' portions',
+      tasks: [
+        'Rincer 100g fraises + 100g framboises',
+        'Couper 1/2 concombre en morceaux',
+        'Mixer tout avec gingembre + 1/2 citron + miel',
+        'Filtrer dans chinois',
+        'Verser en carafe. Frigo max 3 jours'
+      ],
+      time: '8 min'
+    },
+    'jus-skinglow': {
+      prep: 'Skin glow juice · ' + days + ' portions',
+      tasks: [
+        'Couper 1 concombre + 1/2 branche celeri + 1/2 ananas en morceaux',
+        'Ciseler la menthe fraiche',
+        'Mixer tout avec eau jusqu\'a texture lisse',
+        'Filtrer dans chinois, verser en carafe, frigo'
+      ],
+      time: '8 min'
+    },
+    'jus-antiage': {
+      prep: 'Jus anti-age · ' + days + ' portions',
+      tasks: [
+        'Rincer 100g fruits rouges + 100g ananas',
+        'Rincer la menthe fraiche',
+        'Mixer tout avec eau',
+        'Filtrer et verser en carafe. Frigo max 2 jours'
+      ],
+      time: '8 min'
+    },
+    'jus-blueglow': {
+      prep: 'Blue glow potion · ' + days + ' portions',
+      tasks: [
+        'Couper 1 concombre + 1 pomme verte en morceaux',
+        'Presser 1 citron vert',
+        'Mixer tout avec 10g spiruline bleue + eau',
+        'Filtrer soigneusement dans chinois',
+        'Verser en carafe, frigo'
+      ],
+      note: 'La spiruline bleue se filtre mal — bien presser le chinois.',
+      time: '10 min'
+    },
+    'mat-super-supra': {
+      prep: 'Mat Supra smoothie · ' + days + ' portions',
+      tasks: [
+        'Sortir les fruits congeles du congelateur 5 min avant',
+        'Mixer pomme + banane + poire + myrtilles avec eau + jus orange',
+        'Repartir en ' + days + ' portions dans bouteilles fermees',
+        'Frigo (2 jours) ou congelateur (J3-J' + days + ')'
+      ],
+      time: '8 min'
+    },
+    'mat-mamba': {
+      prep: 'Mat Mamba matinal · ' + days + ' portions',
+      tasks: [
+        'Eplucher et couper la banane',
+        'Presser 1 orange et 1/2 citron',
+        'Mixer banane + jus orange + jus citron + curcuma + framboises + lait coco + pincee piment Cayenne',
+        'Repartir en ' + days + ' portions. Frigo max 2 jours — faire en 2 batches'
+      ],
+      note: 'Le piment de Cayenne active la circulation et booste l\'effet anti-inflammatoire.',
+      time: '8 min'
+    },
+    'limonade-matk': {
+      prep: 'Limonade Matkiavelique · ' + days + ' portions',
+      tasks: [
+        'Porter 1 tasse eau + 2cc gingembre + 2cc miel a ebullition 5 min',
+        'Laisser refroidir le sirop 15 min',
+        'Presser les ' + Math.ceil(days * 0.75) + ' citrons',
+        'Dans carafe : sirop filtre + jus citrons + 1L eau froide',
+        'Frigo. Se conserve 4 jours facilement'
+      ],
+      time: '15 min'
+    },
+    'mat-resurrection': {
+      prep: 'Mat Resurrection · ' + days + ' portions',
+      tasks: [
+        'Eplucher et couper ' + Math.ceil(days) + ' peches en morceaux',
+        'Couper la banane',
+        'Mixer banane + peches + lait noisette + jus citron + gingembre',
+        'Repartir en ' + days + ' portions. Frigo max 2 jours'
+      ],
+      time: '8 min'
+    },
+    'oats-framboise': {
+      prep: 'Overnight oats framboise · ' + days + ' boites — PREPARER LA VEILLE AU SOIR',
+      tasks: [
+        'Dans grand saladier : ecraser ' + Math.round(50 * days) + 'g framboises a la fourchette',
+        'Ajouter ' + Math.round(50 * days) + 'g flocons avoine + ' + Math.round(100 * days) + 'ml lait amande + sirop erable + vanille + whey',
+        'Bien melanger jusqu\'a homogene',
+        'Repartir en ' + days + ' boites hermetiques',
+        'Fondre ' + Math.round(20 * days / 4) + 'g chocolat 70%+ avec huile coco au bain-marie ou micro-ondes',
+        'Dans chaque boite : ajouter ' + Math.round(150) + 'g fromage blanc + framboises fraiches + filet chocolat fondu',
+        'Fermer les boites et mettre au frigo toute la nuit'
+      ],
+      note: 'Se consomme froid le matin. Se conserve ' + days + ' jours. Pret en ' + days + ' min le matin.',
+      time: '20 min'
+    },
+    'oats-banana-choco': {
+      prep: 'Overnight oats banane-cacao · ' + days + ' boites — PREPARER LA VEILLE AU SOIR',
+      tasks: [
+        'Ecraser ' + Math.ceil(days / 4) + ' banane(s) tres mure(s) dans un grand bol',
+        'Ajouter ' + Math.round(50 * days) + 'g flocons avoine + whey + sirop erable + vanille + ' + Math.round(30 * days) + 'ml lait amande',
+        'Melanger jusqu\'a homogene',
+        'Repartir en ' + days + ' boites',
+        'Melanger ' + Math.round(150 * days / 4) + 'g fromage blanc avec ' + Math.round(10 * days) + 'g beurre cacahuete',
+        'Fondre le chocolat noir 70%+',
+        'Dans chaque boite : creme fromage blanc-cacahuete + chocolat fondu par-dessus',
+        'Fermer et frigo toute la nuit'
+      ],
+      time: '20 min'
+    },
+    'oats-apple': {
+      prep: 'Overnight oats apple pie · ' + days + ' boites — PREPARER LA VEILLE AU SOIR',
+      tasks: [
+        'Eplucher et couper ' + Math.round(50 * days) + 'g pommes en cubes de 1cm',
+        'Rotir les pommes a la poele feu doux avec 1 cc miel pendant 8 min. Garder 1/4 de cote',
+        'Dans ' + days + ' boites : 50g flocons avoine + 1cs fromage blanc + 30ml lait amande + pommes + sirop erable',
+        'Bien melanger chaque boite',
+        'Melanger reste fromage blanc + whey + cannelle generuse',
+        'Verser par-dessus chaque boite. Ajouter pommes reservees + cannelle',
+        'Fermer et frigo toute la nuit'
+      ],
+      note: 'La cannelle est un anti-inflammatoire puissant — ne pas lesiner.',
+      time: '25 min'
+    },
+    'oats-cheesecake': {
+      prep: 'Overnight oats cheesecake · ' + days + ' boites — PREPARER LA VEILLE AU SOIR',
+      tasks: [
+        'Dans grand bol : melanger ' + Math.round(50 * days) + 'g flocons avoine + ' + Math.round(10 * days) + 'g graines chia + whey + ' + Math.round(10 * days) + 'ml jus citron + zestes + sirop erable + ' + Math.round(100 * days) + 'ml lait amande',
+        'Repartir en ' + days + ' boites. Repos 1h frigo',
+        'Melanger yaourt grec + cream cheese + chocolat blanc fondu + filet citron',
+        'Verser la creme par-dessus les flocons',
+        'Ajouter zestes citron + copeaux chocolat blanc',
+        'Fermer et frigo toute la nuit'
+      ],
+      time: '20 min'
+    },
+    'oats-carrot-cake': {
+      prep: 'Overnight oats carrot cake · ' + days + ' boites — PREPARER LA VEILLE AU SOIR',
+      tasks: [
+        'Raper ' + Math.round(20 * days) + 'g carottes finement',
+        'Dans grand bol : ' + Math.round(50 * days) + 'g flocons avoine + ' + Math.round(100 * days) + 'ml lait amande + carottes rapees + raisins secs + sirop erable + vanille + noix de pecan',
+        'Repartir en ' + days + ' boites. Repos 1h frigo',
+        'Melanger fromage blanc + whey. Verser par-dessus',
+        'Fondre chocolat blanc. Verser + noix de pecan concassees',
+        'Frigo toute la nuit'
+      ],
+      time: '20 min'
+    },
+    'oats-myrtille-blend': {
+      prep: 'Overnight oats myrtille blend · ' + days + ' boites — PREPARER LA VEILLE AU SOIR',
+      tasks: [
+        'Tout dans le blender : fromage blanc + myrtilles + ' + Math.round(80 * days) + 'ml lait amande + flocons avoine + whey + sirop erable + vanille',
+        'Mixer 2 min jusqu\'a texture tres onctueuse',
+        'Repartir en ' + days + ' boites hermetiques',
+        'Ajouter quelques myrtilles fraiches sur le dessus de chaque boite',
+        'Frigo toute la nuit. Version LA PLUS SIMPLE et meilleure pour l\'epaule'
+      ],
+      note: 'C\'est la recette la plus anti-inflammatoire des overnight oats — myrtilles integrales dans toute la base.',
+      time: '10 min'
+    },
+    'oats-raffaello': {
+      prep: 'Overnight oats Raffaello · ' + days + ' boites — PREPARER LA VEILLE AU SOIR',
+      tasks: [
+        'Dans bol : ' + Math.round(50 * days) + 'g flocons avoine + ' + Math.round(100 * days) + 'ml lait amande + graines chia + vanille + puree amande + ' + Math.round(5 * days) + 'g noix coco rapee',
+        'Repartir en ' + days + ' boites. Repos 1h frigo',
+        'Melanger fromage blanc + reste noix coco + whey. Verser par-dessus',
+        'Fondre chocolat blanc. Verser + noisettes concassees par-dessus',
+        'Frigo toute la nuit'
+      ],
+      time: '20 min'
+    },
+    'oats-snickers': {
+      prep: 'Overnight oats Snickers · ' + days + ' boites — PREPARER LA VEILLE AU SOIR',
+      tasks: [
+        'Dans bol : ' + Math.round(50 * days) + 'g flocons avoine + ' + Math.round(50 * days) + 'ml lait amande + fromage blanc + beurre cacahuete + miel + cacahuetes',
+        'Repartir en ' + days + ' boites. Repos 1h frigo',
+        'Melanger 600g fromage blanc + beurre cacahuete + whey. Verser par-dessus',
+        'Fondre chocolat noir 70%+ avec huile coco. Verser + cacahuetes concassees',
+        'Frigo toute la nuit'
+      ],
+      time: '20 min'
+    },
+    'oats-pistamat': {
+      prep: 'Overnight oats pistache-matcha · ' + days + ' boites — PREPARER LA VEILLE AU SOIR',
+      tasks: [
+        'Dans bol : ' + Math.round(50 * days) + 'g flocons avoine + ' + Math.round(100 * days) + 'ml lait amande + sirop erable + vanille + ' + Math.round(5 * days) + 'g matcha + pistaches concassees',
+        'Repartir en ' + days + ' boites. Repos 1h frigo',
+        'Melanger fromage blanc + whey. Verser par-dessus',
+        'Fondre creme pistache + chocolat blanc ensemble',
+        'Verser melangu pistache-chocolat + pistaches concassees par-dessus',
+        'Frigo toute la nuit'
+      ],
+      note: 'Le matcha = EGCG, l\'antioxydant le plus puissant connu.',
+      time: '20 min'
+    },
+    'porridge-quinoa': {
+      prep: 'Mat porridge quinoa-chia · ' + days + ' bols',
+      tasks: [
+        'Dans un bol sec : melanger ' + Math.round(10 * days) + 'g flocons quinoa + graines chia + graines lin + vanille + cannelle',
+        'Porter ' + Math.round(25 * days) + 'ml eau + ' + Math.round(37 * days) + 'ml lait noisettes a ebullition',
+        'Reduire feu doux. Ajouter le melange quinoa-chia. Remuer constamment 4 min',
+        'Ajouter ' + Math.ceil(days / 4) + ' banane(s) ecrasee(s) + ' + Math.round(12 * days) + 'ml lait noisettes restant. Remuer 2 min',
+        'Verser en ' + days + ' bols. Laisser tiedir',
+        'Garnir chaque bol : fruits rouges + beurre amande + filet miel',
+        'Couvrir de film, frigo. Rechauffer doucement ou manger froid'
+      ],
+      note: 'Chia + lin = oméga-3 végétaux actifs contre l\'inflammation articulaire.',
+      time: '20 min'
+    },
+    'pancakes-sarrasin': {
+      prep: 'Mat banana pancakes sarrasin · ' + days + ' portions — PATE PREPAREE LA VEILLE',
+      tasks: [
+        'VEILLE : 1 bol farine sarrasin + sel + miel + banane ecrasee + cacao + cannelle + poudre a lever. Lait noisettes progressivement en remuant de bas en haut. Couvrir, frigo toute la nuit',
+        'Sortir la pate du frigo, elle doit etre bulleuse et un peu fermentee',
+        'Chauffer poele avec filet huile olive a feu vif',
+        'Verser une petite louche, reduire feu moyen, cuire ~3 min SANS retourner (petites alveoles = signe que c\'est pret)',
+        'Retourner uniquement si trop cuit en dessous',
+        'Repeter pour ' + Math.ceil(days * 1.5) + ' pancakes',
+        'Empiler avec papier cuisson entre chaque. Boite hermetique'
+      ],
+      note: 'La fermentation une nuit = meilleure digestibilite et IG plus bas.',
+      time: '25 min'
+    },
+    'mat-marmelade-pancakes': {
+      prep: 'Mat pancakes + marmelade poires-pommes · ' + days + ' portions — PATE PREPAREE LA VEILLE',
+      tasks: [
+        'VEILLE : preparer pate pancakes sarrasin (voir etape precedente)',
+        'MARMELADE : eplucher et couper ' + Math.ceil(days / 2) + ' poires + ' + Math.ceil(days / 2) + ' pommes en morceaux',
+        'Faire cuire avec eau + cannelle + gingembre + curcuma + vanille a feu doux 20 min',
+        'Ajouter une poignee de myrtilles les 5 dernieres minutes. Verser en bocal',
+        'Cuire les pancakes sarrasin (cf. pancakes-sarrasin)',
+        'Repartir en ' + days + ' portions avec papier cuisson entre chaque'
+      ],
+      note: 'Gingembre + curcuma + cannelle dans la marmelade = 3 anti-inflammatoires en une sauce.',
+      time: '35 min'
+    },
+    'mat-blinis-guac': {
+      prep: 'Mat blinis guacamole · ' + days + ' portions — PATE PREPAREE LA VEILLE',
+      tasks: [
+        'VEILLE : 1 bol farine sarrasin + sel + miel + poudre a lever. Lait amande progressivement. Couvrir, frigo toute la nuit',
+        'GUACAMOLE : ecraser ' + Math.ceil(days / 2) + ' avocats murs avec sel + poivre + curcuma + huile olive + jus citron',
+        'Mettre guacamole en petit pot hermetique, couvrir d\'un filet citron pour ne pas noircir',
+        'Cuire les blinis dans poele huilee feu vif (1-2 min par face)',
+        'Repartir en ' + days + ' portions'
+      ],
+      note: 'Curcuma dans le guacamole = bonus articulaire. Avocat = vitamine E anti-oxydante.',
+      time: '25 min'
+    },
+    'mat-muesli': {
+      prep: 'Mat muesli poire-chia · ' + days + ' bols — PREPARER LA VEILLE AU SOIR',
+      tasks: [
+        'Dans ' + days + ' bols : ' + Math.round(10 * days / 4) + 'g flocons avoine + 1cc graines chia + pincee vanille',
+        'Couper ' + Math.ceil(days / 4 * 0.75) + ' poire(s) en morceaux. Repartir dans les bols',
+        'Verser ' + Math.round(50 * days / 4) + 'ml lait noisettes dans chaque. Melanger',
+        'Couvrir de film. Frigo min 2h (idealement une nuit)',
+        'Preparer un petit pot commun : date + figue sechee + myrtilles + mures + puree cacahuete (garniture du matin)'
+      ],
+      time: '15 min'
+    },
+    'mat-pudding-matin': {
+      prep: 'Mat pudding chia-noix · ' + days + ' bols',
+      tasks: [
+        'Dans mixeur : ' + Math.round(25 * days) + 'ml lait noisettes + noix cajou + noix macadamia + ' + Math.ceil(days / 2) + ' poignees noix entieres',
+        'Ajouter graines chia + graines lin + noix du Bresil + cannelle + cacao + citron',
+        'Ajouter ' + Math.round(4 * days) + ' myrtilles + ' + Math.round(4 * days) + ' framboises',
+        'Mixer 4 min jusqu\'a texture tres onctueuse',
+        'Verser en ' + days + ' bols',
+        'Ajouter fruits restants par-dessus. Film. Frigo'
+      ],
+      note: 'Le pudding le plus riche en oméga-3 du livre — chia + lin + noix du Brésil.',
+      time: '15 min'
+    },
+    'choco-noyade-oranges': {
+      prep: 'Choco noyade d\'oranges · ' + days + ' portions',
+      tasks: [
+        'Peler ' + days + ' oranges et les couper en tranches fines',
+        'Disposer dans un plat creux. Verser jus de ' + Math.ceil(days / 3) + ' orange(s)',
+        'Film, frigo 20 min',
+        'Faire fondre le chocolat dans petite casserole a feu doux',
+        'SERVIR : sortir les assiettes, verser chocolate fondu juste avant de manger — ne pas preparer a l\'avance'
+      ],
+      note: 'Le chocolat fondu se prépare chaque soir (5 min). Les oranges se préparent toutes en une fois.',
+      time: '20 min'
+    },
+    'mat-tartare-fruite': {
+      prep: 'Mat tartare fruite · ' + days + ' ramequins',
+      tasks: [
+        'Ecraser 1 peche a la fourchette avec miel + menthe ciselee + jus citron',
+        'Eplucher et couper ' + days + ' poires + ' + Math.ceil(days / 2) + ' peche(s) en petits cubes',
+        'Melanger delicatement la puree de peche avec les cubes de fruits',
+        'Repartir en ' + days + ' ramequins',
+        'Couvrir de film. Frigo min 30 min',
+        'Ajouter myrtilles fraiches + feuille menthe au moment de servir'
+      ],
+      time: '15 min'
+    },
+    'soupe-popeye': {
+      prep: 'Soupe Popeye · ' + days + ' portions',
+      tasks: [
+        'Eplucher et couper 1 oignon + 4 gousses ail + 1 patate douce en des de 2cm',
+        'Dans grande casserole : chauffer 1,5L bouillon legumes',
+        'Ajouter oignon + ail + patate douce + 1cc curcuma + 1cc gingembre + origan + laurier',
+        'Porter a ebullition, couvrir et cuire 25 min',
+        'Egoutter 1 boite haricots blancs et les ajouter avec 400g epinards',
+        'Cuire encore 5 min',
+        'Saler, poivrer, filet huile olive, persil cise. Gouter',
+        'Repartir en ' + days + ' boites hermetiques. Refroidir avant de fermer',
+        'Frigo 4 jours ou congeler J3-J' + days
+      ],
+      note: 'Curcuma + gingembre = combo anti-inflammatoire optimal pour les articulations.',
+      time: '40 min'
+    },
+    'soupe-carotte-coco': {
+      prep: 'Soupe carotte-coco · ' + days + ' portions',
+      tasks: [
+        'Eplucher 1kg carottes et les couper en rondelles',
+        'Dans grande casserole : carottes + 1,2L eau + sel. Cuire 35 min feu doux',
+        'Hors du feu : ajouter 3 oignons epluches et coupes + 1cc cumin + 1cc cannelle',
+        'Ajouter persil + coriandre + 4 gouttes citron + 15cl lait coco',
+        'Mixer au mixeur plongeant jusqu\'a texture tres lisse',
+        'Gouter, ajuster sel',
+        'Repartir en ' + days + ' portions. Refroidir, puis frigo'
+      ],
+      note: 'Trilogie anti-inflammatoire : lait de coco + cumin + cannelle.',
+      time: '45 min'
+    },
+    'soupe-brocoli': {
+      prep: 'Soupe brocoli-carotte · ' + days + ' portions',
+      tasks: [
+        'Couper 400g brocolis en bouquets',
+        'Eplucher 150g carottes + 150g pommes de terre en morceaux',
+        'Eplucher et ciseler 3 echalotes',
+        'Dans grande casserole huilee : faire revenir echalotes 6 min feu doux',
+        'Ajouter tous les legumes + 1L eau + sel + feuilles basilic',
+        'Couvrir et cuire 35 min',
+        'Mixer au mixeur plongeant. Poivrer',
+        'Repartir en ' + days + ' portions. Refroidir, puis frigo'
+      ],
+      note: 'Le brocoli contient du sulforaphane — un des composés les plus étudiés contre l\'inflammation.',
+      time: '45 min'
+    },
+    'soupe-potiron': {
+      prep: 'Soupe potiron-curcuma · ' + days + ' portions',
+      tasks: [
+        'Eplucher 1,5kg potiron, retirer les graines, couper la chair en morceaux',
+        'Dans grande casserole huilee : faire revenir 2 oignons + 1 echalote + 1cc gingembre + 1cc curcuma 4 min',
+        'Ajouter potiron et remuer 5 min',
+        'Verser 0,75L eau + sel + basilic + 1cc cannelle + 1cc poivre noir',
+        'Couvrir et cuire 20 min',
+        'Ajouter 1cc huile noix + 2 gouttes citron',
+        'Mixer jusqu\'a texture tres onctueuse',
+        'Repartir en ' + days + ' portions. Frigo'
+      ],
+      note: '4 anti-inflammatoires dans un bol : bêtacarotène, curcuma, gingembre, cannelle.',
+      time: '40 min'
+    },
+    'soupe-chou': {
+      prep: 'Soupe chou-fleur-gingembre · ' + days + ' portions',
+      tasks: [
+        'Laver et couper 1 tete chou-fleur en fleurettes',
+        'Eplucher 3 carottes en rondelles',
+        'Dans grande casserole : bouillon legumes + chou-fleur + carottes + oignon + ail + epinards',
+        'Porter a ebullition, couvrir et cuire 25 min',
+        'Mixer avec 1cc curcuma + 1cc gingembre + sel + poivre',
+        'Ajouter basilic cise',
+        'Repartir en ' + days + ' portions. Frigo'
+      ],
+      time: '35 min'
+    },
+    'soupe-betterave': {
+      prep: 'Soupe betterave-orange · ' + days + ' portions',
+      tasks: [
+        'Peler 5 betteraves crues, couper en petits des',
+        'Eplucher et couper 7 echalotes',
+        'Dans grande casserole : betteraves + echalotes + 1L eau. Cuire 35 min feu moyen',
+        'Retirer du feu et mixer au mixeur plongeant',
+        'Ajouter jus de 3 oranges + 1cc miel + jus citron + sel + poivre. Remixer',
+        'Mettre au frigo 45 min minimum',
+        'Au moment de servir : ajouter creme coco + persil (ne pas melanger d\'avance)'
+      ],
+      note: 'Betterave + grenade = antioxydants qui réduisent directement les marqueurs inflammatoires.',
+      time: '50 min'
+    },
+    'soupe-champi': {
+      prep: 'Soupe champignon-shitake · ' + days + ' portions',
+      tasks: [
+        'Eplucher et emincer oignon + echalote + ail',
+        'Laver et trancher champignons de Paris + shiitake',
+        'Dans casserole huilee : faire revenir oignon + echalote + ail 5 min feu moyen',
+        'Ajouter champignons + shiitake. Cuire 5 min en remuant',
+        'Ajouter 1cc gingembre + lait amande + laurier. Mijoter 3 min',
+        'Ajouter persil cise + poivre. Gouter',
+        'Repartir en ' + days + ' portions. Frigo'
+      ],
+      note: 'Le shiitaké contient du lentinane, un immunostimulant naturel puissant.',
+      time: '25 min'
+    },
+    'soupe-matador-lentilles': {
+      prep: 'Soupe Matador lentilles · ' + days + ' portions',
+      tasks: [
+        'Rincer ' + Math.round(125 * days) + 'g lentilles et cuire 23 min dans casserole eau bouillante',
+        'Eplucher et couper oignons + carotte + patates douces',
+        'Dans poele : faire revenir oignons 6 min dans huile olive',
+        'Cuire patates douces 20 min dans casserole eau',
+        'Dans grande marmite : reunir lentilles + oignons + carotte + patates + eau + boisson riz',
+        'Ajouter jus citron + coriandre + persil + menthe + 1cc cumin',
+        'Cuire encore 10 min. Sel + poivre + huile olive. Gouter',
+        'Repartir en ' + days + ' portions. Frigo'
+      ],
+      time: '45 min'
+    },
+    'gazpacho': {
+      prep: 'Gazpamatcho · ' + days + ' portions',
+      tasks: [
+        'Plonger 1kg tomates 40s dans eau bouillante, retirer peau et pepins',
+        'Couper 1 poivron rouge en morceaux, retirer les graines',
+        'Dans grand saladier : tomates + concombre (non pele) + 4 oignons + 2 gousses ail',
+        'Ajouter sel + poivre + 3cs huile olive + 2cs jus citron + 3 feuilles basilic',
+        'Mixer au mixeur plongeant jusqu\'a texture tres lisse',
+        'Ajouter 3 gouttes tabasco + 1/2cc miel. Remixer',
+        'Gouter, ajuster sel',
+        'Repartir en ' + days + ' portions. Frigo min 2h avant de servir tres froid'
+      ],
+      note: 'Meilleur bien froid. Peut se congeler en petits pots pour des dîners express.',
+      time: '25 min'
+    },
+    'matgic-chili': {
+      prep: 'Matgic chili haricots · ' + days + ' portions',
+      tasks: [
+        'Rincer 1/3 tasse lentilles et cuire 23 min dans casserole eau bouillante',
+        'Chauffer 400ml bouillon legumes dans grande casserole',
+        'Eplucher et couper 1 oignon + 3 pommes de terre + 2 gousses ail. Ajouter au bouillon',
+        'Ajouter champignons laves + 4cs concentre tomate + basilic + curcuma + 1 poivron rouge coupe + sel',
+        'Cuire 20 min feu moyen',
+        'Ajouter haricots rouges + lentilles + 1cs beurre cacahuete. Cuire 5 min en remuant',
+        'Gouter, ajuster sel. Repartir en ' + days + ' portions. Frigo'
+      ],
+      time: '40 min'
+    },
+    'salade-betteraves': {
+      prep: 'Salade betteraves-avocat · ' + days + ' portions',
+      tasks: [
+        'Si betteraves crues : cuire 40 min eau bouillante. Si cuites en bocal : passer directement',
+        'Couper les betteraves en petits des',
+        'Laver 20 feuilles epinards',
+        'Couper 15 rondelles de radis',
+        'Hacher 1 oignon + 1 echalote finement',
+        'Dans grand saladier : epinards + betterave + oignon + echalote + 4cs huile olive + jus citron + pincee curcuma + sel + poivre',
+        'Melanger. Repartir en ' + days + ' boites',
+        'Couper 1 avocat en tranches PAR JOUR - ne pas couper tout a l\'avance (noircit). Ajouter au moment de servir'
+      ],
+      note: 'L\'avocat se prépare le jour J. Les autres composants tiennent 4 jours.',
+      time: '20 min'
+    },
+    'salade-patates-crevettes': {
+      prep: 'Salade patates-crevettes · ' + days + ' portions',
+      tasks: [
+        'Eplucher et couper 500g patates douces en rondelles de 1cm',
+        'Cuire 20 min dans casserole eau bouillante salee',
+        'Egoutter et passer sous eau froide pour stopper la cuisson',
+        'Dans poele huilee feu vif : faire sauter les patates 7 min jusqu\'a dorees et legerement croustillantes',
+        'Saler, poivrer',
+        'Decortiquer les crevettes si besoin',
+        'Dans bol : crevettes + patates + filet huile olive + sel + poivre',
+        'Repartir en ' + days + ' boites. Frigo'
+      ],
+      time: '35 min'
+    },
+    'saumon-panko': {
+      prep: 'Saumon panko · ' + days + ' portions — PRIORITE OMEGA-3 POUR L\'EPAULE',
+      tasks: [
+        'Prechauffer four a 180 C',
+        'Couper ' + Math.round(150 * days) + 'g saumon en cubes de 3cm',
+        'Melanger dans une assiette : panko + ail en poudre + paprika',
+        'Rouler chaque cube de saumon dans la chapelure. Disposer sur plaque',
+        'Enfourner 10-12 min',
+        'CONCOMBRE : couper ' + Math.round(100 * days) + 'g concombre en fines tranches. Melanger avec sauce soja + miel + vinaigre riz + piment dans un bol',
+        'SAUCE : fouetter sriracha + mayo allegee + fromage blanc + jus citron vert dans un bol',
+        'Cuire ' + Math.round(150 * days) + 'g riz complet (2 tasses riz, 4 tasses eau, 30 min)',
+        'Repartir en ' + days + ' boites : riz + concombre + saumon + sauce. Frigo'
+      ],
+      note: 'Saumon = oméga-3 EPA/DHA → réduit directement les prostaglandines inflammatoires. À faire au moins 2x/semaine.',
+      time: '45 min'
+    },
+    'maquereau-legumes': {
+      prep: 'Maquereau et legumes · ' + days + ' portions',
+      tasks: [
+        'Prechauffer four a 160 C',
+        'Couper ' + Math.ceil(days * 3 / 4) + ' maquereau(x) en gros morceaux. Enduire huile olive + gros sel',
+        'Enfourner 9 min',
+        'Couper 1 poireau en rondelles. Blanchir 4 min eau bouillante. Egoutter',
+        'SAUCE : dans poele, dorer 2 echalotes + 1 oignon haches dans huile olive. Ajouter 10cl creme coco + sel + poivre. Reduire 8 min',
+        'Dans wok ou grande poele : ajouter legumes + morceaux maquereau + sauce',
+        'Cuire ensemble 10 min feu doux en remuant delicatement',
+        'Ajouter aneth cise + jus citron',
+        'Repartir en ' + days + ' boites. Frigo'
+      ],
+      note: 'Maquereau = oméga-3 + moins de mercure que le thon. Excellent pour l\'épaule.',
+      time: '45 min'
+    },
+    'matajine-sardines': {
+      prep: 'Matajine de sardines · ' + days + ' portions',
+      tasks: [
+        'Blanchir 7 tomates 40s eau bouillante. Retirer peau + pepins. Couper en morceaux',
+        'Eplucher pommes de terre en rondelles de 1cm',
+        'Couper oignon + echalote finement',
+        'Dans grande casserole huilee : cuire oignon + echalote jusqu\'a tendres 5 min',
+        'Ajouter tomates + 1cc paprika + 1cc curcuma + 1cc cumin + 2cc gingembre. Remuer 8 min',
+        'Ajouter pommes de terre + eau mi-hauteur. Couvrir, cuire 50 min feu moyen',
+        'Farcir chaque sardine avec persil + coriandre cises + citron + huile olive',
+        'Poser les sardines sur les pommes de terre. Cuire 25 min couverts',
+        'Laisser refroidir. Repartir delicatement en ' + days + ' boites. Frigo'
+      ],
+      note: 'Sardines fraîches = oméga-3 + calcium + protéines. Petites poissons = très peu de mercure.',
+      time: '90 min'
+    },
+    'chicken-spicy': {
+      prep: 'Spicy chicken riz · ' + days + ' portions',
+      tasks: [
+        'Couper ' + Math.round(200 * days) + 'g blanc poulet en lanieres',
+        'MARINADE : dans grand bol : paprika + piment doux + ail en poudre + 1cc curcuma + 1cc poivre noir + filet huile olive',
+        'Enrober le poulet de marinade. Laisser reposer 30 min frigo minimum (1h ideal)',
+        'Cuire ' + Math.round(150 * days) + 'g riz complet avec curcuma + paprika (30 min)',
+        'SAUCE : mixer yaourt grec + mayo allegee + jus citron + miel + ail en poudre',
+        'Dans poele bien chaude : cuire le poulet marine 8 min jusqu\'a belle coloration doree',
+        'Repartir en ' + days + ' boites : riz + poulet + sauce generuse. Frigo'
+      ],
+      note: 'Le curcuma + poivre noir dans la marinade = effet anti-inflammatoire maximal.',
+      time: '50 min'
+    },
+    'chicken-bbq': {
+      prep: 'Chicken BBQ · ' + days + ' portions',
+      tasks: [
+        'Couper ' + Math.round(200 * days) + 'g blanc poulet en morceaux',
+        'MARINADE : gingembre frais rape + ail + 40ml sauce soja + 25g sriracha. Enrober le poulet. Mariner 1h frigo',
+        'CONCOMBRE : couper ' + Math.round(100 * days) + 'g concombre en fines tranches',
+        'Melanger concombre avec ail + sriracha + soja + miel + vinaigre riz + piment doux',
+        'Cuire ' + Math.round(150 * days) + 'g riz complet',
+        'Dans poele bien chaude : cuire le poulet marine. Ajouter trait sauce soja fin de cuisson',
+        'Repartir en ' + days + ' boites : riz + poulet + concombre + graines sesame. Frigo'
+      ],
+      note: 'Le gingembre frais est aussi puissant que l\'ibuprofène selon certaines études.',
+      time: '50 min'
+    },
+    'hawaii-chicken': {
+      prep: 'Hawaii chicken · ' + days + ' portions',
+      tasks: [
+        'Couper ' + Math.round(200 * days) + 'g blanc poulet en cubes',
+        'Assaisonner avec sel + poivre + ail + paprika + poudre chili',
+        'Dans poele bien chaude : cuire le poulet jusqu\'a dores',
+        'Dans meme poele : verser 200ml jus orange + 50ml sauce soja + 20g miel + 10g maizena diluee dans 50ml eau + jus citron + piment + ail + gingembre',
+        'Remuer jusqu\'a sauce onctueuse',
+        'Remettre le poulet dans la sauce et l\'enrober',
+        'Ajouter ' + Math.round(20 * days) + 'g ananas coupe en des. Couvrir 5 min',
+        'Cuire ' + Math.round(150 * days) + 'g riz',
+        'Repartir en ' + days + ' boites. Frigo'
+      ],
+      note: 'L\'ananas contient de la bromélaïne, un anti-inflammatoire naturel.',
+      time: '45 min'
+    },
+    'pad-thai-tofu': {
+      prep: 'Pad Thai tofu · ' + days + ' portions',
+      tasks: [
+        'Couper ' + Math.round(100 * days) + 'g tofu ferme en cubes de 2cm bien secs',
+        'Dans poele huilee feu moyen : dorer le tofu 10 min en remuant regulierement',
+        'Raper 2 carottes. Couper 1 brocoli en petits bouquets',
+        'Hacher 2 echalotes + 3 gousses ail',
+        'Ajouter brocoli + echalote + ail + 1cc curcuma + 1cc gingembre a la poele avec tofu. Cuire 6 min',
+        'Cuire ' + Math.round(75 * days) + 'g pates de riz dans eau bouillante 4-5 min. Egoutter',
+        'SAUCE : beurre cacahuete + sauce soja + 80ml eau. Fouetter energiquement jusqu\'a onctueux',
+        'Ajouter carottes rapees 1 min dans la poele',
+        'Assembler : pates + sauce + contenu poele. Jus citron + persil cise',
+        'Repartir en ' + days + ' boites. Frigo'
+      ],
+      note: 'Tofu + brocoli + curcuma + gingembre = plat vegan le plus anti-inflammatoire.',
+      time: '35 min'
+    },
+    'poke-bowl': {
+      prep: 'Poke bowl avocat-edamame · ' + days + ' bols',
+      tasks: [
+        'Cuire ' + Math.ceil(days / 4) + ' tasse(s) riz complet dans casserole eau bouillante 30 min. Egoutter',
+        'Cuire edamame selon paquet (5 min eau bouillante)',
+        'Couper 2 avocats en cubes JUSTE AVANT DE SERVIR (ou preparer l\'avocat quotidiennement)',
+        'Raper 1 carotte. Hacher 1 oignon finement',
+        'MARINADE : 2cs huile sesame + 1cs vinaigre riz + gingembre rape + coriandre ciselee + sauce soja',
+        'Ajouter oignon + carotte dans la marinade. Melanger',
+        'Repartir en ' + days + ' bols : riz + melange marine + edamame + epinards + coriandre + citron',
+        'Frigo. Ajouter l\'avocat et la coriandre fraiche juste avant de manger'
+      ],
+      note: 'L\'avocat noircit vite — le préparer au dernier moment ou arroser de citron.',
+      time: '40 min'
+    },
+    'matgret-canard': {
+      prep: 'Matgret de canard et puree · ' + days + ' portions',
+      tasks: [
+        'PUREE : eplucher et couper 700g pommes de terre en rondelles fines',
+        'Cuire 20 min dans casserole eau salee',
+        'Egoutter en gardant un peu d\'eau de cuisson. Ecraser au pilon',
+        'Ajouter 1cs creme coco + 2cs huile olive + poivre + eau de cuisson jusqu\'a texture onctueuse. Gouter',
+        'MAGRET : quadriller la peau avec couteau (incisions en losanges)',
+        'Prechauffer four a 180 C',
+        'Dans poele sans huile feu vif : saisir magret 3 min cote peau, puis 3 min cote chair. Saler',
+        'Enfourner 10 min pour saignant, 14 min pour a point',
+        'Laisser reposer 5 min avant de couper en tranches',
+        'Repartir en ' + days + ' boites : puree + tranches magret + feuilles basilic. Frigo'
+      ],
+      note: 'Rechauffer doucement au bain-marie ou micro-ondes avec un peu d\'eau pour ne pas dessecher le magret.',
+      time: '40 min'
+    },
+    'chicken-salade-cesar': {
+      prep: 'Chicken salade Cesar · ' + days + ' portions',
+      tasks: [
+        'Assaisonner 225g blanc poulet avec sel + poivre + ail',
+        'Cuire dans poele avec huile jusqu\'a belle coloration doree des deux cotes',
+        'Laisser refroidir 5 min puis emincer en lanieres',
+        'SAUCE CESAR : dans blender, mixer fromage blanc + parmesan rape + jus citron + ail en poudre + huile olive + moutarde + sel + poivre jusqu\'a sauce onctueuse',
+        'Laver et couper grossierement 250g salade romaine',
+        'Dans saladier : melanger salade + poulet + sauce cesar',
+        'Repartir en ' + days + ' boites. Frigo',
+        'Consommer dans les 2 jours max pour que la salade reste croquante'
+      ],
+      note: '70g protéines/portion — le repas le plus protéiné. La salade tient 2 jours.',
+      time: '25 min'
+    },
+    'pasta-bolo': {
+      prep: 'Pasta bolognaise cottage · ' + days + ' portions',
+      tasks: [
+        'Eplucher et hacher finement 1 oignon + 2 gousses ail',
+        'Dans grande poele : revenir oignon + ail dans huile olive 3 min',
+        'Ajouter ' + Math.round(200 * days) + 'g viande hachee 5% avec paprika + sel + poivre. Cuire 8 min en emiettant la viande',
+        'Ajouter 250g sauce tomate + 200ml bouillon boeuf + 200g cottage cheese + parmesan rape + herbes italiennes',
+        'Mijoter 30 min feu doux en remuant de temps en temps',
+        'Cuire ' + Math.round(150 * days) + 'g pates completes selon paquet',
+        'Melanger les pates dans la poele avec la sauce. Gouter, ajuster sel',
+        'Repartir en ' + days + ' boites. Frigo'
+      ],
+      time: '50 min'
+    },
+    'sweet-potatoes-veggie': {
+      prep: 'Sweet potatoes veggie · ' + days + ' portions',
+      tasks: [
+        'Eplucher et couper 800g patates douces en tranches de 1cm',
+        'Disposer sur plaque de cuisson. Saupoudrer paprika + sel + filet huile olive',
+        'Prechauffer four 180 C. Enfourner 30 min jusqu\'a dorees',
+        'SAUCE : dans blender, mixer cottage cheese + beurre cacahuete + jus citron + paprika + filet huile olive jusqu\'a homogene',
+        'Repartir la sauce en ' + days + ' boites',
+        'Disposer les tranches de patate douce par-dessus',
+        'Emietter feta + persil cise par-dessus. Frigo'
+      ],
+      time: '40 min'
+    },
+    'aubergines-farcies': {
+      prep: 'Aubergines mat farcies · ' + days + ' portions',
+      tasks: [
+        'Couper 3 aubergines en longueur dans le sens de la longueur',
+        'Dans grande poele huilee : cuire aubergines 12 min en retournant a mi-cuisson',
+        'Eplucher 1 patate douce, couper en rondelles. Cuire 25 min eau bouillante',
+        'Egoutter et couper en petits morceaux',
+        'FARCE : dans bol, melanger persil cise + 2 tomates en des + oignon rouge + 2 echalotes + 3 gousses ail + curcuma + 1 poivron vert coupe + 3cs huile olive + citron',
+        'Faire sauter la farce 5 min dans poele',
+        'Farcir chaque aubergine avec le melange',
+        'Disposer morceaux patate douce autour',
+        'Cuire feu doux 25 min couverts. Repartir en ' + days + ' boites. Frigo'
+      ],
+      time: '60 min'
+    },
+    'bouillon-terroir': {
+      prep: 'Mat bouillon terroir · ' + days + ' portions',
+      tasks: [
+        'Rincer 1/2 tasse lentilles et plonger dans casserole eau bouillante',
+        'Eplucher et couper 2 patates douces + 1/3 potiron en des de 2cm',
+        'Eplucher et hacher oignon + echalote + ail',
+        'Dans grande marmite huilee : faire revenir ail + echalote + oignon 4 min feu moyen',
+        'Ajouter patates douces + potiron + haricots blancs + 2cs concentre tomate + persil + aneth',
+        'Couvrir de 4 tasses eau. Ajouter les lentilles',
+        'Cuire 30 min feu moyen',
+        'Assaisonner : sel + poivre + filet huile olive + 2cs puree sesame + 3 gouttes citron',
+        'Gouter, ajuster. Repartir en ' + days + ' boites. Frigo'
+      ],
+      time: '45 min'
+    },
+    'galette-champi': {
+      prep: 'Galette sarrasin champignons · ' + days + ' portions — PATE PREPAREE LA VEILLE',
+      tasks: [
+        'VEILLE : melanger 125g farine sarrasin + sel + poivre + 3 oeufs + 30cl eau + 2cs huile tournesol + poudre a lever. Couvrir, frigo 12h minimum',
+        'Laver et couper champignons de Paris + shiitake. Emincer 1 echalote',
+        'Dans poele huilee : cuire echalote + champignons + shiitake 8 min. Ajouter 1cs creme coco + persil + sel + poivre',
+        'Cuire 8 fonds d\'artichaut 30 min eau bouillante. Egoutter, couper en morceaux',
+        'Dans poele a crepes huilee feu vif : cuire chaque galette ~1 min un seul cote',
+        'Garnir en fin de cuisson : champignons + artichaut + persil + sel + poivre',
+        'Repartir en ' + days + ' portions. Frigo'
+      ],
+      note: 'Shiitaké + artichaut = anti-inflammatoires et immunostimulants. Sarrasin = sans gluten + magnésium.',
+      time: '50 min'
+    },
+    'smoothie-myrtilles': {
+      prep: 'Smoothie myrtilles-lin · ' + days + ' portions',
+      tasks: [
+        'Sortir myrtilles + framboises du congelateur 5 min',
+        'Dans blender : 2 tasses myrtilles + 1 banane + 2cs beurre amande + 1 tasse framboises + 1cs graines lin',
+        'Ajouter ' + Math.round(100 * days) + 'ml lait noisettes progressivement',
+        'Mixer 2 min jusqu\'a texture lisse',
+        'Repartir en ' + days + ' portions dans bouteilles fermees',
+        'Frigo 2 jours — faire en 2 batches si plus de 4 jours',
+        'Preparer ' + days + ' petits sachets de noix entieres separes (a manger avec le smoothie)'
+      ],
+      note: 'Myrtilles = anthocyanes + lin = oméga-3 végétaux. La meilleure collation anti-inflammatoire articulaire.',
+      time: '10 min'
+    },
+    'smoothie-choco-pb': {
+      prep: 'Smoothie choco-cacahuete (A PREPARER LE JOUR-MEME)',
+      tasks: [
+        'Dans blender : 200ml lait amande + 120g fromage blanc + 30g flocons avoine + 30g beurre cacahuete',
+        'Ajouter 30g chocolat noir 70%+ en morceaux + 1cs cacao brut + sirop erable',
+        'Ajouter whey si souhaite + quelques glaçons',
+        'Mixer 2 min jusqu\'a texture tres onctueuse',
+        'Verser dans grand verre. Saupoudrer cacao brut',
+        'NE PAS batchez ce smoothie — trop calorique (766 kcal), a preparer a la demande les jours actifs uniquement'
+      ],
+      note: '53g protéines — réserver aux jours où tu reprends le sport ou es très actif.',
+      time: '5 min'
+    },
+    'smoothie-myrtille-pyx': {
+      prep: 'Blueberry smoothie proteine · ' + days + ' portions',
+      tasks: [
+        'Dans blender : 80g banane + 80g myrtilles congelees + whey (ou fromage blanc 0%) + 50g fromage blanc',
+        'Ajouter 100ml lait amande + 20g flocons avoine + glaçons',
+        'Mixer 2 min',
+        'Repartir en ' + days + ' portions. Frigo max 2 jours',
+        'Ajouter quelques myrtilles fraiches au moment de servir'
+      ],
+      time: '8 min'
+    },
+    'smoothie-apple-pie': {
+      prep: 'Apple pie smoothie · ' + days + ' portions',
+      tasks: [
+        'Sortir ' + days + ' pommes Granny Smith congelees 5 min avant',
+        'Dans blender : 1 pomme congelee + 100ml lait amande + whey + 50g fromage blanc + miel + 1cc cannelle + vanille + 20g flocons avoine + glaçons',
+        'Mixer 2 min',
+        'Saupoudrer cannelle sur le dessus',
+        'Consommer le jour-meme ou frigo 24h max'
+      ],
+      time: '5 min'
+    },
+    'smoothie-banane-cannelle': {
+      prep: 'Smoothie banane-cannelle · ' + days + ' portions',
+      tasks: [
+        'Dans blender : 200ml lait amande + 100g fromage blanc + 100g banane + 5g cannelle + whey + sirop erable + glaçons',
+        'Mixer 2 min',
+        'Repartir en ' + days + ' portions. Saupoudrer cannelle',
+        'Frigo max 2 jours'
+      ],
+      time: '5 min'
+    },
+    'smoothie-fraise': {
+      prep: 'Smoothie fraise · ' + days + ' portions',
+      tasks: [
+        'Rincer 100g fraises (fraiches ou surgeles)',
+        'Dans blender : 200ml lait amande + 100g fromage blanc + fraises + cream cheese + whey + sirop agave + glaçons',
+        'Mixer 2 min',
+        'Repartir en ' + days + ' portions. Frigo max 2 jours'
+      ],
+      time: '5 min'
+    },
+    'mat-smoothie-myrtilles-amande': {
+      prep: 'Myrtilles Mat smoothie · ' + days + ' portions',
+      tasks: [
+        'Dans blender : 2 tasses myrtilles + 1 banane + 2cs beurre amande + 1cs graines lin + 1 tasse framboises',
+        'Ajouter eau ou lait noisette progressivement jusqu\'a texture lisse',
+        'Mixer 2 min',
+        'Repartir en ' + days + ' portions. Frigo 2 jours',
+        'Preparer ' + days + ' sachets de noix entieres separes'
+      ],
+      time: '10 min'
+    },
+    'granola-prote': {
+      prep: 'Granola proteine maison · 1 batch pour ' + days + ' jours',
+      tasks: [
+        'Prechauffer four a 200 C',
+        'Dans grand bol : 150g flocons avoine + 60g whey chocolat. Melanger',
+        'Ajouter progressivement 10g huile coco + 10g miel + 10g beurre cacahuete',
+        'Melangeaer a la main en formant des petits grumeaux irreguliers',
+        'Etaler uniformement sur plaque avec papier sulfurise — ne pas tasser',
+        'Enfourner 10 min — SURVEILLER : ca brule tres vite !',
+        'Retourner avec cuillere a mi-cuisson',
+        'Sortir, laisser refroidir completement sur la plaque (importante — il devient croustillant en refroidissant)',
+        'Ajouter 10g pepites chocolat 70%+ + noix concassees (optionnel)',
+        'Conserver en boite hermetique ' + days + ' jours maximum'
+      ],
+      time: '20 min'
+    },
+    'cookie-prote': {
+      prep: 'Cookies proteines · 10 cookies pour ' + days + ' jours',
+      tasks: [
+        'Prechauffer four a 180 C. Recouvrir plaque de papier cuisson',
+        'Dans saladier : 1 oeuf + 10g huile coco + 10g sirop agave + 10g puree amande. Melanger',
+        'Ajouter 100g poudre amande + 60g whey (ou flocons avoine mixe) + 50g flocons avoine + 5g levure + vanille',
+        'Incorporer 10g pepites chocolat 70%+. Bien melanger jusqu\'a pate homogene',
+        'Avec une cuillere a soupe : former 10 petits tas sur la plaque. Aplatir legerement',
+        'Enfourner 10-12 min — sortir quand les bords sont dores, le centre reste mou',
+        'Laisser refroidir sur grille — ils durcissent en refroidissant',
+        'Conserver en boite hermetique max 2 jours'
+      ],
+      note: '9g protéines par cookie. Sans sucre raffiné, sans gluten.',
+      time: '25 min'
+    },
+    'banana-bread': {
+      prep: 'Banana bread proteine · 1 moule pour ' + days + ' jours',
+      tasks: [
+        'Prechauffer four a 180 C. Huiler un moule a cake',
+        'Peser et couper 2 bananes tres mures (plus elles sont tachetees, mieux c\'est)',
+        'Dans blender : bananes + 160g flocons avoine + whey + 10g levure + vanille + 100ml lait amande + 1cc cannelle',
+        'Mixer jusqu\'a preparation homogene et lisse',
+        'Verser dans moule huile',
+        'DECORATION : poser 1 banane coupee en 2 dans le sens de la longueur par-dessus + quelques carreaux chocolat noir + saupoudrer cannelle',
+        'Enfourner 20-25 min. Tester avec cure-dent — doit ressortir propre',
+        'Laisser refroidir 10 min dans le moule, puis sur grille',
+        'Couper en 4-6 tranches. Boite hermetique max 3 jours'
+      ],
+      time: '35 min'
+    },
+    'mat-the-glace': {
+      prep: 'Mathe glace maison · 1 carafe pour ' + days + ' jours',
+      tasks: [
+        'Porter 1L eau a ebullition dans grande casserole',
+        'Hors du feu : plonger le sachet de the vert (ou 1cs the vrac) + feuilles menthe fraiche + 1cc menthe sechee + 1cc camomille + feuilles verveine',
+        'Infuser 5 min exactement (plus longtemps = amer)',
+        'Filtrer dans une carafe en verre',
+        'Ajouter 1cs miel + zeste citron vert + 4 quartiers de peche fraiche',
+        'Laisser refroidir 30 min a temperature ambiante',
+        'Mettre au frigo 1h minimum',
+        'Servir avec glaçons + feuilles menthe fraiches. Se conserve 4 jours'
+      ],
+      note: 'Le thé vert contient l\'EGCG, l\'antioxydant le plus puissant connu. À faire en grande quantité.',
+      time: '15 min'
+    },
+    'fondue-chocomat': {
+      prep: 'Fondue Chocomat · FRUITS PREPARES A L\'AVANCE, CHOCOLAT CHAQUE SOIR',
+      tasks: [
+        'BATCH : eplucher et couper poires + pommes + bananes en tranches. Arroser de jus citron. Mettre en assiettes film frigo',
+        'CHAQUE SOIR (5 min) : dans petite casserole feu tres doux, faire fondre 2cs lait noisettes + carreaux chocolat noir 70%+',
+        'Remuer doucement. Une fois fondu, ajouter 1cs creme coco + vanille',
+        'Sortir les fruits du frigo et servir immediatement avec le chocolat chaud',
+        'NE PAS fondre tout le chocolat d\'avance — se solidifie'
+      ],
+      note: 'Chocolat 70%+ = magnésium anti-stress + antioxydants. À consommer avec plaisir.',
+      time: '15 min'
+    },
+    'blueberry-bread': {
+      prep: 'Blueberry protein bread · 7 parts pour ' + days + ' jours',
+      tasks: [
+        'Prechauffer four a 160 C. Huiler un moule a cake',
+        'Dans saladier : 180g farine + 90g whey + 20g sirop agave + 5g levure. Melanger les ingredients secs',
+        'Ajouter 3 oeufs battre et melanger',
+        'Incorporer 220g fromage blanc 0% + 20ml huile coco. Melanger jusqu\'a homogene',
+        'Ajouter delicatement 200g myrtilles fraiches ou congelees et melanger',
+        'Verser dans moule huile',
+        'Enfourner 1 heure exactement — le temps est important pour ce pain',
+        'Tester avec cure-dent. Laisser refroidir completement avant de couper',
+        'Couper en 7 parts egales. Boite hermetique max 3 jours'
+      ],
+      note: 'Myrtilles intégrées = anthocyanes anti-inflammatoires dans chaque bouchée.',
+      time: '70 min'
+    }
   };
 
-  var matinGuide = batchGuide[m.matin.id] || { prep: m.matin.steps.join(' Puis : '), time: '15 min' };
-  var dinerGuide = batchGuide[m.diner.id] || { prep: m.diner.steps.join(' Puis : '), time: '40 min' };
-  var dejGuide = batchGuide[m.dejeuner.id] || { prep: m.dejeuner.steps.join(' Puis : '), time: '20 min' };
-  var souprGuide = batchGuide[m.souper.id] || { prep: m.souper.steps.join(' Puis : '), time: '30 min' };
-  var collGuide = batchGuide[m.collation.id] || { prep: m.collation.steps.join(' Puis : '), time: '15 min' };
+  var matinGuide = batchGuide[m.matin.id] || { prep: m.matin.name, tasks: m.matin.steps, time: '15 min' };
+  var dinerGuide = batchGuide[m.diner.id] || { prep: m.diner.name, tasks: m.diner.steps, time: '40 min' };
+  var dejGuide = batchGuide[m.dejeuner.id] || { prep: m.dejeuner.name, tasks: m.dejeuner.steps, time: '20 min' };
+  var souprGuide = batchGuide[m.souper.id] || { prep: m.souper.name, tasks: m.souper.steps, time: '30 min' };
+  var collGuide = batchGuide[m.collation.id] || { prep: m.collation.name, tasks: m.collation.steps, time: '15 min' };
 
-  var needsOvernightMatin = ['pancakes-sarrasin', 'mat-marmelade-pancakes', 'mat-blinis-guac'].indexOf(m.matin.id) >= 0;
+  var needsOvernightMatin = ['pancakes-sarrasin','mat-marmelade-pancakes','mat-blinis-guac'].indexOf(m.matin.id) >= 0;
   var needsOvernightDej = ['oats-framboise','oats-banana-choco','oats-apple','oats-cheesecake','oats-carrot-cake','oats-myrtille-blend','oats-raffaello','oats-snickers','oats-pistamat','mat-muesli'].indexOf(m.dejeuner.id) >= 0;
-  var needsOvernightGalette = m.souper.id === 'galette-champi';
-  var needsFour = ['saumon-panko','chicken-spicy','hawaii-chicken','sweet-potatoes-veggie','aubergines-farcies'].indexOf(m.souper.id) >= 0
+  var needsFour = ['saumon-panko','chicken-spicy','hawaii-chicken','sweet-potatoes-veggie','aubergines-farcies','cookie-prote','banana-bread','blueberry-bread','granola-prote'].indexOf(m.souper.id) >= 0
     || ['cookie-prote','banana-bread','blueberry-bread','granola-prote'].indexOf(m.collation.id) >= 0;
 
   var veilleDesc = '';
-  if (needsOvernightMatin) veilleDesc += 'PANCAKES/BLINIS : preparer la pate sarrasin. Melanger tous les ingredients, couvrir, frigo toute la nuit. ';
-  if (needsOvernightDej) veilleDesc += (needsOvernightMatin ? ' — ' : '') + 'OVERNIGHT OATS : melanger les flocons avec le lait vegetal, la garniture et la whey. Repartir en 4 boites, couvrir, frigo toute la nuit.';
-  if (needsOvernightGalette) veilleDesc += ' — PATE GALETTES : melanger farine sarrasin + sel + oeufs + eau + huile. Repos frigo 12h.';
-  if (!veilleDesc) veilleDesc = 'Si overnight oats ou pancakes : preparer les bases ce soir. Sinon cette etape peut etre sautee.';
-
-  var steps = [];
-  steps.push({ t: 'Veille au soir', d: veilleDesc, time: '5-15 min' });
-
-  if (needsFour) {
-    var temp = (m.souper.id === 'sweet-potatoes-veggie' || m.souper.id === 'aubergines-farcies') ? '180 C' : m.souper.id === 'saumon-panko' ? '180 C' : '200 C';
-    steps.push({ t: 'Prechauffer le four a ' + temp, d: 'Pendant le prechauffage : preparer les ingredients qui vont au four en premier (couper le poisson, les legumes, huiler le moule...).', time: '5 min' });
+  var veilleTasks = [];
+  if (needsOvernightMatin) {
+    veilleDesc = 'Pancakes ou blinis : preparer la pate sarrasin.';
+    veilleTasks.push('Melanger farine sarrasin + sel + miel + ingredients. Fermer, frigo toute la nuit');
+  }
+  if (needsOvernightDej) {
+    veilleDesc += (veilleDesc ? ' + ' : '') + 'Overnight oats : melanger et repartir en ' + days + ' boites.';
+    veilleTasks.push('Preparer les ' + days + ' boites overnight oats (flocons + lait + garniture)');
+    veilleTasks.push('Fermer les boites et frigo toute la nuit');
+  }
+  if (!needsOvernightMatin && !needsOvernightDej) {
+    veilleDesc = 'Rien a preparer la veille pour ce menu.';
+    veilleTasks.push('Optionnel : sortir les ingredients du frigo/placard et verifier les stocks');
   }
 
-  steps.push({ t: m.diner.name, d: dinerGuide.prep, time: dinerGuide.time });
+  function makeStep(num, title, desc, tasks, note, time, isAutoOpen) {
+    var tasksHtml = '';
+    if (tasks && tasks.length) {
+      tasksHtml = '<ul class="step-tasks">';
+      tasks.forEach(function(task, ti) {
+        tasksHtml += '<li id="task-' + num + '-' + ti + '" onclick="toggleTask(this)">'
+          + '<div class="task-box"></div>'
+          + '<span>' + task + '</span>'
+          + '</li>';
+      });
+      tasksHtml += '</ul>';
+    }
+    var noteHtml = note ? '<div class="step-note">💡 ' + note + '</div>' : '';
+    return '<div class="bstep" id="bst-' + num + '">'
+      + '<div class="step-header" onclick="toggleStep(' + num + ')">'
+      + '<div class="step-n">' + (num + 1) + '</div>'
+      + '<div class="step-header-content">'
+      + '<div class="stitle">' + title + '</div>'
+      + '<div class="step-meta"><span class="stime">' + time + '</span></div>'
+      + '</div>'
+      + '<span class="step-check" onclick="event.stopPropagation();markStepDone(' + num + ')">✓</span>'
+      + '<span class="step-arrow" id="arr-' + num + '">' + (isAutoOpen ? '▲' : '▼') + '</span>'
+      + '</div>'
+      + '<div class="step-body' + (isAutoOpen ? ' open' : '') + '" id="sbody-' + num + '">'
+      + '<div class="step-body-inner">'
+      + '<div class="step-instructions">' + desc + '</div>'
+      + tasksHtml
+      + noteHtml
+      + '</div>'
+      + '</div>'
+      + '</div>';
+  }
 
-  var matinDesc = needsOvernightMatin ? 'La pate est prête depuis cette nuit. La sortir, cuire les pancakes ou blinis. ' + (matinGuide.prep.split('//')[1] || '') : matinGuide.prep;
-  steps.push({ t: m.matin.name, d: 'Pendant la cuisson du diner : ' + matinDesc, time: matinGuide.time });
+  var steps = [];
 
-  var dejDesc = needsOvernightDej ? 'Les boites overnight oats sont pretes depuis cette nuit. Preparer uniquement les toppings finaux : fondre le chocolat, preparer la creme fromage blanc-whey, couper les fruits frais. Finaliser et remettre au frigo.' : dejGuide.prep;
-  steps.push({ t: m.dejeuner.name, d: dejDesc, time: needsOvernightDej ? '15 min' : dejGuide.time });
+  // Step 0: veille
+  steps.push({ title: 'Veille au soir', desc: veilleDesc, tasks: veilleTasks, note: null, time: needsOvernightMatin || needsOvernightDej ? '10-20 min' : '5 min' });
 
-  var souprPrepDesc = '';
-  if (m.souper.id === 'saumon-panko') souprPrepDesc = 'Couper 600g saumon en cubes. Melanger panko + ail + paprika dans une assiette. Rouler chaque cube. Disposer sur plaque. Preparer aussi le concombre en fines tranches + la sauce dans un bol separe.';
-  else if (m.souper.id === 'chicken-spicy' || m.souper.id === 'chicken-bbq' || m.souper.id === 'hawaii-chicken') souprPrepDesc = 'Couper le poulet. Preparer la marinade dans un grand bol. Enrober le poulet et laisser mariner au frigo le temps de finir les autres etapes (minimum 20 min, idealement 1h).';
-  else if (m.souper.id === 'pad-thai-tofu') souprPrepDesc = 'Couper le tofu en cubes 2cm. Preparer la sauce cacahuete dans un bol. Raper les carottes. Couper le brocoli en bouquets. Hacher echalotes + ail.';
-  else souprPrepDesc = 'Eplucher, couper et assaisonner tous les ingredients du souper. Preparer la marinade si necessaire.';
-  steps.push({ t: 'Preparer les ingredients du souper', d: souprPrepDesc, time: '15 min' });
+  // Step 1: four
+  if (needsFour) {
+    steps.push({
+      title: 'Prechauffer le four',
+      desc: 'Demarrer le four maintenant pendant que tu prepares les ingredients.',
+      tasks: ['Prechauffer a 180 C (saumon, poulet) ou 200 C (granola, cookies, banana bread)'],
+      note: null,
+      time: '5 min'
+    });
+  }
 
-  steps.push({ t: m.souper.name, d: souprGuide.prep, time: souprGuide.time });
-  steps.push({ t: m.collation.name, d: collGuide.prep, time: collGuide.time });
+  // Step 2: diner
+  steps.push({ title: m.diner.name, desc: 'Lancer en premier — cuit seul.', tasks: dinerGuide.tasks, note: dinerGuide.note || null, time: dinerGuide.time });
+
+  // Step 3: matin
+  var matinTasks = matinGuide.tasks ? matinGuide.tasks.slice() : m.matin.steps.slice();
+  if (needsOvernightMatin) matinTasks = ['La pate est prete depuis cette nuit'].concat(matinTasks.filter(function(t) { return t.indexOf('veille') < 0 && t.indexOf('VEILLE') < 0; }));
+  steps.push({ title: m.matin.name, desc: 'Pendant la cuisson du diner.', tasks: matinTasks, note: matinGuide.note || null, time: matinGuide.time });
+
+  // Step 4: dejeuner
+  var dejTasks = needsOvernightDej
+    ? ['Les boites overnight oats sont pretes depuis cette nuit', 'Fondre le chocolat au bain-marie ou micro-ondes (30 sec)', 'Preparer la creme fromage blanc + whey ou autre topping', 'Finaliser chaque boite et remettre au frigo']
+    : (dejGuide.tasks || m.dejeuner.steps);
+  steps.push({ title: m.dejeuner.name, desc: needsOvernightDej ? 'Finaliser les toppings uniquement.' : 'Pendant la cuisson.', tasks: dejTasks, note: dejGuide.note || null, time: needsOvernightDej ? '15 min' : dejGuide.time });
+
+  // Step 5: prep souper
+  var prepTasks = [];
+  if (m.souper.id === 'saumon-panko') prepTasks = ['Couper le saumon en cubes de 3cm', 'Melanger panko + ail + paprika dans une assiette', 'Rouler chaque cube dans la chapelure, disposer sur plaque', 'Couper le concombre en fines tranches', 'Preparer la sauce (sriracha + mayo + fromage blanc + citron vert) dans un bol', 'Cuire le riz complet maintenant (30 min)'];
+  else if (m.souper.id === 'chicken-spicy' || m.souper.id === 'chicken-bbq') prepTasks = ['Couper le poulet en lanieres ou morceaux', 'Preparer la marinade dans un grand bol', 'Enrober le poulet de marinade et frigo (30 min minimum)', 'Cuire le riz complet maintenant (30 min)'];
+  else if (m.souper.id === 'hawaii-chicken') prepTasks = ['Couper le poulet en cubes', 'Assaisonner avec sel + poivre + ail + paprika + poudre chili', 'Cuire le riz complet maintenant (30 min)'];
+  else if (m.souper.id === 'pad-thai-tofu') prepTasks = ['Couper le tofu en cubes de 2cm, secher avec papier absorbant', 'Raper les carottes', 'Couper le brocoli en petits bouquets', 'Hacher les echalotes et l\'ail', 'Preparer la sauce cacahuete dans un bol'];
+  else prepTasks = ['Sortir tous les ingredients du frigo et des placards', 'Eplucher et couper les legumes du souper', 'Assaisonner et preparer les proteines si marinade necessaire'];
+  steps.push({ title: 'Preparer les ingredients du souper', desc: 'Pre-preparation pendant que les plats cuisent.', tasks: prepTasks, note: null, time: '15 min' });
+
+  // Step 6: souper
+  steps.push({ title: m.souper.name, desc: '', tasks: souprGuide.tasks, note: souprGuide.note || null, time: souprGuide.time });
+
+  // Step 7: collation
+  steps.push({ title: m.collation.name, desc: '', tasks: collGuide.tasks, note: collGuide.note || null, time: collGuide.time });
+
+  // Step 8: boxing
   steps.push({
-    t: 'Mise en boites et etiquetage',
-    d: 'Laisser refroidir tous les plats chauds avant de fermer (evite la condensation). Etiqueter avec adhesif : J1, J2, J3, J4 + nom du plat. Mettre les soupes et bouillons J3-J4 au congelateur. Verifier que toutes les boites sont hermetiques. Ranger frigo en ordre de consommation (J1 devant, J4 derriere).',
+    title: 'Mise en boites et etiquetage',
+    desc: 'Derniere etape avant de ranger.',
+    tasks: [
+      'Laisser refroidir tous les plats chauds 15-20 min avant de fermer les boites',
+      'Etiqueter chaque boite : J1, J2, J3, J4' + (days > 4 ? ', J5...' : '') + ' + nom du plat',
+      'Mettre les soupes et bouillons J' + Math.max(3, days - 1) + '-J' + days + ' au congelateur',
+      'Verifier que toutes les boites sont bien hermetiques',
+      'Ranger frigo en ordre de consommation : J1 devant, J' + days + ' derriere'
+    ],
+    note: 'Refroidir avant de fermer = évite la condensation qui accélère la dégradation.',
     time: '10 min'
   });
 
   var total = steps.length;
   var html = '';
   steps.forEach(function(s, i) {
-    html += '<div class="bstep" id="bst-' + i + '" onclick="toggleBatch(' + i + ',' + total + ')">'
-      + '<div class="step-n">' + (i + 1) + '</div>'
-      + '<div><div class="stitle">' + s.t + '</div><div class="sdesc">' + s.d + '</div><span class="stime">' + s.time + '</span></div>'
-      + '</div>';
+    html += makeStep(i, s.title, s.desc, s.tasks, s.note, s.time, false);
   });
+
   document.getElementById('batch-content').innerHTML = html;
   document.getElementById('bpl').textContent = '0 / ' + total + ' etapes';
   updateBP(0, total);
 }
 
-function toggleBatch(i, total) {
-  var el = document.getElementById('bst-' + i);
-  el.classList.toggle('done');
-  updateBP(document.querySelectorAll('.bstep.done').length, total);
+function toggleStep(i) {
+  var body = document.getElementById('sbody-' + i);
+  var arr = document.getElementById('arr-' + i);
+  var open = body.classList.toggle('open');
+  arr.textContent = open ? '▲' : '▼';
 }
 
+function toggleTask(el) {
+  el.classList.toggle('task-done');
+}
+
+function markStepDone(i) {
+  var el = document.getElementById('bst-' + i);
+  el.classList.toggle('done');
+  // Also close the accordion when marking done
+  var body = document.getElementById('sbody-' + i);
+  var arr = document.getElementById('arr-' + i);
+  if (el.classList.contains('done') && body.classList.contains('open')) {
+    body.classList.remove('open');
+    arr.textContent = '▼';
+  }
+  updateBP(document.querySelectorAll('.bstep.done').length, document.querySelectorAll('.bstep').length);
+}
+
+
+
 function updateBP(done, total) {
-  var pct = Math.round(done / total * 100);
+  var pct = total > 0 ? Math.round(done / total * 100) : 0;
   document.getElementById('bp').style.width = pct + '%';
-  document.getElementById('bpl').textContent = done + ' / ' + total + ' etapes' + (done === total ? ' — Session terminee !' : '');
+  document.getElementById('bpl').textContent = done + ' / ' + total + ' etapes' + (done === total && total > 0 ? ' — Session terminee !' : '');
 }
 
 function filterRecipes() {
@@ -1563,6 +2569,7 @@ generateMenu();
   var el = document.getElementById(id);
   if (el) el.addEventListener('change', recalcTargets);
 });
+
 
 </script>
 </body>
