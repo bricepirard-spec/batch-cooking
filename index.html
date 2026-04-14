@@ -5,191 +5,228 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1c1915">
-<title>Batch Cooking — Brice</title>
+<title>Batch Cooking</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Instrument+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --ink: #1c1915;
-  --ink2: #3d3530;
-  --ink3: #6b5f58;
-  --ink4: #9a8e86;
-  --paper: #faf7f2;
-  --paper2: #f3ede3;
-  --paper3: #e6ddd0;
-  --white: #ffffff;
-  --sage: #4e7a52;
-  --sage-light: #eaf3ea;
-  --sage-mid: #a3c9a6;
-  --amber: #b86820;
-  --amber-light: #fdf2e4;
-  --amber-mid: #e8b060;
-  --serif: 'Cormorant Garamond', Georgia, serif;
-  --sans: 'Instrument Sans', system-ui, sans-serif;
-  --r: 8px;
-  --r-lg: 14px;
-  --shadow: 0 1px 8px rgba(28,25,21,0.07);
-  --shadow-md: 0 4px 20px rgba(28,25,21,0.10);
-  --shadow-lg: 0 8px 36px rgba(28,25,21,0.13);
+  --ink:#1c1915;--ink2:#3d3530;--ink3:#6b5f58;--ink4:#9a8e86;
+  --paper:#faf7f2;--paper2:#f3ede3;--paper3:#e6ddd0;--white:#fff;
+  --sage:#4e7a52;--sage-light:#eaf3ea;--sage-mid:#a3c9a6;
+  --amber:#b86820;--amber-light:#fdf2e4;--amber-mid:#e8b060;
+  --rose:#b84040;--rose-light:#fdf0f0;--rose-mid:#e8a0a0;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Instrument Sans',system-ui,sans-serif;
+  --r:8px;--r-lg:14px;
+  --shadow:0 1px 8px rgba(28,25,21,.07);
+  --shadow-md:0 4px 20px rgba(28,25,21,.10);
 }
-* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-html { scroll-behavior: smooth; }
-body { background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 14px; line-height: 1.65; min-height: 100vh; }
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.65;min-height:100vh}
 
 /* HEADER */
-.site-header { background: var(--ink); position: sticky; top: 0; z-index: 100; }
-.header-inner { max-width: 980px; margin: 0 auto; padding: 0 2rem; display: flex; align-items: center; justify-content: space-between; height: 62px; gap: 1rem; }
-.logo-group { display: flex; align-items: baseline; gap: 10px; }
-.logo-name { font-family: var(--serif); font-size: 23px; font-weight: 300; color: var(--paper); font-style: italic; letter-spacing: 0.02em; }
-.logo-sep { color: rgba(255,255,255,0.2); }
-.logo-sub { font-size: 11px; color: var(--ink4); letter-spacing: 0.1em; text-transform: uppercase; }
-.header-pill { font-size: 10px; padding: 4px 12px; border-radius: 100px; border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.3); letter-spacing: 0.05em; white-space: nowrap; }
+.site-header{background:var(--ink);position:sticky;top:0;z-index:100}
+.header-inner{max-width:980px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:62px;gap:1rem}
+.logo-name{font-family:var(--serif);font-size:23px;font-weight:300;color:var(--paper);font-style:italic;letter-spacing:.02em}
+.logo-sep{color:rgba(255,255,255,.2);margin:0 8px}
+.logo-sub{font-size:11px;color:var(--ink4);letter-spacing:.1em;text-transform:uppercase}
+
 
 /* NAV */
-.nav-wrap { background: var(--ink2); position: sticky; top: 62px; z-index: 99; overflow-x: auto; -ms-overflow-style: none; scrollbar-width: none; }
-.nav-wrap::-webkit-scrollbar { display: none; }
-.nav-inner { max-width: 980px; margin: 0 auto; padding: 0 2rem; display: flex; }
-.nav-tab { padding: 13px 20px; font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.38); cursor: pointer; border: none; background: none; white-space: nowrap; border-bottom: 2px solid transparent; transition: all .2s; font-family: var(--sans); letter-spacing: 0.08em; text-transform: uppercase; }
-.nav-tab:hover { color: rgba(255,255,255,0.65); }
-.nav-tab.active { color: var(--paper); border-bottom-color: var(--amber-mid); }
+.nav-wrap{background:var(--ink2);position:sticky;top:62px;z-index:99;overflow-x:auto;-ms-overflow-style:none;scrollbar-width:none}
+.nav-wrap::-webkit-scrollbar{display:none}
+.nav-inner{max-width:980px;margin:0 auto;padding:0 2rem;display:flex}
+.nav-tab{padding:13px 18px;font-size:11px;font-weight:500;color:rgba(255,255,255,.38);cursor:pointer;border:none;background:none;white-space:nowrap;border-bottom:2px solid transparent;transition:all .2s;font-family:var(--sans);letter-spacing:.08em;text-transform:uppercase}
+.nav-tab:hover{color:rgba(255,255,255,.65)}
+.nav-tab.active{color:var(--paper);border-bottom-color:var(--amber-mid)}
 
 /* MAIN */
-.main { max-width: 980px; margin: 0 auto; padding: 2.5rem 2rem; }
-.section { display: none; }
-.section.active { display: block; }
+.main{max-width:980px;margin:0 auto;padding:2.5rem 2rem}
+.section{display:none}.section.active{display:block}
 
 /* PAGE HEADER */
-.pg-head { margin-bottom: 2rem; }
-.pg-title { font-family: var(--serif); font-size: 44px; font-weight: 300; color: var(--ink); letter-spacing: -0.01em; margin-bottom: 4px; line-height: 1.15; }
-.pg-title em { font-style: italic; color: var(--ink3); }
-.pg-sub { font-size: 13px; color: var(--ink4); }
+.pg-head{margin-bottom:2rem}
+.pg-title{font-family:var(--serif);font-size:44px;font-weight:300;color:var(--ink);letter-spacing:-.01em;margin-bottom:4px;line-height:1.15}
+.pg-title em{font-style:italic;color:var(--ink3)}
+.pg-sub{font-size:13px;color:var(--ink4)}
+
+/* PROFILE SECTION */
+.profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem}
+@media(max-width:600px){.profile-grid{grid-template-columns:1fr}}
+.profile-card{background:var(--white);border:1px solid var(--paper3);border-radius:var(--r-lg);padding:1.25rem 1.5rem;box-shadow:var(--shadow)}
+.profile-card h3{font-family:var(--serif);font-size:18px;font-weight:400;color:var(--ink);margin-bottom:1rem;font-style:italic}
+.field{margin-bottom:1rem}
+.field label{display:block;font-size:10px;font-weight:500;color:var(--ink4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px}
+.field input,.field select,.field textarea{width:100%;padding:9px 12px;border:1px solid var(--paper3);border-radius:var(--r);background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:13px;transition:border-color .2s}
+.field input:focus,.field select:focus{outline:none;border-color:var(--amber)}
+.field-row{display:flex;gap:10px}
+.field-row .field{flex:1}
+.field input[type=range]{padding:0;height:4px;accent-color:var(--amber);margin-top:8px}
+.range-val{font-family:var(--serif);font-size:20px;font-weight:400;color:var(--amber);margin-top:4px}
+
+/* MACRO TARGETS CARD */
+.targets-card{background:var(--ink);border-radius:var(--r-lg);padding:1.25rem 1.5rem;color:var(--paper);margin-bottom:1.5rem}
+.targets-card h3{font-family:var(--serif);font-size:18px;font-weight:300;color:var(--paper);margin-bottom:1rem;font-style:italic}
+.targets-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media(max-width:500px){.targets-grid{grid-template-columns:repeat(2,1fr)}}
+.target-item{background:rgba(255,255,255,.06);border-radius:var(--r);padding:10px 12px}
+.target-lbl{font-size:10px;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px}
+.target-val{font-family:var(--serif);font-size:22px;font-weight:300;color:var(--paper);line-height:1}
+.target-val.amber{color:var(--amber-mid)}
+.target-val.sage{color:var(--sage-mid)}
+
+/* INTOLERANCES */
+.intol-grid{display:flex;gap:8px;flex-wrap:wrap}
+.intol-chip{padding:5px 12px;border-radius:100px;border:1.5px solid var(--paper3);background:var(--paper);font-size:12px;color:var(--ink3);cursor:pointer;transition:all .2s;user-select:none}
+.intol-chip.active{background:var(--rose-light);border-color:var(--rose-mid);color:var(--rose)}
+
+/* EXCLUSIONS */
+.exclusion-input{display:flex;gap:8px;margin-bottom:10px}
+.exclusion-input input{flex:1}
+.excl-add-btn{padding:9px 14px;border-radius:var(--r);border:1px solid var(--paper3);background:var(--paper2);color:var(--ink3);font-size:12px;cursor:pointer;white-space:nowrap;font-family:var(--sans);transition:all .2s}
+.excl-add-btn:hover{background:var(--paper3)}
+.excl-tags{display:flex;gap:6px;flex-wrap:wrap}
+.excl-tag{padding:4px 10px;border-radius:100px;background:var(--amber-light);border:1px solid var(--amber-mid);color:var(--amber);font-size:11px;display:flex;align-items:center;gap:5px;cursor:pointer}
+.excl-tag span{color:var(--amber);opacity:.6;font-size:13px;line-height:1}
+
+/* SAVE PROFILE BTN */
+.save-profile-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 26px;border-radius:var(--r);border:none;background:var(--sage);color:white;font-size:13px;font-weight:500;cursor:pointer;transition:all .25s;font-family:var(--sans);box-shadow:0 2px 12px rgba(78,122,82,.35)}
+.save-profile-btn:hover{background:#3d6140;transform:translateY(-1px)}
+.profile-saved-msg{display:none;font-size:13px;color:var(--sage);margin-left:12px;align-items:center;gap:6px}
+.profile-saved-msg.show{display:inline-flex}
 
 /* MODE BAR */
-.mode-bar { display: flex; gap: 6px; margin-bottom: 1.5rem; flex-wrap: wrap; align-items: center; }
-.mode-lbl { font-size: 10px; color: var(--ink4); letter-spacing: .1em; text-transform: uppercase; margin-right: 4px; }
-.mode-btn { padding: 6px 16px; border-radius: 100px; border: 1.5px solid var(--paper3); background: transparent; font-size: 12px; color: var(--ink3); cursor: pointer; transition: all .2s; font-family: var(--sans); }
-.mode-btn:hover { border-color: var(--ink3); color: var(--ink); }
-.mode-btn.active { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.mode-bar{display:flex;gap:6px;margin-bottom:1.5rem;flex-wrap:wrap;align-items:center}
+.mode-lbl{font-size:10px;color:var(--ink4);letter-spacing:.1em;text-transform:uppercase;margin-right:4px}
+.mode-btn{padding:6px 16px;border-radius:100px;border:1.5px solid var(--paper3);background:transparent;font-size:12px;color:var(--ink3);cursor:pointer;transition:all .2s;font-family:var(--sans)}
+.mode-btn:hover{border-color:var(--ink3);color:var(--ink)}
+.mode-btn.active{background:var(--ink);border-color:var(--ink);color:var(--paper)}
 
 /* GEN BTN */
-.gen-btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 26px; border-radius: var(--r); border: none; background: var(--amber); color: white; font-size: 13px; font-weight: 500; cursor: pointer; margin-bottom: 2rem; transition: all .25s; font-family: var(--sans); letter-spacing: .03em; box-shadow: 0 2px 12px rgba(184,104,32,.35); }
-.gen-btn:hover { background: #a05818; box-shadow: 0 5px 22px rgba(184,104,32,.45); transform: translateY(-1px); }
-.gen-btn:active { transform: translateY(0); }
-.gen-btn.loading .spin { animation: spin .5s linear infinite; display: inline-block; }
-@keyframes spin { to { transform: rotate(360deg); } }
+.gen-btn{display:inline-flex;align-items:center;gap:8px;padding:11px 26px;border-radius:var(--r);border:none;background:var(--amber);color:white;font-size:13px;font-weight:500;cursor:pointer;margin-bottom:2rem;transition:all .25s;font-family:var(--sans);box-shadow:0 2px 12px rgba(184,104,32,.35)}
+.gen-btn:hover{background:#a05818;transform:translateY(-1px)}
+.gen-btn:active{transform:translateY(0)}
+.gen-btn.loading .spin{animation:spin .5s linear infinite;display:inline-block}
+@keyframes spin{to{transform:rotate(360deg)}}
 
 /* TOTALS */
-.totals { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-bottom: 1.5rem; }
-.total-card { background: var(--white); border: 1px solid var(--paper3); border-radius: var(--r-lg); padding: 14px 16px; box-shadow: var(--shadow); }
-.t-lbl { font-size: 10px; color: var(--ink4); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 5px; }
-.t-val { font-family: var(--serif); font-size: 24px; font-weight: 400; color: var(--ink); line-height: 1; }
-.t-val.good { color: var(--sage); }
-.t-val.warn { color: var(--amber); }
+.totals{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:1.5rem}
+.total-card{background:var(--white);border:1px solid var(--paper3);border-radius:var(--r-lg);padding:14px 16px;box-shadow:var(--shadow)}
+.t-lbl{font-size:10px;color:var(--ink4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px}
+.t-val{font-family:var(--serif);font-size:24px;font-weight:400;color:var(--ink);line-height:1}
+.t-val.good{color:var(--sage)}.t-val.warn{color:var(--amber)}.t-val.over{color:var(--rose)}
+
+/* PROGRESS BAR IN TOTALS */
+.t-bar{height:3px;background:var(--paper3);border-radius:100px;margin-top:6px;overflow:hidden}
+.t-bar-fill{height:100%;border-radius:100px;transition:width .4s ease;background:var(--sage)}
+.t-bar-fill.warn{background:var(--amber)}.t-bar-fill.over{background:var(--rose)}
 
 /* ALERTS */
-.alert { padding: 10px 14px; border-radius: var(--r); font-size: 12.5px; margin-bottom: 1.5rem; display: flex; align-items: flex-start; gap: 8px; line-height: 1.5; }
-.alert.green { background: var(--sage-light); border: 1px solid var(--sage-mid); color: var(--sage); }
-.alert.amber { background: var(--amber-light); border: 1px solid var(--amber-mid); color: var(--amber); }
+.alert{padding:10px 14px;border-radius:var(--r);font-size:12.5px;margin-bottom:1.5rem;display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+.alert.green{background:var(--sage-light);border:1px solid var(--sage-mid);color:var(--sage)}
+.alert.amber{background:var(--amber-light);border:1px solid var(--amber-mid);color:var(--amber)}
+.alert.rose{background:var(--rose-light);border:1px solid var(--rose-mid);color:var(--rose)}
 
 /* MENU SLOTS */
-.menu-slots { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 2rem; }
-@media (max-width: 700px) { .menu-slots { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 380px) { .menu-slots { grid-template-columns: 1fr; } }
-.meal-slot { background: var(--white); border: 1px solid var(--paper3); border-radius: var(--r-lg); padding: 14px; box-shadow: var(--shadow); transition: box-shadow .2s; }
-.meal-slot.has-omega { border-color: var(--sage-mid); background: #fafdf8; }
-.slot-ico { font-size: 18px; margin-bottom: 7px; display: block; line-height: 1; }
-.slot-cat { font-size: 9px; font-weight: 500; color: var(--ink4); text-transform: uppercase; letter-spacing: .12em; margin-bottom: 4px; }
-.slot-name { font-size: 12px; color: var(--ink); line-height: 1.4; }
-.slot-macro { font-size: 11px; color: var(--ink4); margin-top: 5px; }
+.menu-slots{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:2rem}
+@media(max-width:700px){.menu-slots{grid-template-columns:1fr 1fr}}
+@media(max-width:380px){.menu-slots{grid-template-columns:1fr}}
+.meal-slot{background:var(--white);border:1px solid var(--paper3);border-radius:var(--r-lg);padding:14px;box-shadow:var(--shadow)}
+.meal-slot.has-omega{border-color:var(--sage-mid);background:#fafdf8}
+.slot-ico{font-size:18px;margin-bottom:7px;display:block;line-height:1}
+.slot-cat{font-size:9px;font-weight:500;color:var(--ink4);text-transform:uppercase;letter-spacing:.12em;margin-bottom:4px}
+.slot-name{font-size:12px;color:var(--ink);line-height:1.4}
+.slot-macro{font-size:11px;color:var(--ink4);margin-top:5px}
 
 /* DIVIDER */
-.divider { height: 1px; background: linear-gradient(to right, var(--paper3), transparent); margin: 1.75rem 0; }
+.divider{height:1px;background:linear-gradient(to right,var(--paper3),transparent);margin:1.75rem 0}
 
 /* RECIPE CARDS */
-.rc { background: var(--white); border: 1px solid var(--paper3); border-radius: var(--r-lg); padding: 1.1rem 1.25rem; margin-bottom: 10px; box-shadow: var(--shadow); transition: box-shadow .2s; }
-.rc:hover { box-shadow: var(--shadow-md); }
-.rc.omega { border-left: 3px solid var(--sage); }
-.card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; }
-.card-meta { flex: 1; min-width: 0; }
-.card-cat-lbl { font-size: 9px; font-weight: 500; color: var(--ink4); text-transform: uppercase; letter-spacing: .12em; margin-bottom: 4px; }
-.card-name { font-family: var(--serif); font-size: 19px; font-weight: 400; color: var(--ink); margin-bottom: 8px; line-height: 1.25; }
-.badges { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 8px; }
-.badge { font-size: 10px; padding: 2px 8px; border-radius: 100px; font-weight: 400; letter-spacing: .02em; }
-.badge.anti { background: var(--sage-light); color: var(--sage); border: 1px solid var(--sage-mid); }
-.badge.proto { background: #e8f0f8; color: #2a5a8a; border: 1px solid #9abcd8; }
-.badge.vegan { background: #f0f8e8; color: #3a6a2a; border: 1px solid #9acc88; }
-.badge.omega { background: var(--amber-light); color: var(--amber); border: 1px solid var(--amber-mid); }
-.badge.gf { background: #f8f4e4; color: #7a6020; border: 1px solid #ccc070; }
-.badge.dessert { background: #f8e8f4; color: #8a2a7a; border: 1px solid #d490c4; }
-.badge.apero { background: #e8f4f8; color: #1a6070; border: 1px solid #80c0d0; }
-.ai-row { display: flex; gap: 4px; align-items: center; margin-bottom: 8px; }
-.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--paper3); border: 1px solid var(--paper3); }
-.dot.on { background: var(--sage); border-color: var(--sage); }
-.ai-src { font-size: 10px; color: var(--ink4); margin-left: 8px; }
-.card-macros { font-size: 12px; color: var(--ink4); display: flex; gap: 10px; flex-wrap: wrap; }
-.card-macros b { color: var(--ink2); font-weight: 500; }
-.expand-btn { background: none; border: 1px solid var(--paper3); border-radius: var(--r); color: var(--ink3); font-size: 11.5px; cursor: pointer; padding: 7px 14px; white-space: nowrap; transition: all .2s; font-family: var(--sans); flex-shrink: 0; }
-.expand-btn:hover { background: var(--paper2); color: var(--ink); border-color: var(--ink4); }
-.rd { display: none; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--paper2); animation: fd .2s ease; }
-.rd.open { display: block; }
-@keyframes fd { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
-.tip-box { background: var(--sage-light); border: 1px solid var(--sage-mid); border-radius: var(--r); padding: 9px 13px; font-size: 12px; color: var(--sage); margin-bottom: 12px; line-height: 1.55; }
-.recipe-desc { font-family: var(--serif); font-size: 15px; font-style: italic; color: var(--ink3); margin-bottom: 14px; line-height: 1.55; font-weight: 300; }
-.db { margin-bottom: 14px; }
-.db h4 { font-size: 9.5px; font-weight: 500; color: var(--ink4); text-transform: uppercase; letter-spacing: .12em; margin-bottom: 8px; padding-bottom: 5px; border-bottom: 1px solid var(--paper2); }
-.db ul { list-style: none; font-size: 13px; color: var(--ink2); line-height: 1.9; }
-.db ul li { padding-left: 14px; position: relative; }
-.db ul li::before { content: "·"; position: absolute; left: 3px; color: var(--ink4); }
-.db ol { list-style: none; counter-reset: st; padding: 0; }
-.db ol li { counter-increment: st; font-size: 13px; color: var(--ink2); line-height: 1.7; padding: 7px 0 7px 30px; position: relative; border-bottom: 1px solid var(--paper2); }
-.db ol li:last-child { border-bottom: none; }
-.db ol li::before { content: counter(st); position: absolute; left: 0; top: 9px; font-family: var(--serif); font-size: 15px; color: var(--amber); font-weight: 400; width: 22px; text-align: center; }
+.rc{background:var(--white);border:1px solid var(--paper3);border-radius:var(--r-lg);padding:1.1rem 1.25rem;margin-bottom:10px;box-shadow:var(--shadow);transition:box-shadow .2s}
+.rc:hover{box-shadow:var(--shadow-md)}
+.rc.omega{border-left:3px solid var(--sage)}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:14px}
+.card-meta{flex:1;min-width:0}
+.card-cat-lbl{font-size:9px;font-weight:500;color:var(--ink4);text-transform:uppercase;letter-spacing:.12em;margin-bottom:4px}
+.card-name{font-family:var(--serif);font-size:19px;font-weight:400;color:var(--ink);margin-bottom:8px;line-height:1.25}
+.badges{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:8px}
+.badge{font-size:10px;padding:2px 8px;border-radius:100px;font-weight:400}
+.badge.anti{background:var(--sage-light);color:var(--sage);border:1px solid var(--sage-mid)}
+.badge.proto{background:#e8f0f8;color:#2a5a8a;border:1px solid #9abcd8}
+.badge.vegan{background:#f0f8e8;color:#3a6a2a;border:1px solid #9acc88}
+.badge.omega{background:var(--amber-light);color:var(--amber);border:1px solid var(--amber-mid)}
+.badge.gf{background:#f8f4e4;color:#7a6020;border:1px solid #ccc070}
+.badge.dessert{background:#f8e8f4;color:#8a2a7a;border:1px solid #d490c4}
+.badge.apero{background:#e8f4f8;color:#1a6070;border:1px solid #80c0d0}
+.badge.exclu{background:var(--rose-light);color:var(--rose);border:1px solid var(--rose-mid)}
+.ai-row{display:flex;gap:4px;align-items:center;margin-bottom:8px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--paper3);border:1px solid var(--paper3)}
+.dot.on{background:var(--sage);border-color:var(--sage)}
+.ai-src{font-size:10px;color:var(--ink4);margin-left:8px}
+.card-macros{font-size:12px;color:var(--ink4);display:flex;gap:10px;flex-wrap:wrap}
+.card-macros b{color:var(--ink2);font-weight:500}
+.expand-btn{background:none;border:1px solid var(--paper3);border-radius:var(--r);color:var(--ink3);font-size:11.5px;cursor:pointer;padding:7px 14px;white-space:nowrap;transition:all .2s;font-family:var(--sans);flex-shrink:0}
+.expand-btn:hover{background:var(--paper2);color:var(--ink)}
+.rd{display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--paper2)}
+.rd.open{display:block;animation:fd .2s ease}
+@keyframes fd{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+.tip-box{background:var(--sage-light);border:1px solid var(--sage-mid);border-radius:var(--r);padding:9px 13px;font-size:12px;color:var(--sage);margin-bottom:12px;line-height:1.55}
+.recipe-desc{font-family:var(--serif);font-size:15px;font-style:italic;color:var(--ink3);margin-bottom:14px;line-height:1.55;font-weight:300}
+.portion-note{font-size:12px;color:var(--amber);background:var(--amber-light);border:1px solid var(--amber-mid);border-radius:var(--r);padding:6px 10px;margin-bottom:12px}
+.db{margin-bottom:14px}
+.db h4{font-size:9.5px;font-weight:500;color:var(--ink4);text-transform:uppercase;letter-spacing:.12em;margin-bottom:8px;padding-bottom:5px;border-bottom:1px solid var(--paper2)}
+.db ul{list-style:none;font-size:13px;color:var(--ink2);line-height:1.9}
+.db ul li{padding-left:14px;position:relative}
+.db ul li::before{content:"·";position:absolute;left:3px;color:var(--ink4)}
+.db ol{list-style:none;counter-reset:st;padding:0}
+.db ol li{counter-increment:st;font-size:13px;color:var(--ink2);line-height:1.7;padding:7px 0 7px 30px;position:relative;border-bottom:1px solid var(--paper2)}
+.db ol li:last-child{border-bottom:none}
+.db ol li::before{content:counter(st);position:absolute;left:0;top:9px;font-family:var(--serif);font-size:15px;color:var(--amber);width:22px;text-align:center}
 
 /* FILTER BAR */
-.filter-bar { background: var(--white); border: 1px solid var(--paper3); border-radius: var(--r-lg); padding: 14px 18px; margin-bottom: 1.5rem; box-shadow: var(--shadow); display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
-.filter-bar label { font-size: 10px; color: var(--ink4); letter-spacing: .08em; text-transform: uppercase; }
-.filter-bar select { font-size: 12.5px; padding: 7px 10px; border-radius: var(--r); border: 1px solid var(--paper3); background: var(--paper); color: var(--ink2); font-family: var(--sans); cursor: pointer; }
-.filter-bar select:focus { outline: 2px solid var(--amber); outline-offset: 2px; }
-.cat-hdr { font-family: var(--serif); font-size: 22px; font-weight: 300; font-style: italic; color: var(--ink3); padding: 18px 0 10px; border-bottom: 1px solid var(--paper3); margin-bottom: 12px; margin-top: 6px; }
-.cat-hdr:first-child { padding-top: 0; margin-top: 0; }
+.filter-bar{background:var(--white);border:1px solid var(--paper3);border-radius:var(--r-lg);padding:14px 18px;margin-bottom:1.5rem;box-shadow:var(--shadow);display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.filter-bar label{font-size:10px;color:var(--ink4);letter-spacing:.08em;text-transform:uppercase}
+.filter-bar select{font-size:12.5px;padding:7px 10px;border-radius:var(--r);border:1px solid var(--paper3);background:var(--paper);color:var(--ink2);font-family:var(--sans);cursor:pointer}
+.cat-hdr{font-family:var(--serif);font-size:22px;font-weight:300;font-style:italic;color:var(--ink3);padding:18px 0 10px;border-bottom:1px solid var(--paper3);margin-bottom:12px;margin-top:6px}
+.cat-hdr:first-child{padding-top:0;margin-top:0}
 
 /* SHOPPING */
-.shop-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; }
-.shop-cat { background: var(--white); border: 1px solid var(--paper3); border-radius: var(--r-lg); padding: 16px; box-shadow: var(--shadow); }
-.shop-cat h4 { font-size: 10px; font-weight: 500; color: var(--ink4); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--paper2); }
-.shop-cat ul { list-style: none; font-size: 13px; line-height: 2.1; color: var(--ink3); }
-.shop-cat ul li { cursor: pointer; transition: color .15s; display: flex; align-items: center; gap: 9px; }
-.shop-cat ul li:hover { color: var(--ink); }
-.shop-cat ul li.checked { text-decoration: line-through; color: var(--ink4); }
-.shop-cat ul li::before { content: ''; width: 15px; height: 15px; border: 1.5px solid var(--paper3); border-radius: 4px; flex-shrink: 0; transition: all .15s; background: var(--paper); }
-.shop-cat ul li.checked::before { background: var(--sage); border-color: var(--sage); }
-.price-box { margin-top: 1.25rem; background: var(--amber-light); border: 1px solid var(--amber-mid); border-radius: var(--r-lg); padding: 16px 20px; }
-.price-main { font-family: var(--serif); font-size: 30px; font-weight: 400; color: var(--amber); line-height: 1; }
-.price-sub { font-size: 12px; color: var(--ink4); margin-top: 3px; }
+.shop-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.shop-cat{background:var(--white);border:1px solid var(--paper3);border-radius:var(--r-lg);padding:16px;box-shadow:var(--shadow)}
+.shop-cat h4{font-size:10px;font-weight:500;color:var(--ink4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--paper2)}
+.shop-cat ul{list-style:none;font-size:13px;line-height:2.1;color:var(--ink3)}
+.shop-cat ul li{cursor:pointer;transition:color .15s;display:flex;align-items:center;gap:9px}
+.shop-cat ul li:hover{color:var(--ink)}
+.shop-cat ul li.checked{text-decoration:line-through;color:var(--ink4)}
+.shop-cat ul li::before{content:'';width:15px;height:15px;border:1.5px solid var(--paper3);border-radius:4px;flex-shrink:0;background:var(--paper);transition:all .15s}
+.shop-cat ul li.checked::before{background:var(--sage);border-color:var(--sage)}
+.price-box{margin-top:1.25rem;background:var(--amber-light);border:1px solid var(--amber-mid);border-radius:var(--r-lg);padding:16px 20px}
+.price-main{font-family:var(--serif);font-size:30px;font-weight:400;color:var(--amber);line-height:1}
+.price-sub{font-size:12px;color:var(--ink4);margin-top:3px}
 
 /* BATCH */
-.batch-meta { font-size: 12px; color: var(--ink4); margin-bottom: 10px; }
-.prog-wrap { background: var(--paper3); border-radius: 100px; height: 3px; margin-bottom: 1.75rem; overflow: hidden; }
-.prog-bar { height: 100%; background: linear-gradient(90deg, var(--sage), var(--amber)); border-radius: 100px; transition: width .5s cubic-bezier(.4,0,.2,1); width: 0%; }
-.bstep { display: flex; gap: 14px; align-items: flex-start; background: var(--white); border: 1px solid var(--paper3); border-radius: var(--r-lg); padding: 14px 16px; margin-bottom: 8px; cursor: pointer; transition: all .2s; box-shadow: var(--shadow); }
-.bstep:hover { box-shadow: var(--shadow-md); }
-.bstep.done { opacity: .4; box-shadow: none; }
-.bstep.done .step-n { color: var(--sage); }
-.bstep.done .stitle { text-decoration: line-through; }
-.step-n { font-family: var(--serif); font-size: 22px; font-weight: 300; color: var(--amber); min-width: 26px; line-height: 1.2; }
-.stitle { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 3px; }
-.sdesc { font-size: 12px; color: var(--ink3); line-height: 1.55; }
-.stime { font-size: 10px; color: var(--ink4); background: var(--paper2); padding: 2px 9px; border-radius: 100px; display: inline-block; margin-top: 5px; letter-spacing: .04em; }
+.batch-meta{font-size:12px;color:var(--ink4);margin-bottom:10px}
+.prog-wrap{background:var(--paper3);border-radius:100px;height:3px;margin-bottom:1.75rem;overflow:hidden}
+.prog-bar{height:100%;background:linear-gradient(90deg,var(--sage),var(--amber));border-radius:100px;transition:width .5s ease;width:0%}
+.bstep{display:flex;gap:14px;align-items:flex-start;background:var(--white);border:1px solid var(--paper3);border-radius:var(--r-lg);padding:14px 16px;margin-bottom:8px;cursor:pointer;transition:all .2s;box-shadow:var(--shadow)}
+.bstep:hover{box-shadow:var(--shadow-md)}
+.bstep.done{opacity:.4;box-shadow:none}
+.bstep.done .step-n{color:var(--sage)}
+.bstep.done .stitle{text-decoration:line-through}
+.step-n{font-family:var(--serif);font-size:22px;font-weight:300;color:var(--amber);min-width:26px;line-height:1.2}
+.stitle{font-size:13px;font-weight:500;color:var(--ink);margin-bottom:3px}
+.sdesc{font-size:12px;color:var(--ink3);line-height:1.55}
+.stime{font-size:10px;color:var(--ink4);background:var(--paper2);padding:2px 9px;border-radius:100px;display:inline-block;margin-top:5px}
 
-.empty { font-size: 13px; color: var(--ink4); padding: 2rem 0; font-style: italic; }
+.empty{font-size:13px;color:var(--ink4);padding:2rem 0;font-style:italic}
 
-@media (max-width: 600px) {
-  .main { padding: 1.5rem 1.25rem; }
-  .header-inner { padding: 0 1.25rem; }
-  .nav-inner { padding: 0 1.25rem; }
-  .totals { grid-template-columns: repeat(3, 1fr); }
-  .pg-title { font-size: 32px; }
-  .header-pill { display: none; }
+@media(max-width:600px){
+  .main{padding:1.5rem 1.25rem}
+  .header-inner{padding:0 1.25rem}
+  .nav-inner{padding:0 1.25rem}
+  .totals{grid-template-columns:repeat(3,1fr)}
+  .pg-title{font-size:32px}
 }
 </style>
 </head>
@@ -197,30 +234,32 @@ body { background: var(--paper); color: var(--ink); font-family: var(--sans); fo
 
 <header class="site-header">
   <div class="header-inner">
-    <div class="logo-group">
+    <div style="display:flex;align-items:baseline;gap:10px">
       <span class="logo-name">Batch Cooking</span>
       <span class="logo-sep">·</span>
-      <span class="logo-sub">Brice</span>
+      <span class="logo-sub" id="header-name">Mon profil</span>
     </div>
-    <span class="header-pill">91 recettes · Mat Resume + Alex PYX</span>
+    
   </div>
 </header>
 
 <nav class="nav-wrap">
   <div class="nav-inner">
-    <button class="nav-tab active" onclick="showTab('menu',this)">Menu 4 jours</button>
-    <button class="nav-tab" onclick="showTab('recipes',this)">Bibliothèque</button>
-    <button class="nav-tab" onclick="showTab('shopping',this)">Courses</button>
-    <button class="nav-tab" onclick="showTab('batch',this)">Batch cooking</button>
+    <button class="nav-tab active" data-tab="menu" onclick="showTab('menu',this)">Menu 4 jours</button>
+    <button class="nav-tab" data-tab="recipes" onclick="showTab('recipes',this)">Bibliothèque</button>
+    <button class="nav-tab" data-tab="shopping" onclick="showTab('shopping',this)">Courses</button>
+    <button class="nav-tab" data-tab="batch" onclick="showTab('batch',this)">Batch cooking</button>
+    <button class="nav-tab" data-tab="profile" onclick="showTab('profile',this)">Mon profil</button>
   </div>
 </nav>
 
 <main class="main">
 
+  <!-- MENU -->
   <section id="menu" class="section active">
     <div class="pg-head">
-      <div class="pg-title">Mon <em>menu</em> de la semaine</div>
-      <div class="pg-sub">Tous les repas identiques × 4 jours &nbsp;·&nbsp; ~2000 kcal &nbsp;·&nbsp; 120–150g protéines</div>
+      <div class="pg-title" id="menu-title">Mon <em>menu</em> de la semaine</div>
+      <div class="pg-sub" id="menu-sub">Configure ton profil pour personnaliser les quantités et les recommandations.</div>
     </div>
     <div class="mode-bar">
       <span class="mode-lbl">Mode</span>
@@ -232,10 +271,10 @@ body { background: var(--paper); color: var(--ink); font-family: var(--sans); fo
       <span class="spin">↻</span> Générer un menu
     </button>
     <div class="totals">
-      <div class="total-card"><div class="t-lbl">Calories</div><div class="t-val" id="t-kcal">—</div></div>
-      <div class="total-card"><div class="t-lbl">Protéines</div><div class="t-val" id="t-prot">—</div></div>
-      <div class="total-card"><div class="t-lbl">Glucides</div><div class="t-val" id="t-gluc">—</div></div>
-      <div class="total-card"><div class="t-lbl">Lipides</div><div class="t-val" id="t-lip">—</div></div>
+      <div class="total-card"><div class="t-lbl">Calories</div><div class="t-val" id="t-kcal">—</div><div class="t-bar"><div class="t-bar-fill" id="bar-kcal" style="width:0%"></div></div></div>
+      <div class="total-card"><div class="t-lbl">Protéines</div><div class="t-val" id="t-prot">—</div><div class="t-bar"><div class="t-bar-fill" id="bar-prot" style="width:0%"></div></div></div>
+      <div class="total-card"><div class="t-lbl">Glucides</div><div class="t-val" id="t-gluc">—</div><div class="t-bar"><div class="t-bar-fill" id="bar-gluc" style="width:0%"></div></div></div>
+      <div class="total-card"><div class="t-lbl">Lipides</div><div class="t-val" id="t-lip">—</div><div class="t-bar"><div class="t-bar-fill" id="bar-lip" style="width:0%"></div></div></div>
       <div class="total-card"><div class="t-lbl">Score inflam.</div><div class="t-val" id="t-ai">—</div></div>
       <div class="total-card"><div class="t-lbl">Budget 4j</div><div class="t-val" id="t-budget">—</div></div>
     </div>
@@ -245,10 +284,11 @@ body { background: var(--paper); color: var(--ink); font-family: var(--sans); fo
     <div id="menu-detail"></div>
   </section>
 
+  <!-- RECIPES -->
   <section id="recipes" class="section">
     <div class="pg-head">
       <div class="pg-title">La <em>bibliothèque</em></div>
-      <div class="pg-sub">91 recettes &nbsp;·&nbsp; Filtrer, explorer, s'inspirer</div>
+      <div class="pg-sub">91 recettes · Filtrer, explorer, s'inspirer</div>
     </div>
     <div class="filter-bar">
       <label>Catégorie</label>
@@ -279,6 +319,7 @@ body { background: var(--paper); color: var(--ink); font-family: var(--sans); fo
     <div id="recipe-list"></div>
   </section>
 
+  <!-- SHOPPING -->
   <section id="shopping" class="section">
     <div class="pg-head">
       <div class="pg-title">Liste de <em>courses</em></div>
@@ -286,14 +327,153 @@ body { background: var(--paper); color: var(--ink); font-family: var(--sans); fo
     <div id="shopping-content"><div class="empty">Génère d'abord un menu depuis l'onglet "Menu 4 jours".</div></div>
   </section>
 
+  <!-- BATCH -->
   <section id="batch" class="section">
     <div class="pg-head">
       <div class="pg-title">Session <em>batch</em></div>
-      <div class="pg-sub">Coche les étapes en cuisine &nbsp;·&nbsp; durée estimée ~2h30</div>
+      <div class="pg-sub">Coche les étapes en cuisine · durée estimée ~2h30</div>
     </div>
     <div class="batch-meta" id="bpl">0 / 9 étapes</div>
     <div class="prog-wrap"><div class="prog-bar" id="bp"></div></div>
     <div id="batch-content"><div class="empty">Génère d'abord un menu depuis l'onglet "Menu 4 jours".</div></div>
+  </section>
+
+  <!-- PROFILE -->
+  <section id="profile" class="section">
+    <div class="pg-head">
+      <div class="pg-title">Mon <em>profil</em></div>
+      <div class="pg-sub">Renseigne tes informations pour des menus et portions personnalisés.</div>
+    </div>
+
+    <!-- Résumé des objectifs calculés -->
+    <div class="targets-card" id="targets-card">
+      <h3>Tes objectifs calculés</h3>
+      <div class="targets-grid">
+        <div class="target-item"><div class="target-lbl">Calories / jour</div><div class="target-val amber" id="tgt-kcal">—</div></div>
+        <div class="target-item"><div class="target-lbl">Protéines / jour</div><div class="target-val sage" id="tgt-prot">—</div></div>
+        <div class="target-item"><div class="target-lbl">Glucides / jour</div><div class="target-val" id="tgt-gluc">—</div></div>
+        <div class="target-item"><div class="target-lbl">Lipides / jour</div><div class="target-val" id="tgt-lip">—</div></div>
+      </div>
+    </div>
+
+    <div class="profile-grid">
+
+      <!-- Identité -->
+      <div class="profile-card">
+        <h3>Identité</h3>
+        <div class="field">
+          <label>Prénom</label>
+          <input type="text" id="p-name" placeholder="Ton prénom">
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>Âge</label>
+            <input type="number" id="p-age" placeholder="31" min="15" max="80">
+          </div>
+          <div class="field">
+            <label>Sexe</label>
+            <select id="p-sex">
+              <option value="m">Homme</option>
+              <option value="f">Femme</option>
+            </select>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label>Taille (cm)</label>
+            <input type="number" id="p-height" placeholder="178" min="140" max="220">
+          </div>
+          <div class="field">
+            <label>Poids (kg)</label>
+            <input type="number" id="p-weight" placeholder="68" min="40" max="200">
+          </div>
+        </div>
+      </div>
+
+      <!-- Objectifs -->
+      <div class="profile-card">
+        <h3>Objectifs</h3>
+        <div class="field">
+          <label>Objectif principal</label>
+          <select id="p-goal" onchange="recalcTargets()">
+            <option value="maintain">Maintien du poids</option>
+            <option value="mass">Prise de masse musculaire</option>
+            <option value="cut">Perte de poids / sèche</option>
+            <option value="health">Santé & anti-inflammation</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Niveau d'activité</label>
+          <select id="p-activity" onchange="recalcTargets()">
+            <option value="1.2">Sédentaire (bureau, peu de sport)</option>
+            <option value="1.375">Légèrement actif (1-3j sport/sem)</option>
+            <option value="1.55">Modérément actif (3-5j sport/sem)</option>
+            <option value="1.725">Très actif (6-7j sport/sem)</option>
+            <option value="1.9">Extrêmement actif (sport quotidien)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Protéines cibles (g/kg poids)</label>
+          <input type="range" id="p-prot-ratio" min="1.2" max="2.5" step="0.1" value="1.8" oninput="updateProtRatio(this)">
+          <div class="range-val"><span id="prot-ratio-val">1.8</span> g/kg</div>
+        </div>
+      </div>
+
+      <!-- Intolerances -->
+      <div class="profile-card">
+        <h3>Intolérances & préférences</h3>
+        <div class="field">
+          <label>Régime alimentaire</label>
+          <select id="p-diet">
+            <option value="omnivore">Omnivore</option>
+            <option value="vegan">Vegan</option>
+            <option value="vegetarian">Végétarien</option>
+            <option value="pescatarian">Pescatarien (poisson ok)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Intolérances</label>
+          <div class="intol-grid" id="intol-grid">
+            <div class="intol-chip" data-intol="gluten" onclick="toggleIntol(this)">Gluten</div>
+            <div class="intol-chip" data-intol="lactose" onclick="toggleIntol(this)">Lactose</div>
+            <div class="intol-chip" data-intol="noix" onclick="toggleIntol(this)">Noix / fruits à coque</div>
+            <div class="intol-chip" data-intol="oeuf" onclick="toggleIntol(this)">Oeufs</div>
+            <div class="intol-chip" data-intol="soja" onclick="toggleIntol(this)">Soja / tofu</div>
+            <div class="intol-chip" data-intol="poisson" onclick="toggleIntol(this)">Poisson</div>
+            <div class="intol-chip" data-intol="fruit-mer" onclick="toggleIntol(this)">Fruits de mer</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Exclusions -->
+      <div class="profile-card">
+        <h3>Aliments à exclure</h3>
+        <div class="field">
+          <label>Ajouter un aliment à exclure</label>
+          <div class="exclusion-input">
+            <input type="text" id="excl-input" placeholder="Ex: mangue, tajine..." onkeydown="if(event.key==='Enter')addExclusion()">
+            <button class="excl-add-btn" onclick="addExclusion()">Ajouter</button>
+          </div>
+          <div class="excl-tags" id="excl-tags"></div>
+        </div>
+        <div class="field" style="margin-top:1rem">
+          <label>Pathologie / focus santé</label>
+          <select id="p-health">
+            <option value="none">Aucune</option>
+            <option value="inflammation">Inflammation chronique / articulations</option>
+            <option value="digestif">Troubles digestifs / intestins</option>
+            <option value="cardiovasculaire">Santé cardiovasculaire</option>
+            <option value="fatigue">Fatigue chronique</option>
+            <option value="peau">Problèmes de peau (eczéma, acné)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:12px;margin-top:0.5rem">
+      <button class="save-profile-btn" onclick="saveProfile()">✓ Enregistrer le profil</button>
+      <span class="profile-saved-msg" id="saved-msg">✓ Profil enregistré — les menus sont maintenant personnalisés</span>
+    </div>
   </section>
 
 </main>
@@ -770,13 +950,227 @@ but:'Dessert frais anti-inflammatoire — framboises + basilic + cannelle + huil
 ]
 };
 
-let mode = 'anti';
-let currentMenu = null;
+// ============================================================
+// PROFILE SYSTEM
+// ============================================================
+
+var DEFAULT_PROFILE = {
+  name: '', age: 31, sex: 'm', height: 178, weight: 68,
+  goal: 'health', activity: '1.2', protRatio: 1.8,
+  diet: 'omnivore', intolerances: [], exclusions: [],
+  health: 'inflammation'
+};
+
+var profile = DEFAULT_PROFILE;
+
+function loadProfile() {
+  try {
+    var saved = localStorage.getItem('batchcooking_profile');
+    if (saved) {
+      profile = JSON.parse(saved);
+      populateProfileForm();
+      recalcTargets();
+      updateHeaderName();
+    }
+  } catch(e) {}
+}
+
+function saveProfile() {
+  profile.name = document.getElementById('p-name').value.trim();
+  profile.age = parseInt(document.getElementById('p-age').value) || 31;
+  profile.sex = document.getElementById('p-sex').value;
+  profile.height = parseInt(document.getElementById('p-height').value) || 178;
+  profile.weight = parseInt(document.getElementById('p-weight').value) || 68;
+  profile.goal = document.getElementById('p-goal').value;
+  profile.activity = document.getElementById('p-activity').value;
+  profile.protRatio = parseFloat(document.getElementById('p-prot-ratio').value) || 1.8;
+  profile.diet = document.getElementById('p-diet').value;
+  profile.health = document.getElementById('p-health').value;
+  profile.intolerances = [];
+  document.querySelectorAll('.intol-chip.active').forEach(function(c) {
+    profile.intolerances.push(c.getAttribute('data-intol'));
+  });
+  try { localStorage.setItem('batchcooking_profile', JSON.stringify(profile)); } catch(e) {}
+  recalcTargets();
+  updateHeaderName();
+  var msg = document.getElementById('saved-msg');
+  msg.classList.add('show');
+
+  setTimeout(function() { msg.classList.remove('show'); }, 3000);
+}
+
+function populateProfileForm() {
+  document.getElementById('p-name').value = profile.name || '';
+  document.getElementById('p-age').value = profile.age || '';
+  document.getElementById('p-sex').value = profile.sex || 'm';
+  document.getElementById('p-height').value = profile.height || '';
+  document.getElementById('p-weight').value = profile.weight || '';
+  document.getElementById('p-goal').value = profile.goal || 'health';
+  document.getElementById('p-activity').value = profile.activity || '1.2';
+  document.getElementById('p-prot-ratio').value = profile.protRatio || 1.8;
+  document.getElementById('prot-ratio-val').textContent = profile.protRatio || 1.8;
+  document.getElementById('p-diet').value = profile.diet || 'omnivore';
+  document.getElementById('p-health').value = profile.health || 'none';
+  document.querySelectorAll('.intol-chip').forEach(function(c) {
+    if (profile.intolerances && profile.intolerances.indexOf(c.getAttribute('data-intol')) >= 0) {
+      c.classList.add('active');
+    }
+  });
+  renderExclusionTags();
+}
+
+function updateHeaderName() {
+  var nameEl = document.getElementById('header-name');
+  if (nameEl) nameEl.textContent = profile.name || 'Mon profil';
+}
+
+function calcTargets() {
+  var w = profile.weight || 68;
+  var h = profile.height || 178;
+  var a = profile.age || 31;
+  var sex = profile.sex || 'm';
+  var act = parseFloat(profile.activity) || 1.2;
+  var goal = profile.goal || 'maintain';
+  var protRatio = parseFloat(profile.protRatio) || 1.8;
+
+  // Mifflin-St Jeor BMR
+  var bmr = sex === 'm'
+    ? (10 * w) + (6.25 * h) - (5 * a) + 5
+    : (10 * w) + (6.25 * h) - (5 * a) - 161;
+
+  var tdee = Math.round(bmr * act);
+
+  // Adjust by goal
+  var kcal = tdee;
+  if (goal === 'mass') kcal = Math.round(tdee * 1.15);
+  else if (goal === 'cut') kcal = Math.round(tdee * 0.85);
+  else if (goal === 'health') kcal = tdee;
+
+  var prot = Math.round(w * protRatio);
+  var lip = Math.round(kcal * 0.28 / 9);
+  var gluc = Math.round((kcal - (prot * 4) - (lip * 9)) / 4);
+
+  return { kcal: kcal, prot: prot, gluc: gluc, lip: lip };
+}
+
+function recalcTargets() {
+  var t = calcTargets();
+  document.getElementById('tgt-kcal').textContent = t.kcal + ' kcal';
+  document.getElementById('tgt-prot').textContent = t.prot + 'g';
+  document.getElementById('tgt-gluc').textContent = t.gluc + 'g';
+  document.getElementById('tgt-lip').textContent = t.lip + 'g';
+  // Update profile fields live
+  profile.age = parseInt(document.getElementById('p-age').value) || profile.age;
+  profile.sex = document.getElementById('p-sex').value;
+  profile.height = parseInt(document.getElementById('p-height').value) || profile.height;
+  profile.weight = parseInt(document.getElementById('p-weight').value) || profile.weight;
+  profile.activity = document.getElementById('p-activity').value;
+  profile.goal = document.getElementById('p-goal').value;
+  profile.protRatio = parseFloat(document.getElementById('p-prot-ratio').value) || profile.protRatio;
+}
+
+function updateProtRatio(el) {
+  document.getElementById('prot-ratio-val').textContent = parseFloat(el.value).toFixed(1);
+  recalcTargets();
+}
+
+function toggleIntol(el) {
+  el.classList.toggle('active');
+}
+
+function addExclusion() {
+  var input = document.getElementById('excl-input');
+  var val = input.value.trim().toLowerCase();
+  if (!val) return;
+  if (!profile.exclusions) profile.exclusions = [];
+  if (profile.exclusions.indexOf(val) < 0) {
+    profile.exclusions.push(val);
+    renderExclusionTags();
+  }
+  input.value = '';
+}
+
+function removeExclusion(val) {
+  profile.exclusions = profile.exclusions.filter(function(e) { return e !== val; });
+  renderExclusionTags();
+}
+
+function renderExclusionTags() {
+  var container = document.getElementById('excl-tags');
+  if (!profile.exclusions || !profile.exclusions.length) {
+    container.innerHTML = '<span style="font-size:12px;color:var(--ink4);font-style:italic">Aucun aliment exclu</span>';
+    return;
+  }
+  var html = '';
+  profile.exclusions.forEach(function(e) {
+    html += '<div class="excl-tag" onclick="removeExclusion(\'' + e + '\')">' + e + '<span>×</span></div>';
+  });
+  container.innerHTML = html;
+}
+
+function recipeMatchesProfile(r) {
+  var diet = profile.diet || 'omnivore';
+  var intol = profile.intolerances || [];
+  var excl = profile.exclusions || [];
+
+  // Diet filter
+  if (diet === 'vegan' && r.badges.indexOf('vegan') < 0) return false;
+  if (diet === 'vegetarian' && (r.cat === 'souper') && (r.badges.indexOf('vegan') < 0 && r.badges.indexOf('vegetarian') < 0)) {
+    var hasAnimal = /poulet|viande|boeuf|canard|maquereau|saumon|sardine|crevettes|saint-jacques/.test(r.name.toLowerCase());
+    if (hasAnimal) return false;
+  }
+  if (diet === 'pescatarian') {
+    var hasLandMeat = /poulet|viande|boeuf|canard/.test(r.name.toLowerCase());
+    if (hasLandMeat) return false;
+  }
+
+  // Intolerances
+  if (intol.indexOf('gluten') >= 0 && r.badges.indexOf('gf') < 0) {
+    var hasGluten = /pâtes|pain|farine de blé|seigle|orge|épeautre/.test(r.ingr.join(' ').toLowerCase());
+    if (hasGluten) return false;
+  }
+  if (intol.indexOf('soja') >= 0 || intol.indexOf('tofu') >= 0) {
+    var hasSoja = /tofu|soja|edamame/.test(r.ingr.join(' ').toLowerCase());
+    if (hasSoja) return false;
+  }
+  if (intol.indexOf('poisson') >= 0) {
+    var hasFish = /saumon|maquereau|sardine|thon|maquereau/.test(r.name.toLowerCase() + r.ingr.join(' ').toLowerCase());
+    if (hasFish) return false;
+  }
+  if (intol.indexOf('fruit-mer') >= 0) {
+    var hasSea = /crevettes|saint-jacques|langoustine|moule/.test(r.name.toLowerCase() + r.ingr.join(' ').toLowerCase());
+    if (hasSea) return false;
+  }
+
+  // Exclusions
+  for (var i = 0; i < excl.length; i++) {
+    var ex = excl[i].toLowerCase();
+    var nameCheck = r.name.toLowerCase().indexOf(ex) >= 0;
+    var ingrCheck = r.ingr.join(' ').toLowerCase().indexOf(ex) >= 0;
+    if (nameCheck || ingrCheck) return false;
+  }
+
+  return true;
+}
+
+function getPortionMultiplier() {
+  // All recipes serve 4 by default
+  // Returns multiplier based on profile vs default 2000kcal
+  var targets = calcTargets();
+  return targets.kcal / 2000;
+}
+
+// ============================================================
+// CORE APP
+// ============================================================
+
+var mode = 'anti';
+var currentMenu = null;
 
 function showTab(n, el) {
   document.querySelectorAll('.nav-tab').forEach(function(t) { t.classList.remove('active'); });
   document.querySelectorAll('.section').forEach(function(s) { s.classList.remove('active'); });
-  el.classList.add('active');
+  if (el) el.classList.add('active');
   document.getElementById(n).classList.add('active');
 }
 
@@ -788,10 +1182,20 @@ function setMode(m, el) {
 }
 
 function pick(arr) {
-  if (mode === 'mix') return arr[Math.floor(Math.random() * arr.length)];
-  var sorted = arr.slice().sort(function(a, b) { return mode === 'proto' ? b.prot - a.prot : b.ai - a.ai; });
+  // Filter by profile first
+  var filtered = arr.filter(function(r) { return recipeMatchesProfile(r); });
+  if (!filtered.length) filtered = arr; // fallback
+  if (mode === 'mix') return filtered[Math.floor(Math.random() * filtered.length)];
+  var sorted = filtered.slice().sort(function(a, b) {
+    // For health/inflammation goal, boost anti-inflam score
+    var goal = profile.goal || 'health';
+    if (mode === 'proto' || goal === 'mass') return b.prot - a.prot;
+    return b.ai - a.ai;
+  });
   var top = mode === 'proto' ? sorted[0].prot : sorted[0].ai;
-  var pool = sorted.filter(function(r) { return (mode === 'proto' ? r.prot : r.ai) >= top - 1; });
+  var pool = sorted.filter(function(r) {
+    return (mode === 'proto' ? r.prot : r.ai) >= top - 1;
+  });
   return pool[Math.floor(Math.random() * pool.length)];
 }
 
@@ -816,7 +1220,7 @@ function generateMenu() {
 
 function renderMenu(m) {
   var icons = { matin: '☀', dejeuner: '🌿', diner: '🍵', souper: '🫙', collation: '✦' };
-  var labels = { matin: 'Matin', dejeuner: 'Déjeuner', diner: 'Dîner', souper: 'Souper', collation: 'Collation' };
+  var labels = { matin: 'Matin', dejeuner: 'Dejeuner', diner: 'Diner', souper: 'Souper', collation: 'Collation' };
   var all = Object.values(m);
   var totK = all.reduce(function(s, r) { return s + r.kcal; }, 0);
   var totP = all.reduce(function(s, r) { return s + r.prot; }, 0);
@@ -826,20 +1230,37 @@ function renderMenu(m) {
   var budget4 = Math.round(all.reduce(function(s, r) { return s + r.budget; }, 0) * 4);
   var hasOmega = all.some(function(r) { return r.omega3; });
 
-  document.getElementById('t-kcal').textContent = Math.round(totK) + ' kcal';
-  var pEl = document.getElementById('t-prot');
-  pEl.textContent = Math.round(totP) + 'g';
-  pEl.className = 't-val' + (totP >= 120 ? ' good' : totP < 100 ? ' warn' : '');
-  document.getElementById('t-gluc').textContent = Math.round(totG) + 'g';
-  document.getElementById('t-lip').textContent = Math.round(totL) + 'g';
+  var targets = calcTargets();
+
+  function setTotal(id, barId, val, target) {
+    var el = document.getElementById(id);
+    var bar = document.getElementById(barId);
+    var pct = target > 0 ? Math.min(Math.round(val / target * 100), 120) : 0;
+    var cls = pct > 110 ? 'over' : pct < 75 ? 'warn' : 'good';
+    el.textContent = val + (id === 't-kcal' ? ' kcal' : 'g');
+    el.className = 't-val ' + cls;
+    if (bar) {
+      bar.style.width = Math.min(pct, 100) + '%';
+      bar.className = 't-bar-fill ' + cls;
+    }
+  }
+
+  setTotal('t-kcal', 'bar-kcal', Math.round(totK), targets.kcal);
+  setTotal('t-prot', 'bar-prot', Math.round(totP), targets.prot);
+  setTotal('t-gluc', 'bar-gluc', Math.round(totG), targets.gluc);
+  setTotal('t-lip', 'bar-lip', Math.round(totL), targets.lip);
+
   var aiEl = document.getElementById('t-ai');
   aiEl.textContent = totAI.toFixed(1) + '/5';
   aiEl.className = 't-val' + (totAI >= 4 ? ' good' : totAI < 3 ? ' warn' : '');
-  document.getElementById('t-budget').textContent = '~' + Math.round(budget4 * .9) + '–' + budget4 + '€';
+  document.getElementById('t-budget').textContent = '~' + Math.round(budget4 * .9) + '-' + budget4 + 'EUR';
 
-  document.getElementById('omega-alert').innerHTML = hasOmega
-    ? '<div class="alert green">✓ Ce menu contient des oméga-3 — essentiel pour l\'épaule.</div>'
-    : '<div class="alert amber">⚠ Pas d\'oméga-3. Régénère ou ajoute saumon / maquereau / sardines cette semaine.</div>';
+  // Omega alert
+  var alerts = [];
+  if (!hasOmega) alerts.push('<div class="alert amber">⚠ Pas d\'omeg-3 dans ce menu. Regenere ou ajoute saumon / maquereau / sardines cette semaine.</div>');
+  if (profile.health === 'inflammation') alerts.push('<div class="alert green">✓ Mode anti-inflammation actif — recettes filtrées pour ton profil.</div>');
+  if (Math.round(totP) < targets.prot * 0.85) alerts.push('<div class="alert amber">⚠ Proteines insuffisantes (' + Math.round(totP) + 'g) par rapport a ton objectif (' + targets.prot + 'g). Regenere ou ajoute une collation proteinee.</div>');
+  document.getElementById('omega-alert').innerHTML = alerts.join('');
 
   var slotsHtml = '';
   Object.entries(m).forEach(function(entry) {
@@ -854,14 +1275,15 @@ function renderMenu(m) {
   document.getElementById('menu-slots').innerHTML = slotsHtml;
 
   var detailHtml = '';
+  var labelsFull = { matin: 'Matin', dejeuner: 'Dejeuner', diner: 'Diner', souper: 'Souper', collation: 'Collation' };
   Object.entries(m).forEach(function(entry) {
-    detailHtml += rcCard(entry[1], labels[entry[0]]);
+    detailHtml += rcCard(entry[1], labelsFull[entry[0]]);
   });
   document.getElementById('menu-detail').innerHTML = detailHtml;
 }
 
 function rcCard(r, lbl) {
-  var bm = { anti: 'Anti-inflam', proto: 'Protéiné', vegan: 'Vegan', omega: 'Oméga-3', gf: 'Sans gluten', dessert: 'Dessert', apero: 'Apéro' };
+  var bm = { anti: 'Anti-inflam', proto: 'Proteine', vegan: 'Vegan', omega: 'Omega-3', gf: 'Sans gluten', dessert: 'Dessert', apero: 'Apero' };
   var lblHtml = lbl ? '<div class="card-cat-lbl">' + lbl + '</div>' : '';
   var badgesHtml = '';
   r.badges.forEach(function(b) { badgesHtml += '<span class="badge ' + b + '">' + (bm[b] || b) + '</span>'; });
@@ -871,6 +1293,16 @@ function rcCard(r, lbl) {
   r.ingr.forEach(function(item) { ingrHtml += '<li>' + item + '</li>'; });
   var stepsHtml = '';
   r.steps.forEach(function(step) { stepsHtml += '<li>' + step + '</li>'; });
+
+  // Portion note
+  var targets = calcTargets();
+  var mult = targets.kcal / 2000;
+  var portionNote = '';
+  if (Math.abs(mult - 1) > 0.1 && profile.weight) {
+    var adjKcal = Math.round(r.kcal * mult);
+    portionNote = '<div class="portion-note">📐 Pour ton profil (' + targets.kcal + ' kcal/jour) : ajuste les quantites x' + mult.toFixed(1) + ' — environ ' + adjKcal + ' kcal/portion.</div>';
+  }
+
   return '<div class="rc' + (r.omega3 ? ' omega' : '') + '">'
     + '<div class="card-top"><div class="card-meta">'
     + lblHtml
@@ -879,30 +1311,31 @@ function rcCard(r, lbl) {
     + '<div class="ai-row">' + dotsHtml + '<span class="ai-src">' + (r.src === 'mat' ? 'Mat Resume' : 'Alex PYX') + '</span></div>'
     + '<div class="card-macros"><b>' + r.kcal + '</b> kcal · Prot <b>' + r.prot + 'g</b> · Gluc <b>' + r.gluc + 'g</b> · Lip <b>' + r.lip + 'g</b></div>'
     + '</div>'
-    + '<button class="expand-btn" onclick="toggleCard(this)">Voir la recette ↓</button>'
+    + '<button class="expand-btn" onclick="toggleCard(this)">Voir la recette</button>'
     + '</div>'
     + '<div class="rd">'
+    + portionNote
     + '<div class="tip-box">💡 ' + r.tip + '</div>'
     + '<div class="recipe-desc">' + r.but + '</div>'
-    + '<div class="db"><h4>Ingrédients</h4><ul>' + ingrHtml + '</ul></div>'
-    + '<div class="db"><h4>Préparation</h4><ol>' + stepsHtml + '</ol></div>'
+    + '<div class="db"><h4>Ingredients</h4><ul>' + ingrHtml + '</ul></div>'
+    + '<div class="db"><h4>Preparation</h4><ol>' + stepsHtml + '</ol></div>'
     + '</div></div>';
 }
 
 function toggleCard(btn) {
   var d = btn.closest('.rc').querySelector('.rd');
   var open = d.classList.toggle('open');
-  btn.textContent = open ? 'Masquer ↑' : 'Voir la recette ↓';
+  btn.textContent = open ? 'Masquer' : 'Voir la recette';
 }
 
 function buildShopping(menu) {
   var cats = {
-    '🐟 Protéines &amp; poissons': [],
-    '🥦 Légumes &amp; fruits': [],
-    '🌾 Féculents &amp; céréales': [],
-    '🥛 Produits frais &amp; laits végétaux': [],
-    '❄️ Surgelés': [],
-    '🧂 Épicerie &amp; condiments': []
+    'Proteines et poissons': [],
+    'Legumes et fruits': [],
+    'Feculent et cereales': [],
+    'Produits frais et laits vegetaux': [],
+    'Surgeles': [],
+    'Epicerie et condiments': []
   };
   var seen = {};
   Object.values(menu).forEach(function(r) {
@@ -911,177 +1344,156 @@ function buildShopping(menu) {
       if (seen[k]) return;
       seen[k] = true;
       var il = item.toLowerCase();
-      if (/saumon|maquereau|sardine|poulet|viande|tofu|crevettes|saint-jacques/.test(il)) cats['🐟 Protéines &amp; poissons'].push(item);
-      else if (/surgelé|surgel/.test(il)) cats['❄️ Surgelés'].push(item);
-      else if (/riz|avoine|pâtes|farine|sarrasin|quinoa|flocons|panko/.test(il)) cats['🌾 Féculents &amp; céréales'].push(item);
-      else if (/lait|amande|noisette|fromage|yaourt|cottage|whey|crème coco|beurre amande|beurre cacah|cream cheese/.test(il)) cats['🥛 Produits frais &amp; laits végétaux'].push(item);
-      else if (/carotte|épinard|brocoli|patate|oignon|ail|citron|orange|banane|pomme|poire|concombre|tomate|avocat|betterave|potiron|grenade|pastèque|framboise|myrtille|fraise|coriandre|persil|basilic|gingembre frais|aubergine|champignon/.test(il)) cats['🥦 Légumes &amp; fruits'].push(item);
-      else cats['🧂 Épicerie &amp; condiments'].push(item);
+      if (/saumon|maquereau|sardine|poulet|viande|tofu|crevettes|saint-jacques/.test(il)) cats['Proteines et poissons'].push(item);
+      else if (/surgel/.test(il)) cats['Surgeles'].push(item);
+      else if (/riz|avoine|pates|farine|sarrasin|quinoa|flocons|panko/.test(il)) cats['Feculent et cereales'].push(item);
+      else if (/lait|amande|noisette|fromage|yaourt|cottage|whey|creme coco|beurre amande|beurre cacah|cream cheese/.test(il)) cats['Produits frais et laits vegetaux'].push(item);
+      else if (/carotte|epinard|brocoli|patate|oignon|ail|citron|orange|banane|pomme|poire|concombre|tomate|avocat|betterave|potiron|grenade|pasteque|framboise|myrtille|fraise|coriandre|persil|basilic|gingembre|aubergine|champignon/.test(il)) cats['Legumes et fruits'].push(item);
+      else cats['Epicerie et condiments'].push(item);
     });
   });
   var budget4 = Math.round(Object.values(menu).reduce(function(s, r) { return s + r.budget; }, 0) * 4);
-  var hasOmega = Object.values(menu).some(function(r) { return r.omega3; });
-  var html = hasOmega
-    ? '<div class="alert green" style="margin-bottom:1.5rem">✓ Ce menu contient des oméga-3 — essentiel pour l\'épaule.</div>'
-    : '<div class="alert amber" style="margin-bottom:1.5rem">⚠ Pas d\'oméga-3. Pense à ajouter saumon ou maquereau cette semaine.</div>';
-  html += '<div class="shop-grid">';
+  var catIcons = {
+    'Proteines et poissons': '🐟',
+    'Legumes et fruits': '🥦',
+    'Feculent et cereales': '🌾',
+    'Produits frais et laits vegetaux': '🥛',
+    'Surgeles': '❄️',
+    'Epicerie et condiments': '🧂'
+  };
+  var html = '<div class="shop-grid">';
   Object.entries(cats).forEach(function(entry) {
     var cat = entry[0], items = entry[1];
     if (!items.length) return;
-    html += '<div class="shop-cat"><h4>' + cat + '</h4><ul>';
+    html += '<div class="shop-cat"><h4>' + catIcons[cat] + ' ' + cat + '</h4><ul>';
     items.forEach(function(item) { html += '<li onclick="this.classList.toggle(\'checked\')">' + item + '</li>'; });
     html += '</ul></div>';
   });
   html += '</div>';
-  html += '<div class="price-box"><div class="price-main">~' + Math.round(budget4 * .9) + '–' + budget4 + ' €</div><div class="price-sub">Budget estimé 4 jours · Colruyt</div></div>';
+  html += '<div class="price-box"><div class="price-main">~' + Math.round(budget4 * .9) + '-' + budget4 + ' EUR</div><div class="price-sub">Budget estime 4 jours · Colruyt</div></div>';
   document.getElementById('shopping-content').innerHTML = html;
 }
 
 function buildBatch(menu) {
   var m = menu;
-
-  // Detailed batch instructions per recipe
   var batchGuide = {
-    // MATINS
-    'jus-citron-gi': { prep: 'Porter 1 tasse eau + 2cc gingembre + 2cc miel à ébullition 5 min. Laisser refroidir 15 min. Verser dans une carafe de 1L avec le jus des 3 citrons, 1 pincée curcuma, 1 pincée poivre noir, et le reste de l\'eau froide. Fermer et mettre au frigo.', time: '15 min' },
-    'jus-feu': { prep: 'Éplucher 2 carottes, presser 2 oranges et 1 citron. Tout mettre dans le mixeur avec gingembre râpé et eau. Mixer 2 min. Filtrer dans un chinois ou un torchon propre en pressant bien. Verser en carafe. Frigo.', time: '10 min' },
-    'jus-roi': { prep: 'Éplucher la betterave crue et la couper en morceaux. Épépiner la grenade. Couper ¼ pastèque. Tout mixer avec gingembre, ½ citron et cannelle. Filtrer dans chinois. Verser en carafe. Frigo.', time: '12 min' },
-    'jus-acne': { prep: 'Presser ½ citron et 1 orange. Mixer avec gingembre, curcuma, poivre noir et eau de coco. Filtrer. Mettre en fioles ou carafe. Frigo.', time: '8 min' },
-    'jus-hormonal': { prep: 'Mixer fraises + framboises + ½ concombre + gingembre + ½ citron + miel. Filtrer dans chinois. Verser en carafe. Frigo. À consommer dans les 3 jours.', time: '8 min' },
-    'jus-skinglow': { prep: 'Couper 1 concombre, ½ branche céleri, ½ ananas. Mixer avec menthe et eau. Filtrer dans chinois. Verser en carafe. Frigo.', time: '8 min' },
-    'jus-antiage': { prep: 'Mixer 100g fruits rouges + 100g ananas + menthe fraîche + eau. Filtrer. Mettre en carafe. Frigo. À consommer dans les 2 jours.', time: '8 min' },
-    'jus-blueglow': { prep: 'Couper 1 concombre, 1 pomme verte. Mixer avec citron vert, 10g spiruline bleue et eau. Filtrer soigneusement dans chinois. Verser en carafe. Frigo.', time: '10 min' },
-    'mat-super-supra': { prep: 'Sortir les fruits congelés du congélateur 5 min avant. Mixer pomme + banane + poire + myrtilles congelées avec eau et jus d\'orange. Répartir en 4 portions. Frigo ou congélateur selon le jour de consommation.', time: '8 min' },
-    'mat-mamba': { prep: 'Mixer banane + jus orange + filet citron + 1cc curcuma + 10 framboises + 450ml lait coco + pincée piment Cayenne. Répartir en 4 portions. Frigo — se conserve 2 jours max donc faire 2 batches de 2 jours.', time: '8 min' },
-    'limonade-matk': { prep: 'Porter 1 tasse eau + 2cc gingembre + 2cc miel à ébullition 5 min. Refroidir 15 min. Dans carafe : sirop filtré + jus des 3 citrons + 1L eau froide. Frigo. Durer 4 jours facilement.', time: '15 min' },
-    'mat-resurrection': { prep: 'Mixer banane + 4 pêches + 500ml lait noisette + ½ jus citron + ½cc gingembre. Répartir en 4 portions. Frigo — se conserve 2 jours max, faire en 2 batches.', time: '8 min' },
-
-    // DEJEUNERS
-    'oats-framboise': { prep: 'Dans grand saladier : écraser 200g framboises à la fourchette. Ajouter 200g flocons avoine, 400ml lait amande, sirop érable, vanille, whey (ou fromage blanc). Bien mélanger. Répartir en 4 boîtes. Fondre 20g chocolat 70%+ avec 5g huile coco au bain-marie. Dans chaque boîte : verser 150g fromage blanc 0%, quelques framboises fraîches, filet de chocolat fondu. Fermer et frigo. Prêt dès le lendemain matin.', time: '20 min' },
-    'oats-banana-choco': { prep: 'Écraser 1 banane dans un saladier. Ajouter 200g flocons avoine, whey chocolat (ou fromage blanc), sirop érable, vanille, 120ml lait amande. Bien mélanger. Répartir en 4 boîtes. Mélanger 600g fromage blanc + 40g beurre cacahuète naturel. Fondre 20g chocolat noir 70%+. Dans chaque boîte : verser crème fromage blanc-cacahuète, puis filet de chocolat fondu. Fermer, frigo.', time: '20 min' },
-    'oats-apple': { prep: 'Éplucher et couper 200g pommes en cubes. Faire rôtir à feu doux dans une poêle avec 1cc miel 8 min. Garder ¼ de côté. Dans 4 boîtes : répartir 50g flocons avoine + 1cs fromage blanc + 30ml lait amande + cuillère de pommes + sirop érable. Bien mélanger. Mélanger 200g fromage blanc + whey + cannelle généreuse. Verser par-dessus chaque boîte. Ajouter les pommes réservées + cannelle. Frigo.', time: '25 min' },
-    'oats-cheesecake': { prep: 'Dans grand bol : mélanger flocons avoine + graines chia + whey + jus citron + zestes + sirop érable + lait amande. Répartir en 4 boîtes. Repos 1h frigo. Mélanger yaourt grec + cream cheese + chocolat blanc fondu + jus citron. Verser par-dessus les flocons reposés. Ajouter zestes et copeaux chocolat blanc. Frigo.', time: '20 min' },
-    'oats-carrot-cake': { prep: 'Râper 80g carottes. Dans grand bol : mélanger flocons avoine + lait amande + carottes râpées + raisins secs + sirop érable + vanille + noix de pécan. Répartir en 4 boîtes. Repos 1h frigo. Fondre chocolat blanc. Mélanger fromage blanc + whey. Verser sur flocons. Ajouter chocolat blanc fondu + noix de pécan concassées. Frigo.', time: '20 min' },
-    'oats-myrtille-blend': { prep: 'Tout mettre dans le blender : fromage blanc + myrtilles + lait amande + flocons avoine + whey + sirop érable + vanille. Mixer 1-2 min jusqu\'à texture onctueuse. Répartir en 4 boîtes. Ajouter quelques myrtilles fraîches sur le dessus. Frigo. LE plus simple et le meilleur pour l\'épaule.', time: '10 min' },
-    'oats-raffaello': { prep: 'Dans bol : mélanger flocons avoine + lait amande + graines chia + vanille + purée amande + 20g noix coco râpée. Répartir en 4 boîtes. Repos 1h frigo. Fondre chocolat blanc. Mélanger fromage blanc + reste noix coco + whey. Verser sur flocons. Ajouter chocolat blanc fondu + noisettes concassées. Frigo.', time: '20 min' },
-    'oats-snickers': { prep: 'Dans bol : mélanger flocons avoine + lait amande + 200g fromage blanc + 10g beurre cacahuète + miel + 20g cacahuètes. Répartir en 4 boîtes. Repos 1h frigo. Mélanger 600g fromage blanc + 30g beurre cacahuète + whey. Fondre chocolat noir avec huile coco. Verser crème sur flocons. Finir avec chocolat fondu + cacahuètes concassées. Frigo.', time: '20 min' },
-    'oats-pistamat': { prep: 'Dans bol : mélanger flocons avoine + lait amande + sirop érable + vanille + 20g matcha en poudre + 20g pistaches. Répartir en 4 boîtes. Repos 1h frigo. Mélanger fromage blanc + whey. Fondre crème pistache + chocolat blanc ensemble. Verser fromage blanc sur flocons, puis mélange pistache-chocolat fondu. Ajouter pistaches concassées. Frigo.', time: '20 min' },
-    'porridge-quinoa': { prep: 'Dans un bol, mélanger flocons quinoa + graines chia + graines lin + vanille + cannelle. Porter 100ml eau + 150ml lait noisettes à ébullition. Réduire feu doux, ajouter le mélange quinoa-chia, remuer 4 min. Ajouter banane écrasée + 50ml lait noisettes restant, remuer 2 min. Préparer 4 bols avec le porridge. Garnir chaque bol : fruits rouges + beurre amande + miel. Recouvrir de film, frigo. Réchauffer légèrement le matin ou manger froid.', time: '20 min' },
-    'pancakes-sarrasin': { prep: 'VEILLE AU SOIR : mélanger 1 bol farine sarrasin + sel + 1cc miel + banane écrasée + 1cs cacao + 1cc cannelle + 1cc poudre à lever. Verser progressivement le lait noisettes en remuant de bas en haut. Couvrir, laisser au frigo toute la nuit. // MATIN DU BATCH : sortir la pâte. Chauffer poêle avec filet huile olive feu vif. Verser une petite louche, réduire feu moyen, cuire ~3 min sans retourner. Répéter. Empiler les pancakes avec papier cuisson entre chaque. Conserver en boîte hermétique. Préparer garniture myrtilles + miel en petit pot.', time: '25 min' },
-    'mat-marmelade-pancakes': { prep: 'MARMELADE (30 min avant les pancakes) : éplucher et couper poires + pommes en morceaux. Dans casserole : cuire avec eau + cannelle + gingembre + curcuma + vanille 20 min feu doux. Ajouter myrtilles 5 dernières minutes. Verser en bocal. // PANCAKES : préparer pâte sarrasin la veille. Cuire les pancakes le matin du batch. Répartir pancakes en 4 portions avec papier cuisson entre chaque. Bocal de marmelade commun pour les 4 jours.', time: '35 min' },
-    'mat-blinis-guac': { prep: 'PÂTE BLINIS (veille) : mélanger sarrasin + sel + miel + poudre à lever + lait amande progressivement. Repos frigo toute la nuit. // GUACAMOLE (jour J) : écraser 2 avocats + sel + poivre + curcuma + huile olive + jus citron. Mettre en petit pot hermétique, couvrir d\'un filet citron pour ne pas noircir. Frigo. // BLINIS : cuire dans poêle huilée. Répartir en 4 portions. Frigo.', time: '25 min' },
-    'mat-muesli': { prep: 'Dans 4 bols : mettre 40g flocons avoine + 1cs graines chia + ½cc vanille. Couper ¾ de la poire en morceaux et répartir. Verser 200ml lait noisettes dans chaque. Mélanger. Recouvrir de film. Frigo minimum 2h. Préparer séparément un petit pot avec date + figue séchée + myrtilles + mûres + purée de cacahuète pour la garniture du lendemain.', time: '15 min' },
-    'mat-pudding-matin': { prep: 'Dans mixeur : mettre lait noisettes + noix cajou + noix macadamia + noix entières + graines chia + graines lin + noix Brésil + cannelle + cacao + jus citron. Ajouter 8 myrtilles et 8 framboises. Mixer 4 min jusqu\'à texture onctueuse. Répartir en 4 bols. Ajouter myrtilles + framboises fraîches sur le dessus. Couvrir de film. Frigo.', time: '15 min' },
-    'choco-noyade-oranges': { prep: 'Peler 6 oranges, couper en tranches fines dans un plat creux. Verser jus de 2 oranges. Couvrir de film, frigo 20 min. Faire fondre 150g chocolat noir dans casserole à feu doux. Sortir les assiettes du frigo, verser le chocolat fondu sur les tranches juste avant de servir. NB : le chocolat fondu ne se conserve pas — préparer le chocolat chaque jour ou servir à temperature ambiante.', time: '20 min' },
-    'mat-tartare-fruite': { prep: 'Écraser 1 pêche à la fourchette avec 2cc miel + 3 feuilles menthe ciselées + filet citron. Éplucher et couper poires + pêche restante en petits cubes. Mélanger délicatement avec la purée de pêche-miel. Répartir en 4 ramequins. Couvrir de film. Frigo 30 min minimum. Ajouter myrtilles fraîches + feuille menthe au moment de servir.', time: '15 min' },
-
-    // DINERS
-    'soupe-popeye': { prep: 'Éplucher et couper l\'oignon, les 4 gousses d\'ail, la patate douce en dés. Dans grande casserole : chauffer 1,5L bouillon légumes. Ajouter oignon + ail + patate douce + 1cc curcuma + 1cc gingembre + origan + laurier. Porter à ébullition, cuire 25 min couverts. Ajouter haricots blancs égouttés + 400g épinards. Cuire 5 min. Saler, poivrer, filet huile olive, persil ciselé. Goûter et ajuster l\'assaisonnement. Répartir en 4 boîtes de 400ml. Laisser refroidir avant de fermer. Frigo 4 jours ou congeler J3-J4.', time: '40 min' },
-    'soupe-carotte-coco': { prep: 'Éplucher 1kg carottes, couper en rondelles. Dans grande casserole : carottes + 1,2L eau + sel. Cuire 35 min feu doux jusqu\'à très tendres. Hors du feu : ajouter 3 oignons épluchés et coupés + 1cc cumin + 1cc cannelle + persil + coriandre + 4 gouttes citron + 15cl lait coco. Mixer au mixeur plongeant jusqu\'à texture lisse et onctueuse. Goûter, ajuster sel. Répartir en 4 portions. Refroidir avant frigo.', time: '45 min' },
-    'soupe-brocoli': { prep: 'Couper 400g brocolis en bouquets, éplucher et couper 150g carottes + 150g pommes de terre. Éplucher 3 échalotes. Dans grande casserole huilée : faire revenir échalotes 6 min feu doux. Ajouter tous les légumes + 1L eau + sel + feuilles de basilic. Couvrir, cuire 35 min. Mixer au mixeur plongeant. Poivrer. Goûter, ajuster. Répartir en 4 portions. Refroidir avant frigo. C\'est la soupe la plus rapide — idéale pour lancer en premier.', time: '45 min' },
-    'soupe-potiron': { prep: 'Éplucher 1,5kg potiron, retirer graines, couper la chair en morceaux de 3cm. Dans grande casserole huilée : faire revenir 2 oignons + 1 échalote + 1cc gingembre + 1cc curcuma 4 min. Ajouter potiron 5 min en remuant. Verser 0,75L eau + sel + basilic + 1cc cannelle. Couvrir, cuire 20 min. Ajouter 1cc huile noix + 1cc poivre noir + 2 gouttes citron. Mixer au mixeur plongeant jusqu\'à texture très onctueuse. Goûter. Répartir en 4 portions. Refroidir avant frigo.', time: '40 min' },
-    'soupe-chou': { prep: 'Couper 1 tête chou-fleur en fleurettes. Éplucher et couper 3 carottes en rondelles. Dans grande casserole : bouillon légumes + chou-fleur + carottes + oignon + ail + épinards. Porter à ébullition, cuire 25 min couverts. Mixer avec 1cc curcuma + 1cc gingembre + sel + poivre. Ajouter basilic ciselé. Goûter, ajuster. Répartir en 4 portions. Refroidir avant frigo.', time: '35 min' },
-    'soupe-betterave': { prep: 'Peler 5 betteraves crues, couper en petits dés. Éplucher et couper 7 échalotes. Dans grande casserole : mettre betteraves + échalotes + 1L eau. Cuire 35 min feu moyen jusqu\'à betteraves très tendres. Retirer du feu. Mixer tout au mixeur plongeant. Ajouter jus de 3 oranges + 1cc miel + jus d\'1 citron + sel + poivre. Mixer à nouveau. Mettre au frigo 45 min. Verser 20cl crème coco + persil ciselé au moment de servir — garder la crème coco séparée.', time: '50 min' },
-    'soupe-champi': { prep: 'Éplucher et émincer oignon + échalote + ail. Laver et trancher champignons de Paris + shiitaké. Dans casserole huilée : faire revenir oignon + échalote + ail 5 min feu moyen. Ajouter champignons + shiitaké, cuire 5 min en remuant. Ajouter 1cc gingembre + 2 tasses lait épeautre ou amande + laurier. Mijoter 3 min. Ajouter persil ciselé + poivre. Goûter, ajuster. Répartir en 4 portions. Refroidir avant frigo.', time: '25 min' },
-    'soupe-matador-lentilles': { prep: 'Rincer 500g lentilles, cuire dans casserole d\'eau bouillante 23 min. Éplucher et couper oignons + carotte + patates douces. Faire revenir oignons 6 min dans poêle huilée. Cuire patates douces 20 min dans casserole. Dans grande marmite : rassembler lentilles cuites + oignons + carotte + patates + 1L eau + 1L boisson riz + jus citron + coriandre + persil + menthe + 1cc cumin. Cuire ensemble 10 min. Sel, poivre, filet huile olive. Répartir en 4 portions. Frigo.', time: '45 min' },
-    'gazpacho': { prep: 'Blanchir 1kg tomates 40s eau bouillante, retirer peau et pépins. Couper poivron rouge en morceaux, retirer graines. Dans grand saladier : tomates + concombre (non pelé) + 4 oignons + 2 gousses ail + sel + poivre + 3cs huile olive + 2cs citron + 3 feuilles basilic. Mixer au mixeur plongeant ou blender jusqu\'à texture très lisse. Ajouter 3 gouttes tabasco + ½cc miel. Remixer. Goûter, ajuster sel. Répartir en 4 portions. Frigo minimum 2h avant de servir froid. C\'est meilleur très frais.', time: '25 min' },
-    'matgic-chili': { prep: 'Rincer 1/3 tasse lentilles, cuire 23 min dans casserole eau bouillante. Chauffer 400ml bouillon légumes. Éplucher et couper 1 oignon + 3 pommes de terre + 2 gousses ail. Ajouter dans bouillon avec champignons lavés, 4cs concentré tomate, basilic, 1 pincée curcuma, 1 poivron rouge coupé, sel. Cuire 20 min feu moyen. Ajouter haricots rouges + lentilles + 1cs beurre cacahuète. Cuire 5 min en remuant. Goûter, ajuster. Répartir en 4 boîtes. Frigo.', time: '40 min' },
-    'salade-betteraves': { prep: 'Si betteraves crues : les cuire 40 min eau bouillante. Si déjà cuites : passer directement. Couper en petits dés. Couper avocat en tranches. Laver épinards. Couper radis en rondelles. Hacher oignon + échalote finement. Dans grand saladier : épinards + betterave + échalote + oignon + 4cs huile olive + jus citron + pincée curcuma + sel + poivre. Mélanger. Répartir en 4 boîtes. Ajouter tranches avocat + radis par-dessus. Frigo. Manger dans les 2 jours pour que l\'avocat reste frais — préparer avocat en J3-J4 séparément.', time: '20 min' },
-    'salade-patates-crevettes': { prep: 'Éplucher et couper 500g patates douces en rondelles de 1cm. Cuire 20 min dans casserole eau bouillante salée jusqu\'à tendres mais encore fermes. Égoutter. Dans poêle huilée feu vif : faire sauter les patates 7 min jusqu\'à dorées. Saler, poivrer. Décortiquer crevettes si besoin. Dans bol : mélanger crevettes + patates + filet huile olive + sel + poivre. Répartir en 4 boîtes. Frigo. Servir tiède ou froid.', time: '35 min' },
-
-    // SOUPERS
-    'saumon-panko': { prep: 'Couper 600g saumon en cubes de 3cm. Dans assiette : mélanger 40g chapelure panko + ail en poudre + paprika. Rouler chaque cube dans la chapelure. Disposer sur plaque four papier cuisson. Four 180°C, 10-12 min. // CONCOMBRE : couper 400g concombre en fines tranches au couteau (ou mandoline). Dans bol : sauce soja + miel + vinaigre riz + purée piment. Ajouter concombre, mélanger. // SAUCE : mélanger sriracha + mayo allégée + 100g fromage blanc + jus citron vert. // Cuire 600g riz complet (2 tasses riz + 4 tasses eau, 30 min). Répartir en 4 boîtes : riz + concombre + saumon + sauce. Frigo.', time: '45 min' },
-    'maquereau-legumes': { prep: 'Préchauffer four 160°C. Couper maquereaux en gros morceaux, enduire huile olive + gros sel. Enfourner 9 min. // LÉGUMES : couper poireau en rondelles. Blanchir dans casserole eau bouillante 4 min. Égoutter. // SAUCE : dans poêle, faire dorer 2 échalotes + 1 oignon hachés dans huile olive. Ajouter 10cl crème coco + sel + poivre. Réduire 8 min feu moyen. // Rassembler dans wok ou grande poêle : légumes + morceaux maquereau + sauce. Cuire ensemble 10 min feu doux. Ajouter aneth ciselé + jus citron. Répartir en 4 boîtes. Frigo.', time: '45 min' },
-    'matajine-sardines': { prep: 'Blanchir 7 tomates 40s eau bouillante, retirer peau + pépins, couper en morceaux. Éplucher pommes de terre en rondelles. Couper oignon + échalote finement. Dans grande casserole huilée : cuire oignon + échalote jusqu\'à tendres. Ajouter tomates + 1cc paprika + 1cc curcuma + 1cc cumin + 2cc gingembre. Remuer 8 min. Ajouter pommes de terre + eau mi-hauteur (~4 tasses). Cuire 50 min feu moyen. Pendant ce temps : farcir 10 sardines avec persil + coriandre ciselés + citron + huile olive. Déposer sardines sur les pommes de terre. Cuire 25 min supplémentaires. Laisser refroidir. Répartir délicatement en 4 boîtes. Frigo.', time: '90 min' },
-    'chicken-spicy': { prep: 'Couper 800g blancs poulet en lanières. Dans bol : mélanger paprika + piment doux + ail en poudre + 1cc curcuma + 1cc poivre noir + filet huile olive. Enrober le poulet. Laisser mariner 30 min frigo minimum. // RIZ : cuire 600g riz complet avec 1cc curcuma + paprika (2 tasses riz, 4 tasses eau, 30 min). // SAUCE : mixer yaourt grec + mayo allégée + jus citron + miel + ail en poudre. // Cuire poulet dans poêle bien chaude 8 min jusqu\'à belle coloration dorée. Répartir en 4 boîtes : riz + poulet + sauce généreuse. Frigo.', time: '50 min' },
-    'chicken-bbq': { prep: 'Couper 800g blancs poulet en morceaux. Dans bol : gingembre frais râpé + ail + 40ml sauce soja + 25g sriracha. Enrober le poulet. Mariner 1h au frigo (ou 30 min minimum). // CONCOMBRE : couper 400g concombre en fines tranches. Dans bol : ail + sriracha + sauce soja + 15g miel + 30ml vinaigre riz + piment doux. Ajouter concombre. Mélanger. // Cuire 600g riz complet. // Cuire poulet dans poêle bien chaude. Ajouter trait de sauce soja en fin de cuisson. Répartir en 4 boîtes : riz + poulet + concombre + graines sésame. Frigo.', time: '50 min' },
-    'hawaii-chicken': { prep: 'Couper 800g blancs poulet en cubes. Assaisonner avec sel + poivre + ail + paprika + poudre chili. Cuire dans poêle bien chaude jusqu\'à dorés. Dans même poêle : verser 200ml jus orange + 50ml sauce soja + 20g miel + 10g maïzena diluée dans 50ml eau + jus citron + 10g purée piment + ail + gingembre. Mélanger jusqu\'à sauce onctueuse. Remettre poulet dans sauce. Ajouter 80g ananas coupé en dés. Couvrir 5 min. // Cuire 600g riz. // Répartir en 4 boîtes : riz + poulet-ananas + sauce. Graines sésame + persil. Frigo.', time: '45 min' },
-    'pad-thai-tofu': { prep: 'Couper 400g tofu ferme en petits cubes de 2cm. Dans poêle huilée feu moyen : dorer tofu 10 min en remuant régulièrement jusqu\'à croûte dorée. Râper 2 carottes. Couper 1 brocoli en petits bouquets. Éplucher et hacher 2 échalotes + 3 gousses ail. Ajouter brocoli + échalote + ail + 1cc curcuma + 1cc gingembre à la poêle avec le tofu. Cuire 6 min. Cuire 300g pâtes de riz selon paquet (souvent 4-5 min eau bouillante). SAUCE : dans bol, mélanger énergiquement 4cs beurre cacahuète + 3cs sauce soja + 80ml eau jusqu\'à texture onctueuse. Égoutter les pâtes. Ajouter carottes râpées 1 min dans la poêle. Rassembler pâtes + sauce + contenu poêle. Mélanger. Ajouter jus citron + persil ciselé. Répartir en 4 boîtes. Frigo.', time: '35 min' },
-    'poke-bowl': { prep: 'Cuire 1 tasse riz complet dans casserole eau bouillante 30 min. Égoutter. Couper 2 avocats en cubes. Râper 1 carotte. Hacher 1 oignon finement. MARINADE : dans grand bol, mélanger 2cs huile sésame + 1cs vinaigre riz + gingembre frais râpé + coriandre ciselée + filet sauce soja. Ajouter oignon + carotte + avocat dans la marinade. Mélanger délicatement. Cuire edamame selon paquet (souvent 5 min eau bouillante). Répartir en 4 bols : riz + mélange mariné + edamame + feuilles épinards + coriandre fraîche + quelques gouttes citron. Frigo. Ne pas mettre les épinards trop tôt — ajouter au moment de servir si possible.', time: '40 min' },
-    'matgret-canard': { prep: 'PURÉE : éplucher et couper 700g pommes de terre en rondelles. Cuire 20 min dans casserole eau + sel. Égoutter en conservant un peu d\'eau de cuisson. Écraser au pilon + 1cs crème coco + 2cs huile olive + poivre + un peu d\'eau de cuisson jusqu\'à texture onctueuse. Réserver au chaud. // MAGRET : quadriller la graisse avec couteau. Préchauffer four 180°C. Dans poêle sans huile, saisir magret 3 min côté gras, 3 min côté chair à feu vif. Saler. Enfourner 10 min pour saignant. Sortir, laisser reposer 5 min, couper en tranches. Répartir en 4 boîtes : purée + tranches magret + feuilles basilic. Frigo. Réchauffer doucement.', time: '40 min' },
-    'chicken-salade-cesar': { prep: 'Assaisonner 225g blanc poulet avec sel + poivre + ail. Cuire dans poêle avec huile jusqu\'à belle coloration dorée. Laisser refroidir 5 min, émincer en lanières. SAUCE : dans blender, mixer 100g fromage blanc 0% + 30g parmesan râpé + 30ml jus citron + ail en poudre + 10ml huile olive + 5g moutarde + sel + poivre jusqu\'à sauce onctueuse. Laver et couper 250g salade romaine grossièrement. Dans grand saladier : mélanger salade + poulet + sauce. Répartir en 4 boîtes. Frigo. Consommer dans les 2 jours (la salade tient moins longtemps).', time: '25 min' },
-    'pasta-bolo': { prep: 'Éplucher et hacher finement oignon + 2 gousses ail. Dans grande poêle : faire revenir oignon + ail dans huile olive 3 min. Ajouter 800g viande hachée 5% avec paprika + sel + poivre. Cuire en émiettant 8 min feu vif. Ajouter 250g sauce tomate + 200ml bouillon bœuf + 200g cottage cheese + 40g parmesan râpé + herbes italiennes. Mijoter 30 min feu doux en remuant de temps en temps. Cuire 600g pâtes complètes selon paquet. Mélanger pâtes dans la poêle avec la sauce. Goûter, ajuster sel. Répartir en 4 boîtes. Frigo.', time: '50 min' },
-    'sweet-potatoes-veggie': { prep: 'Éplucher et couper 800g patates douces en tranches de 1cm. Disposer sur plaque four, saler, paprika, filet huile olive. Four 180°C, 30 min jusqu\'à dorées. // SAUCE : dans blender, mixer 400g cottage cheese + 40g beurre cacahuète + jus citron + paprika + filet huile olive jusqu\'à texture homogène. Goûter, ajuster sel. // Répartir sauce en 4 boîtes. Disposer tranches patate douce par-dessus. Émietter 40g fêta + persil ciselé. Frigo.', time: '40 min' },
-    'aubergines-farcies': { prep: 'Couper 3 aubergines en longueur. Dans grande poêle huilée : cuire aubergines 12 min en retournant à mi-cuisson. Éplucher et couper 1 patate douce en rondelles. Cuire 25 min eau bouillante. Couper en petits morceaux. // FARCE : dans bol, mélanger persil ciselé + 2 tomates coupées en petits dés + oignon rouge + 2 échalotes + 3 gousses ail + 1cc curcuma + 1 poivron vert coupé + 3cs huile olive + 6 gouttes citron. Faire sauter ce mélange 5 min dans une poêle. Farcir les aubergines. Ajouter morceaux patate douce autour. Cuire feu doux 25 min. Répartir en 4 boîtes. Frigo.', time: '60 min' },
-    'bouillon-terroir': { prep: 'Rincer lentilles, les plonger dans casserole eau bouillante. Éplucher et couper patates douces en dés + oignon + échalote + ail + 1/3 potiron. Dans grande marmite huilée : faire revenir ail + échalote + oignon 4 min. Ajouter tous les légumes + haricots blancs + 2cs concentré tomate + persil + aneth. Couvrir de 4 tasses eau. Ajouter lentilles. Cuire 30 min. Assaisonner avec sel + poivre + filet huile olive + 2cs purée sésame + 3 gouttes citron. Répartir en 4 boîtes. Frigo.', time: '45 min' },
-    'galette-champi': { prep: 'PÂTE (12h avant) : mélanger 125g farine sarrasin + sel + poivre + 3 œufs + 30cl eau + 2cs huile tournesol + poudre à lever. Repos 12h au frigo. // GARNITURE : laver champignons de Paris + shiitaké. Couper pieds, hacher le tout avec 1 échalote. Dans poêle huilée : cuire échalote + champignons 8 min. Ajouter 1cs crème coco + persil + sel + poivre. // ARTICHAUTS : cuire 8 fonds d\'artichaut 30 min eau bouillante. Égoutter, couper en morceaux. // Cuire galettes dans poêle à crêpes huilée feu vif ~1 min (un seul côté). Garnir en fin de cuisson avec champignons + artichaut + persil. Répartir en 4 portions. Frigo.', time: '50 min' },
-
-    // COLLATIONS
-    'smoothie-myrtilles': { prep: 'Sortir myrtilles + framboises du congélateur 5 min. Dans blender : myrtilles + banane + 2cs beurre amande + framboises + 1cs graines lin + 400ml lait noisettes. Mixer 2 min. Répartir en 4 portions dans bouteilles ou verres avec couvercle. Frigo — se conserve 2 jours. Faire en 2 batches de 2 jours si préféré frais. Préparer aussi 4 petits sachets de noix entières séparément.', time: '10 min' },
-    'smoothie-choco-pb': { prep: 'Dans blender : 200ml lait amande + 120g fromage blanc + 30g flocons avoine + 30g beurre cacahuète + 30g chocolat noir 70%+ + cacao brut + whey (optionnel) + trait sirop érable. Ajouter quelques glaçons. Mixer 2 min jusqu\'à texture très onctueuse. Servir immédiatement — ne pas congeler. Ce smoothie se prépare à la demande, pas en batch de 4 jours à l\'avance.', time: '5 min' },
-    'smoothie-myrtille-pyx': { prep: 'Dans blender : 80g banane + 80g myrtilles surgelées + whey (ou fromage blanc) + 50g fromage blanc + 100ml lait amande + 20g flocons avoine + glaçons. Mixer 2 min. Répartir en 4 portions dans bouteilles. Frigo — consommer dans les 2 jours. Faire en 2 batches. Ajouter quelques myrtilles fraîches au moment de servir.', time: '8 min' },
-    'smoothie-apple-pie': { prep: 'Sortir 4 pommes Granny Smith congelées 5 min avant. Dans blender : 1 pomme congelée + 100ml lait amande + whey (ou fromage blanc) + 50g fromage blanc + miel + 1cc cannelle généreuse + vanille + 20g flocons avoine + 4 glaçons. Mixer 2 min. Saupoudrer cannelle sur le dessus. Servir immédiatement ou conserver frigo max 24h.', time: '5 min' },
-    'smoothie-banane-cannelle': { prep: 'Dans blender : 200ml lait amande + 100g fromage blanc + 100g banane + 5g cannelle + whey (ou fromage blanc sup.) + trait sirop érable + glaçons. Mixer 2 min. Répartir en 4 verres. Saupoudrer cannelle. Frigo — consommer dans les 2 jours.', time: '5 min' },
-    'smoothie-fraise': { prep: 'Dans blender : 200ml lait amande + 100g fromage blanc + 100g fraises + 30g cream cheese allégé + whey (ou fromage blanc sup.) + trait sirop agave + glaçons. Mixer 2 min. Répartir en 4 verres. Frigo — consommer dans les 2 jours.', time: '5 min' },
-    'mat-smoothie-myrtilles-amande': { prep: 'Dans blender : 2 tasses myrtilles + banane + 2cs beurre amande + 1cs graines lin + 1 tasse framboises + 2 tasses eau ou lait noisette. Mixer jusqu\'à texture lisse. Répartir en 4 portions dans bouteilles. Frigo 2 jours. Préparer 4 petits sachets de noix entières séparément.', time: '10 min' },
-    'granola-prote': { prep: 'Préchauffer four 200°C. Dans grand bol : mélanger 150g flocons avoine + 60g whey chocolat (ou flocons sup.). Ajouter progressivement 10g huile coco + 10g miel + 10g beurre cacahuète. Mélanger à la main pour former des petits grumeaux. Étaler uniformément sur plaque avec papier sulfurisé. Enfourner 10 min — surveiller la couleur, ça brûle vite ! Retourner à mi-cuisson avec cuillère. Sortir, laisser refroidir complètement sur la plaque. Ajouter 10g pépites chocolat 70%+ + noix concassées. Conserver en boîte hermétique 4 jours.', time: '20 min' },
-    'cookie-prote': { prep: 'Préchauffer four 180°C. Dans saladier : mélanger 1 œuf + 10g huile coco + 10g sirop agave + 10g purée amande. Ajouter 100g poudre amande + 60g whey (ou flocons mixés) + 50g flocons avoine + 5g levure + vanille + 10g pépites chocolat 70%+. Mélanger jusqu\'à pâte homogène. Sur plaque papier cuisson : former 10 petits tas avec une cuillère, aplatir légèrement. Enfourner 10-12 min. Laisser refroidir — ils durcissent en refroidissant. Conserver en boîte hermétique 2 jours.', time: '25 min' },
-    'banana-bread': { prep: 'Préchauffer four 180°C. Huiler un moule à cake. Dans blender : 2 bananes très mûres + 160g flocons avoine + whey (ou fromage blanc) + 10g levure + vanille + 100ml lait amande + 1cc cannelle. Mixer jusqu\'à préparation homogène. Verser dans moule. Décorer : 1 banane coupée en 2 posée dessus + carreaux de chocolat noir + pincée cannelle. Enfourner 20-25 min. Tester avec cure-dent — doit ressortir propre. Laisser refroidir 10 min dans le moule, puis sur grille. Couper en 4-6 parts. Conserver en boîte hermétique 3 jours.', time: '35 min' },
-    'mat-the-glace': { prep: 'Porter 1L eau à ébullition dans casserole. Hors du feu : infuser 1cs thé vert + menthe fraîche + 1cc menthe séchée + 1cc camomille + feuilles verveine 5 min. Filtrer dans passoire fine dans une carafe. Ajouter 1cs miel + zeste citron vert + 4 quartiers de pêche fraîche. Laisser refroidir 30 min à température ambiante, puis 1h minimum frigo. Servir avec glaçons + feuilles menthe fraîches. Se conserve 4 jours au frigo — idéal à faire en grand volume.', time: '15 min' },
-    'fondue-chocomat': { prep: 'Éplucher et couper fruits de saison (poires + pommes + bananes) en tranches. Arroser d\'un filet citron pour ne pas noircir. Mettre en assiettes dans frigo. Dans petite casserole à feu très doux : faire fondre 2cs lait noisettes + 200g chocolat noir 70%+ en morceaux. Remuer délicatement. Une fois fondu, ajouter 1cs crème coco + 1cc vanille. Mélanger. Servir immédiatement avec les fruits. Le chocolat fondu ne se conserve pas — préparer les fruits à l\'avance, fondre le chocolat au moment de servir chaque soir.', time: '15 min' },
-    'blueberry-bread': { prep: 'Préchauffer four 160°C. Huiler un moule à cake. Dans saladier : mélanger 180g farine + 90g whey + 20g sirop agave + 5g levure. Ajouter 3 œufs. Incorporer 220g fromage blanc + 20ml huile coco. Mélanger jusqu\'à homogène. Ajouter délicatement 200g myrtilles. Verser dans moule. Enfourner 1 heure. Tester avec cure-dent. Laisser refroidir complètement avant de couper en 7 parts. Conserver en boîte hermétique 3 jours.', time: '70 min' }
+    'jus-citron-gi': { prep: 'Porter 1 tasse eau + 2cc gingembre + 2cc miel a ebullition 5 min. Laisser refroidir 15 min. Verser dans carafe 1L avec jus des 3 citrons + 1 pincee curcuma + 1 pincee poivre noir + reste eau froide. Frigo.', time: '15 min' },
+    'jus-feu': { prep: 'Eplucher 2 carottes, presser 2 oranges et 1 citron. Mixer avec gingembre rape et eau. Filtrer dans chinois. Verser en carafe. Frigo.', time: '10 min' },
+    'jus-roi': { prep: 'Eplucher betterave crue, couper en morceaux. Epepiner grenade. Couper pastaque. Mixer tout avec gingembre + 1/2 citron + cannelle. Filtrer dans chinois. Carafe. Frigo.', time: '12 min' },
+    'jus-acne': { prep: 'Presser 1/2 citron + 1 orange. Mixer avec gingembre + curcuma + poivre noir + eau de coco. Filtrer. Carafe. Frigo.', time: '8 min' },
+    'jus-hormonal': { prep: 'Mixer fraises + framboises + 1/2 concombre + gingembre + 1/2 citron + miel. Filtrer. Carafe. Frigo. A consommer dans les 3 jours.', time: '8 min' },
+    'jus-skinglow': { prep: 'Couper 1 concombre + 1/2 celeri + 1/2 ananas. Mixer avec menthe et eau. Filtrer dans chinois. Carafe. Frigo.', time: '8 min' },
+    'jus-antiage': { prep: 'Mixer 100g fruits rouges + 100g ananas + menthe fraiche + eau. Filtrer. Carafe. Frigo. Consommer dans les 2 jours.', time: '8 min' },
+    'jus-blueglow': { prep: 'Mixer 1 concombre + 1 pomme verte + citron vert + 10g spiruline bleue + eau. Filtrer soigneusement. Carafe. Frigo.', time: '10 min' },
+    'mat-super-supra': { prep: 'Sortir fruits congeles 5 min avant. Mixer pomme + banane + poire + myrtilles congelees avec eau + jus orange. Repartir en 4 portions. Frigo ou congelateur.', time: '8 min' },
+    'mat-mamba': { prep: 'Mixer banane + jus orange + citron + curcuma + framboises + lait coco + pincee piment Cayenne. Repartir en 4 portions. Frigo — 2 jours max.', time: '8 min' },
+    'limonade-matk': { prep: 'Porter 1 tasse eau + gingembre + miel a ebullition 5 min. Refroidir 15 min. Dans carafe : sirop + jus 3 citrons + 1L eau froide. Frigo. Dure 4 jours.', time: '15 min' },
+    'mat-resurrection': { prep: 'Mixer banane + 4 peches + 500ml lait noisette + 1/2 jus citron + gingembre. Repartir en 4 portions. Frigo 2 jours max.', time: '8 min' },
+    'oats-framboise': { prep: 'Dans grand saladier : ecraser 200g framboises. Ajouter 200g flocons avoine + 400ml lait amande + sirop erable + vanille + whey. Bien melanger. Repartir en 4 boites. Fondre 20g chocolat 70%+ avec huile coco. Dans chaque boite : 150g fromage blanc + framboises fraiches + chocolat fondu. Frigo — pret des le lendemain matin.', time: '20 min' },
+    'oats-banana-choco': { prep: 'Ecraser 1 banane. Ajouter flocons avoine + whey + sirop erable + vanille + lait amande. Melanger. Repartir en 4 boites. Melanger 600g fromage blanc + 40g beurre cacahuete. Fondre 20g chocolat noir. Dans chaque boite : creme fromage blanc-cacahuete + filet chocolat fondu. Frigo.', time: '20 min' },
+    'oats-apple': { prep: 'Eplucher et couper 200g pommes en cubes. Rotir 8 min a feu doux avec miel. Garder 1/4 de cote. Dans 4 boites : 50g flocons + fromage blanc + lait amande + pommes + sirop erable. Melanger. Melanger reste fromage blanc + whey + cannelle. Verser par-dessus + pommes reservees + cannelle. Frigo.', time: '25 min' },
+    'oats-cheesecake': { prep: 'Dans grand bol : flocons avoine + graines chia + whey + jus citron + zestes + sirop erable + lait amande. Repartir en 4 boites. Repos 1h frigo. Melanger yaourt grec + cream cheese + chocolat blanc fondu + jus citron. Verser par-dessus. Zestes et copeaux chocolat blanc. Frigo.', time: '20 min' },
+    'oats-carrot-cake': { prep: 'Raper 80g carottes. Melanger flocons avoine + lait amande + carottes + raisins secs + sirop erable + vanille + noix de pecan. Repartir en 4 boites. Repos 1h frigo. Fondre chocolat blanc. Melanger fromage blanc + whey. Verser + chocolat blanc fondu + noix de pecan. Frigo.', time: '20 min' },
+    'oats-myrtille-blend': { prep: 'Tout dans le blender : fromage blanc + myrtilles + lait amande + flocons avoine + whey + sirop erable + vanille. Mixer 2 min. Repartir en 4 boites. Ajouter myrtilles fraiches. Frigo. VERSION LA PLUS SIMPLE ET MEILLEURE POUR L\'EPAULE.', time: '10 min' },
+    'oats-raffaello': { prep: 'Melanger flocons avoine + lait amande + graines chia + vanille + puree amande + 20g noix coco rapee. Repartir en 4 boites. Repos 1h frigo. Fondre chocolat blanc. Melanger fromage blanc + reste noix coco + whey. Verser + chocolat blanc fondu + noisettes concassees. Frigo.', time: '20 min' },
+    'oats-snickers': { prep: 'Melanger flocons avoine + lait amande + 200g fromage blanc + beurre cacahuete + miel + cacahuetes. Repartir en 4 boites. Repos 1h. Melanger 600g fromage blanc + beurre cacahuete + whey. Fondre chocolat. Verser creme sur flocons. Finir avec chocolat fondu + cacahuetes concassees. Frigo.', time: '20 min' },
+    'oats-pistamat': { prep: 'Melanger flocons avoine + lait amande + sirop erable + vanille + matcha + pistaches. Repartir en 4 boites. Repos 1h. Melanger fromage blanc + whey. Fondre creme pistache + chocolat blanc. Verser fromage blanc puis melange pistache-chocolat fondu. Pistaches concassees. Frigo.', time: '20 min' },
+    'porridge-quinoa': { prep: 'Melanger flocons quinoa + graines chia + graines lin + vanille + cannelle. Porter 100ml eau + 150ml lait noisettes a ebullition. Feu doux, ajouter melange quinoa-chia, remuer 4 min. Ajouter banane ecrasee + 50ml lait restant, remuer 2 min. Repartir en 4 bols. Garnir : fruits rouges + beurre amande + miel. Film. Frigo. Rechauffer legerement le matin ou manger froid.', time: '20 min' },
+    'pancakes-sarrasin': { prep: 'VEILLE AU SOIR : melanger 1 bol farine sarrasin + sel + miel + banane ecrasee + cacao + cannelle + poudre a lever. Verser progressivement lait noisettes en remuant de bas en haut. Couvrir, frigo toute la nuit. // MATIN DU BATCH : sortir la pate. Poele huilee feu vif. Verser petite louche, reduire feu moyen, cuire 3 min sans retourner. Empiler les pancakes avec papier cuisson entre chaque. Boite hermetique.', time: '25 min' },
+    'mat-marmelade-pancakes': { prep: 'MARMELADE (30 min avant) : eplucher et couper poires + pommes. Cuire avec eau + cannelle + gingembre + curcuma + vanille 20 min feu doux. Ajouter myrtilles 5 dernieres minutes. Bocal. // PANCAKES : preparer pate sarrasin veille. Cuire pancakes le matin du batch. Repartir en 4 portions avec papier cuisson.', time: '35 min' },
+    'mat-blinis-guac': { prep: 'PATE BLINIS (veille) : sarrasin + sel + miel + poudre a lever + lait amande. Repos frigo toute la nuit. // GUACAMOLE (jour J) : ecraser 2 avocats + sel + poivre + curcuma + huile olive + jus citron. Petit pot hermetique avec filet citron pour ne pas noircir. Frigo. // Cuire blinis dans poele huilee. Repartir en 4 portions.', time: '25 min' },
+    'mat-muesli': { prep: 'Dans 4 bols : 40g flocons avoine + graines chia + vanille. Couper 3/4 de la poire en morceaux. Ajouter. Verser 200ml lait noisettes. Melanger. Film. Frigo min 2h. Petit pot separe avec date + figue + myrtilles + mures + puree cacahuete pour la garniture.', time: '15 min' },
+    'mat-pudding-matin': { prep: 'Dans mixeur : lait noisettes + noix cajou + noix macadamia + noix entieres + graines chia + graines lin + noix Bresil + cannelle + cacao + citron + 8 myrtilles + 8 framboises. Mixer 4 min. Repartir en 4 bols. Fruits restants par-dessus. Film. Frigo.', time: '15 min' },
+    'choco-noyade-oranges': { prep: 'Peler 6 oranges, couper en tranches fines. Verser jus de 2 oranges. Film, frigo 20 min. Faire fondre 150g chocolat. Verser sur les tranches d\'orange juste avant de servir. Preparer les fruits a l\'avance, fondre le chocolat chaque soir.', time: '20 min' },
+    'mat-tartare-fruite': { prep: 'Ecraser 1 peche avec miel + menthe ciselee + citron. Eplucher et couper poires + peche restante en petits cubes. Melanger delicatement. Repartir en 4 ramequins. Film. Frigo 30 min minimum. Myrtilles fraiches + feuille menthe au moment de servir.', time: '15 min' },
+    'soupe-popeye': { prep: 'Eplucher et couper oignon + 4 gousses ail + patate douce en des. Dans grande casserole : chauffer 1,5L bouillon. Ajouter tous les legumes + curcuma + gingembre + laurier. Ebullition, cuire 25 min couverts. Ajouter haricots blancs egouttees + 400g epinards. Cuire 5 min. Saler, poivrer, huile olive, persil cise. Gouter et ajuster. Repartir en 4 boites. Refroidir avant de fermer. Frigo 4 jours ou congeler J3-J4.', time: '40 min' },
+    'soupe-carotte-coco': { prep: 'Eplucher 1kg carottes, couper en rondelles. Dans grande casserole : carottes + 1,2L eau + sel. Cuire 35 min feu doux. Hors du feu : ajouter 3 oignons + cumin + cannelle + persil + coriandre + citron + lait coco. Mixer au mixeur plongeant. Gouter, ajuster sel. Repartir en 4 portions. Refroidir avant frigo.', time: '45 min' },
+    'soupe-brocoli': { prep: 'Couper 400g brocolis en bouquets + 150g carottes + 150g pommes de terre. Faire revenir 3 echalotes 6 min dans casserole huilee. Ajouter legumes + 1L eau + sel + basilic. Couvrir, cuire 35 min. Mixer. Poivrer. Repartir en 4 portions. Refroidir avant frigo.', time: '45 min' },
+    'soupe-potiron': { prep: 'Eplucher 1,5kg potiron, couper chair en morceaux. Dans casserole huilee : oignons + echalote + gingembre + curcuma 4 min. Ajouter potiron 5 min, puis eau + sel + basilic + cannelle. Couvrir 20 min. Ajouter huile noix + poivre noir + citron. Mixer. Repartir en 4 portions. Refroidir avant frigo.', time: '40 min' },
+    'soupe-chou': { prep: 'Couper chou-fleur en fleurettes + carottes en rondelles. Faire bouillir bouillon legumes avec tous les legumes 25 min couverts. Mixer avec curcuma + gingembre + sel + poivre. Basilic cise. Repartir en 4 portions. Refroidir avant frigo.', time: '35 min' },
+    'soupe-betterave': { prep: 'Peler 5 betteraves crues, couper en des. Couper 7 echalotes. Casserole : betteraves + echalotes + 1L eau. Cuire 35 min feu moyen. Mixer. Ajouter jus 3 oranges + miel + jus citron + sel + poivre. Remixer. Frigo 45 min. Crème coco + persil au moment de servir.', time: '50 min' },
+    'soupe-champi': { prep: 'Emincer oignon + echalote + ail + champignons + shiitake. Dans casserole huilee : oignon + echalote + ail 5 min. Ajouter champignons + shiitake. Cuire 5 min. Ajouter gingembre + lait + laurier. Mijoter 3 min. Persil + poivre. Repartir en 4 portions. Frigo.', time: '25 min' },
+    'soupe-matador-lentilles': { prep: 'Rincer lentilles, cuire 23 min. Eplucher et couper oignons + carotte + patates douces. Revenir oignons 6 min. Cuire patates 20 min. Rassembler dans grande marmite : lentilles + oignons + carotte + patates + eau + boisson riz + citron + coriandre + persil + menthe + cumin. Cuire 10 min. Sel + poivre + huile olive. Repartir. Frigo.', time: '45 min' },
+    'gazpacho': { prep: 'Blanchir tomates 40s, retirer peau + pepins. Couper poivron. Dans saladier : tomates + concombre + oignons + ail + sel + poivre + huile olive + citron + basilic. Mixer. Ajouter tabasco + miel. Remixer. Repartir en 4 portions. Frigo min 2h. Servir froid.', time: '25 min' },
+    'matgic-chili': { prep: 'Rincer lentilles, cuire 23 min. Chauffer bouillon. Couper oignon + patates + ail. Ajouter au bouillon avec champignons + concentre tomate + basilic + curcuma + poivron + sel. Cuire 20 min. Ajouter haricots + lentilles + beurre cacahuete. Cuire 5 min. Repartir. Frigo.', time: '40 min' },
+    'salade-betteraves': { prep: 'Si betteraves crues : cuire 40 min eau bouillante. Couper avocat en tranches. Laver epinards. Couper radis. Hacher oignon + echalote. Dans grand saladier : epinards + betterave + oignon + echalote + huile olive + citron + curcuma + sel + poivre. Repartir en 4 boites. Avocat + radis par-dessus. Frigo. Consommer dans les 2 jours.', time: '20 min' },
+    'salade-patates-crevettes': { prep: 'Eplucher et couper 500g patates douces en rondelles. Cuire 20 min eau bouillante salee. Egoutter. Dans poele huilee feu vif : faire sauter les patates 7 min jusqu\'a dorees. Saler, poivrer. Dans bol : crevettes + patates + huile olive + sel + poivre. Repartir en 4 boites. Frigo.', time: '35 min' },
+    'saumon-panko': { prep: 'Couper 600g saumon en cubes 3cm. Melanger panko + ail + paprika. Rouler chaque cube. Disposer sur plaque. Four 180C, 10-12 min. // CONCOMBRE : couper 400g concombre en fines tranches. Dans bol : sauce soja + miel + vinaigre riz + piment. Ajouter concombre. // SAUCE : sriracha + mayo + fromage blanc + jus citron vert. // Cuire 600g riz complet (30 min). Repartir en 4 boites : riz + concombre + saumon + sauce. Frigo.', time: '45 min' },
+    'maquereau-legumes': { prep: 'Four 160C. Couper maquereaux en gros morceaux, enduire huile olive + gros sel. Enfourner 9 min. // Couper poireau en rondelles. Blanchir 4 min. // Dans poele : dorer 2 echalotes + oignon. Ajouter creme coco + sel + poivre. Reduire 8 min. // Wok : legumes + maquereau + sauce. Cuire 10 min feu doux. Aneth + citron. Repartir en 4 boites. Frigo.', time: '45 min' },
+    'matajine-sardines': { prep: 'Blanchir tomates 40s, retirer peau + pepins, couper. Eplucher pommes de terre en rondelles. Couper oignon + echalote. Dans grande casserole huilee : oignon + echalote jusqu\'a tendres. Tomates + paprika + curcuma + cumin + gingembre. Remuer 8 min. Ajouter pommes de terre + eau mi-hauteur. Cuire 50 min. Farcir sardines avec persil + coriandre + citron. Ajouter. Cuire 25 min. Refroidir. Repartir en 4 boites. Frigo.', time: '90 min' },
+    'chicken-spicy': { prep: 'Couper 800g poulet en lanieres. Marinade : paprika + piment + ail + curcuma + poivre noir + huile olive. Enrober. Mariner 30 min frigo minimum. // RIZ : cuire 600g riz complet avec curcuma + paprika (30 min). // SAUCE : mixer yaourt grec + mayo + citron + miel + ail. // Cuire poulet dans poele bien chaude 8 min. Repartir en 4 boites : riz + poulet + sauce. Frigo.', time: '50 min' },
+    'chicken-bbq': { prep: 'Couper 800g poulet. Marinade : gingembre rape + ail + sauce soja + sriracha. Enrober. Mariner 1h frigo. // CONCOMBRE : tranches fines + ail + sriracha + soja + miel + vinaigre riz. // Cuire 600g riz complet. // Cuire poulet poele bien chaude. Ajouter sauce soja en fin. Repartir en 4 boites : riz + poulet + concombre + graines sesame. Frigo.', time: '50 min' },
+    'hawaii-chicken': { prep: 'Couper poulet en cubes. Assaisonner. Cuire poele jusqu\'a dores. Dans meme poele : jus orange + sauce soja + miel + maizena + eau + citron + piment + ail + gingembre. Sauce onctueuse. Remettre poulet. Ajouter ananas. Couvrir 5 min. Cuire riz. Repartir en 4 boites. Frigo.', time: '45 min' },
+    'pad-thai-tofu': { prep: 'Couper 400g tofu en cubes 2cm. Dorer 10 min dans poele huilee. Raper 2 carottes. Couper brocoli en bouquets. Hacher echalotes + ail. Ajouter brocoli + echalote + ail + curcuma + gingembre a la poele 6 min. Cuire pates de riz 4-5 min. SAUCE : beurre cacahuete + sauce soja + 80ml eau. Energiquement jusqu\'a onctueux. Egoutter pates. Ajouter carottes 1 min. Assembler pates + sauce + poele. Citron + persil. Repartir en 4 boites. Frigo.', time: '35 min' },
+    'poke-bowl': { prep: 'Cuire 1 tasse riz complet 30 min. Egoutter. Couper 2 avocats en cubes. Raper 1 carotte. Hacher 1 oignon. MARINADE : huile sesame + vinaigre riz + gingembre rape + coriandre + sauce soja. Ajouter oignon + carotte + avocat. Melanger. Cuire edamame. Repartir en 4 bols : riz + melange marine + edamame + epinards + coriandre + citron. Frigo.', time: '40 min' },
+    'matgret-canard': { prep: 'PUREE : eplucher + couper 700g pommes de terre. Cuire 20 min eau salee. Egoutter. Ecraser au pilon + creme coco + huile olive + poivre + eau cuisson. Onctueux. // MAGRET : quadriller la graisse. Four 180C. Dans poele sans huile, saisir magret 3 min cote gras, 3 min cote chair feu vif. Saler. Enfourner 10 min pour saignant. Laisser reposer 5 min. Couper en tranches. Repartir en 4 boites : puree + tranches magret + basilic. Frigo. Rechauffer doucement.', time: '40 min' },
+    'chicken-salade-cesar': { prep: 'Assaisonner 225g blanc poulet. Cuire dans poele avec huile. Refroidir 5 min, emincer. SAUCE : mixer fromage blanc + parmesan + jus citron + ail + huile olive + moutarde + sel + poivre. Couper 250g salade romaine grossierement. Dans saladier : salade + poulet + sauce. Repartir en 4 boites. Frigo. Consommer dans les 2 jours.', time: '25 min' },
+    'pasta-bolo': { prep: 'Hacher oignon + ail. Dans grande poele : revenir oignon + ail dans huile olive 3 min. Ajouter 800g viande hachee + paprika + sel + poivre. Cuire 8 min en miettant. Ajouter sauce tomate + bouillon + cottage cheese + parmesan + herbes italiennes. Mijoter 30 min feu doux. Cuire pates completes. Melanger pates dans la poele. Gouter, ajuster sel. Repartir en 4 boites. Frigo.', time: '50 min' },
+    'sweet-potatoes-veggie': { prep: 'Eplucher et couper 800g patates douces en tranches 1cm. Plaque four : sel + paprika + huile olive. Four 180C, 30 min jusqu\'a dorees. // SAUCE : mixer cottage cheese + beurre cacahuete + jus citron + paprika + huile olive jusqu\'a homogene. // Repartir sauce en 4 boites. Patates douces par-dessus. Feta emietee + persil cise. Frigo.', time: '40 min' },
+    'aubergines-farcies': { prep: 'Couper 3 aubergines en longueur. Dans poele huilee : cuire 12 min en retournant. Eplucher 1 patate douce en rondelles. Cuire 25 min eau bouillante. Couper en petits morceaux. // FARCE : persil cise + 2 tomates en des + oignon rouge + 2 echalotes + 3 gousses ail + curcuma + poivron vert + huile olive + citron. Sauter 5 min. Farcir aubergines. Patate douce autour. Cuire feu doux 25 min. Repartir en 4 boites. Frigo.', time: '60 min' },
+    'bouillon-terroir': { prep: 'Rincer lentilles. Eplucher et couper patates douces + oignon + echalote + ail + potiron. Dans grande marmite huilee : revenir ail + echalote + oignon 4 min. Ajouter tous les legumes + haricots blancs + concentre tomate + persil + aneth. Couvrir 4 tasses eau. Ajouter lentilles. Cuire 30 min. Assaisonner : sel + poivre + huile olive + puree sesame + citron. Repartir en 4 boites. Frigo.', time: '45 min' },
+    'galette-champi': { prep: 'PATE (12h avant) : 125g farine sarrasin + sel + poivre + 3 oeufs + 30cl eau + huile tournesol + poudre a lever. Repos frigo 12h. // GARNITURE : laver champignons + shiitake. Hacher. Dans poele huilee : echalote + champignons 8 min. Creme coco + persil + sel + poivre. // ARTICHAUTS : cuire 8 fonds 30 min eau bouillante. Egoutter, couper en morceaux. // Cuire galettes poele huilee feu vif 1 min. Garnir : champignons + artichaut + persil. Repartir en 4 portions. Frigo.', time: '50 min' },
+    'smoothie-myrtilles': { prep: 'Sortir myrtilles + framboises du congelateur 5 min. Dans blender : myrtilles + banane + beurre amande + framboises + graines lin + lait noisettes. Mixer 2 min. Repartir en 4 portions. Frigo 2 jours. Faire en 2 batches. Preparer 4 petits sachets de noix entieres separes.', time: '10 min' },
+    'smoothie-choco-pb': { prep: 'Dans blender : lait amande + fromage blanc + flocons avoine + beurre cacahuete + chocolat noir + cacao + whey + sirop erable + glaçons. Mixer 2 min. Servir immediatement — ne pas batchez ce smoothie, il se prepare a la demande.', time: '5 min' },
+    'smoothie-myrtille-pyx': { prep: 'Dans blender : banane + myrtilles congelees + whey + fromage blanc + lait amande + flocons avoine + glaçons. Mixer 2 min. Repartir en 4 portions. Frigo 2 jours.', time: '8 min' },
+    'smoothie-apple-pie': { prep: 'Sortir 4 pommes Granny congelees 5 min avant. Dans blender : pomme congelee + lait amande + whey + fromage blanc + miel + cannelle + vanille + flocons avoine + glaçons. Mixer 2 min. Saupoudrer cannelle. Consommer le jour-meme ou frigo 24h max.', time: '5 min' },
+    'smoothie-banane-cannelle': { prep: 'Dans blender : lait amande + fromage blanc + banane + cannelle + whey + sirop erable + glaçons. Mixer 2 min. Repartir en 4 verres. Saupoudrer cannelle. Frigo 2 jours.', time: '5 min' },
+    'smoothie-fraise': { prep: 'Dans blender : lait amande + fromage blanc + fraises + cream cheese + whey + sirop agave + glaçons. Mixer 2 min. Repartir en 4 verres. Frigo 2 jours.', time: '5 min' },
+    'mat-smoothie-myrtilles-amande': { prep: 'Dans blender : myrtilles + banane + beurre amande + graines lin + framboises + eau ou lait noisette. Mixer. Repartir en 4 portions. Frigo 2 jours. Preparer 4 sachets de noix.', time: '10 min' },
+    'granola-prote': { prep: 'Four 200C. Dans grand bol : flocons avoine + whey. Ajouter huile coco + miel + beurre cacahuete. Melanger a la main en formant grumeaux. Etaler sur plaque papier sulfurise. Four 10 min — surveiller ! Retourner a mi-cuisson. Refroidir completement. Ajouter pepites chocolat + noix. Boite hermetique 4 jours.', time: '20 min' },
+    'cookie-prote': { prep: 'Four 180C. Dans saladier : oeuf + huile coco + sirop agave + puree amande + poudre amande + whey + flocons avoine + levure + vanille + pepites chocolat. Melanger. Sur plaque papier cuisson : 10 petits tas, aplatir. Enfourner 10-12 min. Laisser refroidir. Boite hermetique 2 jours.', time: '25 min' },
+    'banana-bread': { prep: 'Four 180C. Huiler moule a cake. Dans blender : 2 bananes tres mures + flocons avoine + whey + levure + vanille + lait amande + cannelle. Mixer. Verser dans moule. Decorer : banane coupee en 2 + carreaux chocolat noir + cannelle. Enfourner 20-25 min. Cure-dent doit ressortir propre. Refroidir 10 min. Couper en 4-6 parts. Boite hermetique 3 jours.', time: '35 min' },
+    'mat-the-glace': { prep: 'Ebullition 1L eau. Hors du feu : infuser the vert + menthe fraiche + menthe sechee + camomille + verveine 5 min. Filtrer dans carafe. Ajouter miel + zeste citron vert + 4 quartiers peche. Refroidir 30 min T ambiante, puis 1h frigo. Servir avec glacons + menthe fraiche. Se conserve 4 jours au frigo.', time: '15 min' },
+    'fondue-chocomat': { prep: 'Eplucher et couper fruits de saison en tranches. Filet citron. Mettre en assiettes au frigo. Dans petite casserole feu tres doux : fondre lait noisettes + chocolat noir 70%+ en morceaux. Remuer. Une fois fondu, ajouter creme coco + vanille. Servir immediatement avec fruits. Fondre le chocolat au moment de servir chaque soir — les fruits se preparent a l\'avance.', time: '15 min' },
+    'blueberry-bread': { prep: 'Four 160C. Huiler moule a cake. Dans saladier : farine + whey + sirop agave + levure. Ajouter 3 oeufs. Incorporer fromage blanc + huile coco. Melanger. Ajouter delicatement myrtilles. Verser dans moule. Enfourner 1 heure. Tester avec cure-dent. Refroidir completement avant de couper en 7 parts. Boite hermetique 3 jours.', time: '70 min' }
   };
 
-  // Build detailed steps using recipe data
   var matinGuide = batchGuide[m.matin.id] || { prep: m.matin.steps.join(' Puis : '), time: '15 min' };
-    var dinerGuide = batchGuide[m.diner.id] || { prep: m.diner.steps.join(' Puis : '), time: '40 min' };
-    var dejGuide = batchGuide[m.dejeuner.id] || { prep: m.dejeuner.steps.join(' Puis : '), time: '20 min' };
-    var souprGuide = batchGuide[m.souper.id] || { prep: m.souper.steps.join(' Puis : '), time: '30 min' };
-    var collGuide = batchGuide[m.collation.id] || { prep: m.collation.steps.join(' Puis : '), time: '15 min' };
+  var dinerGuide = batchGuide[m.diner.id] || { prep: m.diner.steps.join(' Puis : '), time: '40 min' };
+  var dejGuide = batchGuide[m.dejeuner.id] || { prep: m.dejeuner.steps.join(' Puis : '), time: '20 min' };
+  var souprGuide = batchGuide[m.souper.id] || { prep: m.souper.steps.join(' Puis : '), time: '30 min' };
+  var collGuide = batchGuide[m.collation.id] || { prep: m.collation.steps.join(' Puis : '), time: '15 min' };
 
-  // Check if matin needs overnight prep
-  var needsOvernightMatin = ['pancakes-sarrasin','mat-marmelade-pancakes','mat-blinis-guac'].indexOf(m.matin.id) >= 0;
+  var needsOvernightMatin = ['pancakes-sarrasin', 'mat-marmelade-pancakes', 'mat-blinis-guac'].indexOf(m.matin.id) >= 0;
   var needsOvernightDej = ['oats-framboise','oats-banana-choco','oats-apple','oats-cheesecake','oats-carrot-cake','oats-myrtille-blend','oats-raffaello','oats-snickers','oats-pistamat','mat-muesli'].indexOf(m.dejeuner.id) >= 0;
   var needsOvernightGalette = m.souper.id === 'galette-champi';
+  var needsFour = ['saumon-panko','chicken-spicy','hawaii-chicken','sweet-potatoes-veggie','aubergines-farcies'].indexOf(m.souper.id) >= 0
+    || ['cookie-prote','banana-bread','blueberry-bread','granola-prote'].indexOf(m.collation.id) >= 0;
+
+  var veilleDesc = '';
+  if (needsOvernightMatin) veilleDesc += 'PANCAKES/BLINIS : preparer la pate sarrasin. Melanger tous les ingredients, couvrir, frigo toute la nuit. ';
+  if (needsOvernightDej) veilleDesc += (needsOvernightMatin ? ' — ' : '') + 'OVERNIGHT OATS : melanger les flocons avec le lait vegetal, la garniture et la whey. Repartir en 4 boites, couvrir, frigo toute la nuit.';
+  if (needsOvernightGalette) veilleDesc += ' — PATE GALETTES : melanger farine sarrasin + sel + oeufs + eau + huile. Repos frigo 12h.';
+  if (!veilleDesc) veilleDesc = 'Si overnight oats ou pancakes : preparer les bases ce soir. Sinon cette etape peut etre sautee.';
 
   var steps = [];
+  steps.push({ t: 'Veille au soir', d: veilleDesc, time: '5-15 min' });
 
-  // Step 0: veille
-  var veilleDesc = '';
-  if (needsOvernightMatin) veilleDesc += 'PANCAKES/BLINIS : ' + (matinGuide.prep.split('//')[0] || m.matin.steps[0]) + ' ';
-  if (needsOvernightDej) veilleDesc += (needsOvernightMatin ? ' — ' : '') + 'OVERNIGHT OATS : mélanger les flocons avec le lait végétal, la garniture et la whey. Répartir en 4 boîtes, couvrir, frigo toute la nuit.';
-  if (needsOvernightGalette) veilleDesc += ' — PÂTE GALETTES : mélanger farine sarrasin + sel + œufs + eau + huile. Repos frigo 12h.';
-  if (!veilleDesc) veilleDesc = 'Si la recette du lendemain le demande, préparer les bases (pâtes à pancakes, overnight oats) ce soir. Sinon cette étape peut être sautée.';
-
-  steps.push({ t: 'Veille au soir', d: veilleDesc, time: '5–15 min' });
-
-  // Step 1: four
-  var needsFour = ['saumon-panko','chicken-spicy','hawaii-chicken','sweet-potatoes-veggie','cookie-prote','banana-bread','blueberry-bread','aubergines-farcies'].indexOf(m.souper.id) >= 0
-    || ['cookie-prote','banana-bread','blueberry-bread','granola-prote'].indexOf(m.collation.id) >= 0;
   if (needsFour) {
-    var temp = (m.souper.id === 'sweet-potatoes-veggie' || m.souper.id === 'aubergines-farcies') ? '180°C' : m.souper.id === 'saumon-panko' ? '180°C' : '200°C';
-    steps.push({ t: 'Préchauffer le four', d: 'Préchauffer à ' + temp + '. Pendant le préchauffage, préparer les ingrédients qui vont au four en premier.', time: '5 min' });
+    var temp = (m.souper.id === 'sweet-potatoes-veggie' || m.souper.id === 'aubergines-farcies') ? '180 C' : m.souper.id === 'saumon-panko' ? '180 C' : '200 C';
+    steps.push({ t: 'Prechauffer le four a ' + temp, d: 'Pendant le prechauffage : preparer les ingredients qui vont au four en premier (couper le poisson, les legumes, huiler le moule...).', time: '5 min' });
   }
 
-  // Step 2: diner (soupe — cuit seul)
   steps.push({ t: m.diner.name, d: dinerGuide.prep, time: dinerGuide.time });
 
-  // Step 3: matin (pendant que soupe cuit)
-  var matinDesc = needsOvernightMatin ? (matinGuide.prep.split('//')[1] || matinGuide.prep) : matinGuide.prep;
-  steps.push({ t: m.matin.name, d: 'Pendant la cuisson du dîner : ' + matinDesc, time: matinGuide.time });
+  var matinDesc = needsOvernightMatin ? 'La pate est prête depuis cette nuit. La sortir, cuire les pancakes ou blinis. ' + (matinGuide.prep.split('//')[1] || '') : matinGuide.prep;
+  steps.push({ t: m.matin.name, d: 'Pendant la cuisson du diner : ' + matinDesc, time: matinGuide.time });
 
-  // Step 4: dejeuner
-  var dejDesc = needsOvernightDej ? 'Les boîtes overnight oats sont prêtes depuis cette nuit. Préparer les toppings et garnitures finales : fondre le chocolat, préparer la crème fromage blanc, couper les fruits frais à ajouter. Finaliser chaque boîte et remettre au frigo.' : dejGuide.prep;
+  var dejDesc = needsOvernightDej ? 'Les boites overnight oats sont pretes depuis cette nuit. Preparer uniquement les toppings finaux : fondre le chocolat, preparer la creme fromage blanc-whey, couper les fruits frais. Finaliser et remettre au frigo.' : dejGuide.prep;
   steps.push({ t: m.dejeuner.name, d: dejDesc, time: needsOvernightDej ? '15 min' : dejGuide.time });
 
-  // Step 5: souper prep
   var souprPrepDesc = '';
-  if (m.souper.id === 'saumon-panko') souprPrepDesc = 'Couper 600g saumon en cubes. Mélanger chapelure panko + ail + paprika dans une assiette. Rouler chaque cube. Disposer sur plaque. Préparer aussi le concombre en fines tranches + la sauce dans un bol séparé.';
-  else if (m.souper.id === 'chicken-spicy' || m.souper.id === 'chicken-bbq') souprPrepDesc = 'Couper le poulet en morceaux/lanières. Préparer la marinade dans un grand bol. Enrober le poulet et laisser mariner au frigo le temps de finir les autres étapes (minimum 20 min, idéalement 1h).';
-  else if (m.souper.id === 'pad-thai-tofu') souprPrepDesc = 'Couper le tofu en cubes. Préparer la sauce cacahuète dans un bol. Râper les carottes. Couper le brocoli.';
-  else souprPrepDesc = 'Préparer tous les ingrédients du souper : éplucher, couper, assaisonner. Préparer la marinade si nécessaire.';
-  steps.push({ t: 'Préparer les ingrédients du souper', d: souprPrepDesc, time: '15 min' });
+  if (m.souper.id === 'saumon-panko') souprPrepDesc = 'Couper 600g saumon en cubes. Melanger panko + ail + paprika dans une assiette. Rouler chaque cube. Disposer sur plaque. Preparer aussi le concombre en fines tranches + la sauce dans un bol separe.';
+  else if (m.souper.id === 'chicken-spicy' || m.souper.id === 'chicken-bbq' || m.souper.id === 'hawaii-chicken') souprPrepDesc = 'Couper le poulet. Preparer la marinade dans un grand bol. Enrober le poulet et laisser mariner au frigo le temps de finir les autres etapes (minimum 20 min, idealement 1h).';
+  else if (m.souper.id === 'pad-thai-tofu') souprPrepDesc = 'Couper le tofu en cubes 2cm. Preparer la sauce cacahuete dans un bol. Raper les carottes. Couper le brocoli en bouquets. Hacher echalotes + ail.';
+  else souprPrepDesc = 'Eplucher, couper et assaisonner tous les ingredients du souper. Preparer la marinade si necessaire.';
+  steps.push({ t: 'Preparer les ingredients du souper', d: souprPrepDesc, time: '15 min' });
 
-  // Step 6: souper cuisson
   steps.push({ t: m.souper.name, d: souprGuide.prep, time: souprGuide.time });
-
-  // Step 7: collation
   steps.push({ t: m.collation.name, d: collGuide.prep, time: collGuide.time });
-
-  // Step 8: mise en boites
   steps.push({
-    t: 'Mise en boîtes & étiquetage',
-    d: 'Laisser refroidir tous les plats chauds avant de fermer les boîtes (évite la condensation qui accélère la détérioration). Étiqueter avec un adhésif : J1, J2, J3, J4 + nom du plat. Mettre les soupes et bouillons J3-J4 au congélateur. Vérifier que toutes les boîtes sont bien fermées hermétiquement. Ranger dans le frigo en ordre de consommation (J1 devant, J4 derrière).',
+    t: 'Mise en boites et etiquetage',
+    d: 'Laisser refroidir tous les plats chauds avant de fermer (evite la condensation). Etiqueter avec adhesif : J1, J2, J3, J4 + nom du plat. Mettre les soupes et bouillons J3-J4 au congelateur. Verifier que toutes les boites sont hermetiques. Ranger frigo en ordre de consommation (J1 devant, J4 derriere).',
     time: '10 min'
   });
 
@@ -1094,7 +1506,7 @@ function buildBatch(menu) {
       + '</div>';
   });
   document.getElementById('batch-content').innerHTML = html;
-  document.getElementById('bpl').textContent = '0 / ' + total + ' étapes';
+  document.getElementById('bpl').textContent = '0 / ' + total + ' etapes';
   updateBP(0, total);
 }
 
@@ -1107,7 +1519,7 @@ function toggleBatch(i, total) {
 function updateBP(done, total) {
   var pct = Math.round(done / total * 100);
   document.getElementById('bp').style.width = pct + '%';
-  var totalNow = document.querySelectorAll('.bstep').length; document.getElementById('bpl').textContent = done + ' / ' + totalNow + ' étapes' + (done === totalNow ? ' — Session terminée 🎉' : '');
+  document.getElementById('bpl').textContent = done + ' / ' + total + ' etapes' + (done === total ? ' — Session terminee !' : '');
 }
 
 function filterRecipes() {
@@ -1128,7 +1540,7 @@ function filterRecipes() {
     document.getElementById('recipe-list').innerHTML = '<div class="empty">Aucune recette pour ces filtres.</div>';
     return;
   }
-  var catLabels = { matin: 'Jus & Matin', dejeuner: 'Petit-déj & Déjeuner', diner: 'Dîner & Soupes', souper: 'Souper & Plats', collation: 'Collations & Goûters', apero: 'Apéros', dessert: 'Desserts' };
+  var catLabels = { matin: 'Jus et Matin', dejeuner: 'Petit-dej et Dejeuner', diner: 'Diner et Soupes', souper: 'Souper et Plats', collation: 'Collations et Gouters', apero: 'Aperos', dessert: 'Desserts' };
   var html = '', lastCat = '';
   all.forEach(function(r) {
     if (cat === 'all' && r.cat !== lastCat) {
@@ -1140,8 +1552,17 @@ function filterRecipes() {
   document.getElementById('recipe-list').innerHTML = html;
 }
 
+// INIT
+loadProfile();
+recalcTargets();
 filterRecipes();
 generateMenu();
+
+// Live recalc on profile fields change
+['p-age','p-sex','p-height','p-weight','p-goal','p-activity'].forEach(function(id) {
+  var el = document.getElementById(id);
+  if (el) el.addEventListener('change', recalcTargets);
+});
 
 </script>
 </body>
