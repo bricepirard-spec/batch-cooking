@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0a0a0a">
+<title>Batch Cooking — Brice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f0f0f;
+  --bg2: #181818;
+  --bg3: #222222;
+  --border: rgba(255,255,255,0.08);
+  --border2: rgba(255,255,255,0.15);
+  --text: #f0ede6;
+  --text2: #a09a8e;
+  --text3: #6a6460;
+  --green: #4CAF82;
+  --green-bg: rgba(76,175,130,0.12);
+  --green-border: rgba(76,175,130,0.3);
+  --amber: #E8A838;
+  --amber-bg: rgba(232,168,56,0.12);
+  --amber-border: rgba(232,168,56,0.3);
+  --red: #E05A4E;
+  --red-bg: rgba(224,90,78,0.12);
+  --accent: #4CAF82;
+  --serif: 'DM Serif Display', Georgia, serif;
+  --sans: 'DM Sans', system-ui, sans-serif;
+  --r: 10px;
+  --r-lg: 16px;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* HEADER */
+.site-header {
+  padding: 2rem 1.5rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  background: rgba(15,15,15,0.95);
+  backdrop-filter: blur(12px);
+  z-index: 100;
+}
+.header-inner { max-width: 900px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.logo h1 { font-family: var(--serif); font-size: 22px; font-weight: 400; color: var(--text); letter-spacing: -0.02em; }
+.logo p { font-size: 12px; color: var(--text3); margin-top: 1px; }
+
+/* NAV TABS */
+.nav-tabs {
+  display: flex;
+  gap: 4px;
+  padding: 0 1.5rem;
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  background: var(--bg);
+  position: sticky;
+  top: 73px;
+  z-index: 99;
+}
+.nav-tabs::-webkit-scrollbar { display: none; }
+.nav-tab {
+  padding: 12px 16px;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text3);
+  cursor: pointer;
+  border: none;
+  background: none;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+  font-family: var(--sans);
+}
+.nav-tab:hover { color: var(--text2); }
+.nav-tab.active { color: var(--text); border-bottom-color: var(--green); }
+
+/* MAIN */
+.main { max-width: 900px; margin: 0 auto; padding: 1.5rem; }
+.section { display: none; }
+.section.active { display: block; }
+
+/* MODE SELECTOR */
+.mode-bar { display: flex; gap: 8px; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.mode-btn {
+  padding: 7px 14px;
+  border-radius: 100px;
+  border: 1px solid var(--border2);
+  background: transparent;
+  font-size: 12px;
+  color: var(--text2);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: var(--sans);
+  font-weight: 400;
+}
+.mode-btn:hover { border-color: var(--green-border); color: var(--text); }
+.mode-btn.active { background: var(--green-bg); border-color: var(--green-border); color: var(--green); }
+
+/* GENERATE BTN */
+.gen-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: var(--r);
+  border: 1px solid var(--green-border);
+  background: var(--green-bg);
+  color: var(--green);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+  transition: all 0.2s;
+  font-family: var(--sans);
+}
+.gen-btn:hover { background: rgba(76,175,130,0.2); }
+.gen-btn .spin { display: inline-block; }
+.gen-btn.loading .spin { animation: spin 0.6s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* TOTALS BAR */
+.totals {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 8px;
+  margin-bottom: 1.5rem;
+}
+.total-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 10px 14px;
+}
+.total-card .t-label { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+.total-card .t-val { font-size: 18px; font-weight: 500; color: var(--text); }
+.total-card .t-val.good { color: var(--green); }
+.total-card .t-val.warn { color: var(--amber); }
+.total-card .t-val.bad { color: var(--red); }
+
+/* OMEGA ALERT */
+.alert {
+  padding: 10px 14px;
+  border-radius: var(--r);
+  font-size: 13px;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+.alert.green { background: var(--green-bg); border: 1px solid var(--green-border); color: var(--green); }
+.alert.amber { background: var(--amber-bg); border: 1px solid var(--amber-border); color: var(--amber); }
+
+/* MENU GRID */
+.menu-slots {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  margin-bottom: 1.5rem;
+}
+@media (max-width: 700px) { .menu-slots { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 400px) { .menu-slots { grid-template-columns: 1fr; } }
+.meal-slot {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 12px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.meal-slot:hover { border-color: var(--border2); }
+.meal-slot.has-omega { border-color: var(--green-border); }
+.meal-slot h3 { font-size: 10px; font-weight: 500; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+.meal-slot p { font-size: 12px; color: var(--text); line-height: 1.4; font-weight: 400; }
+.meal-slot .macro-mini { font-size: 11px; color: var(--text3); margin-top: 5px; }
+
+/* RECIPE CARDS */
+.recipe-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 1rem 1.25rem;
+  margin-bottom: 10px;
+  transition: border-color 0.2s;
+}
+.recipe-card:hover { border-color: var(--border2); }
+.recipe-card.omega { border-left: 3px solid var(--green); }
+.card-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.card-meta { flex: 1; min-width: 0; }
+.card-slot-label { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 3px; }
+.card-name { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 6px; line-height: 1.4; }
+.badges { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: 6px; }
+.badge {
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 100px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+.badge.anti { background: var(--green-bg); color: var(--green); border: 1px solid var(--green-border); }
+.badge.proto { background: rgba(100,149,237,0.12); color: #6495ED; border: 1px solid rgba(100,149,237,0.3); }
+.badge.vegan { background: rgba(154,205,50,0.12); color: #8BC34A; border: 1px solid rgba(154,205,50,0.3); }
+.badge.omega { background: var(--amber-bg); color: var(--amber); border: 1px solid var(--amber-border); }
+.badge.gf { background: rgba(180,160,100,0.12); color: #C8A96E; border: 1px solid rgba(180,160,100,0.3); }
+.ai-dots { display: flex; gap: 3px; align-items: center; margin-bottom: 6px; }
+.ai-dots .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--bg3); border: 1px solid var(--border2); }
+.ai-dots .dot.on { background: var(--green); border-color: var(--green); }
+.ai-dots .label { font-size: 10px; color: var(--text3); margin-left: 5px; }
+.card-macros { font-size: 12px; color: var(--text3); display: flex; gap: 8px; flex-wrap: wrap; }
+.card-macros b { color: var(--text2); font-weight: 500; }
+.expand-btn {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  color: var(--text3);
+  font-size: 12px;
+  cursor: pointer;
+  padding: 5px 10px;
+  white-space: nowrap;
+  transition: all 0.2s;
+  font-family: var(--sans);
+  flex-shrink: 0;
+}
+.expand-btn:hover { border-color: var(--border2); color: var(--text2); }
+.recipe-detail { display: none; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); animation: fadeIn 0.2s ease; }
+.recipe-detail.open { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+.ai-tip-box {
+  background: var(--green-bg);
+  border: 1px solid var(--green-border);
+  border-radius: var(--r);
+  padding: 8px 12px;
+  font-size: 12px;
+  color: var(--green);
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+.recipe-but { font-size: 13px; color: var(--text2); margin-bottom: 12px; font-style: italic; line-height: 1.5; }
+.detail-block { margin-bottom: 12px; }
+.detail-block h4 { font-size: 10px; font-weight: 500; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+.detail-block ul { list-style: none; font-size: 13px; color: var(--text); line-height: 1.8; }
+.detail-block ul li::before { content: "—  "; color: var(--text3); }
+.detail-block ol { padding-left: 18px; font-size: 13px; color: var(--text); line-height: 1.9; }
+.detail-block ol li { padding-left: 4px; }
+
+/* FILTER ROW */
+.filter-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 1.25rem; }
+.filter-row label { font-size: 12px; color: var(--text3); }
+.filter-row select {
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: var(--r);
+  border: 1px solid var(--border2);
+  background: var(--bg2);
+  color: var(--text);
+  font-family: var(--sans);
+  cursor: pointer;
+}
+
+/* SHOPPING */
+.shop-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-top: 1rem; }
+.shop-cat {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 14px;
+}
+.shop-cat h4 { font-size: 11px; font-weight: 500; color: var(--text3); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 10px; }
+.shop-cat ul { list-style: none; font-size: 13px; line-height: 2; color: var(--text2); }
+.shop-cat ul li { display: flex; align-items: center; gap: 8px; cursor: pointer; transition: color 0.15s; }
+.shop-cat ul li:hover { color: var(--text); }
+.shop-cat ul li.checked { text-decoration: line-through; color: var(--text3); }
+.shop-cat ul li::before { content: "○"; color: var(--text3); font-size: 12px; flex-shrink: 0; }
+.shop-cat ul li.checked::before { content: "●"; color: var(--green); }
+.price-box {
+  margin-top: 1.25rem;
+  background: var(--green-bg);
+  border: 1px solid var(--green-border);
+  border-radius: var(--r);
+  padding: 12px 16px;
+  font-size: 14px;
+  color: var(--green);
+  font-weight: 500;
+}
+
+/* BATCH STEPS */
+.batch-progress-bar-wrap {
+  background: var(--bg3);
+  border-radius: 100px;
+  height: 4px;
+  margin-bottom: 1.25rem;
+  overflow: hidden;
+}
+.batch-progress-bar {
+  height: 100%;
+  background: var(--green);
+  border-radius: 100px;
+  transition: width 0.4s ease;
+  width: 0%;
+}
+.batch-progress-label { font-size: 12px; color: var(--text3); margin-bottom: 8px; }
+.batch-step {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 12px 14px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.batch-step:hover { border-color: var(--border2); }
+.batch-step.done { opacity: 0.45; }
+.batch-step.done .step-title { text-decoration: line-through; color: var(--text3); }
+.step-check { font-size: 15px; min-width: 18px; padding-top: 1px; color: var(--text3); }
+.batch-step.done .step-check { color: var(--green); }
+.step-content .step-title { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 2px; }
+.step-content .step-desc { font-size: 12px; color: var(--text3); line-height: 1.5; }
+.batch-time { font-size: 11px; color: var(--text3); background: var(--bg3); padding: 1px 7px; border-radius: 100px; display: inline-block; margin-top: 4px; }
+
+/* SECTION TITLE */
+.section-title { font-family: var(--serif); font-size: 20px; font-weight: 400; color: var(--text); margin-bottom: 1.25rem; letter-spacing: -0.02em; }
+.section-sub { font-size: 13px; color: var(--text3); margin-top: -0.75rem; margin-bottom: 1.25rem; }
+
+/* EMPTY */
+.empty { font-size: 13px; color: var(--text3); padding: 2rem 0; }
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
+
+/* MOBILE IMPROVEMENTS */
+@media (max-width: 500px) {
+  .main { padding: 1rem; }
+  .site-header { padding: 1.25rem 1rem 1rem; }
+  .nav-tabs { padding: 0 1rem; }
+  .totals { grid-template-columns: repeat(3, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo">
+      <h1>Batch Cooking</h1>
+      <p>Anti-inflammatoire · Mix Mat Resume + Alex PYX</p>
+    </div>
+  </div>
+</header>
+
+<nav class="nav-tabs">
+  <button class="nav-tab active" onclick="showTab('menu',this)">Menu 4 jours</button>
+  <button class="nav-tab" onclick="showTab('recipes',this)">Bibliothèque</button>
+  <button class="nav-tab" onclick="showTab('shopping',this)">Courses</button>
+  <button class="nav-tab" onclick="showTab('batch',this)">Batch cooking</button>
+</nav>
+
+<main class="main">
+
+  <!-- MENU TAB -->
+  <section id="menu" class="section active">
+    <div class="mode-bar">
+      <span style="font-size:12px;color:var(--text3);align-self:center;">Mode :</span>
+      <button class="mode-btn active" onclick="setMode('anti',this)">Anti-inflammation max</button>
+      <button class="mode-btn" onclick="setMode('mix',this)">Mix équilibré</button>
+      <button class="mode-btn" onclick="setMode('proto',this)">Protéines max</button>
+    </div>
+    <button class="gen-btn" id="gen-btn" onclick="generateMenu()">
+      <span class="spin">↻</span> Générer un menu
+    </button>
+    <div class="totals" id="totals">
+      <div class="total-card"><div class="t-label">Calories</div><div class="t-val" id="t-kcal">—</div></div>
+      <div class="total-card"><div class="t-label">Protéines</div><div class="t-val" id="t-prot">—</div></div>
+      <div class="total-card"><div class="t-label">Glucides</div><div class="t-val" id="t-gluc">—</div></div>
+      <div class="total-card"><div class="t-label">Lipides</div><div class="t-val" id="t-lip">—</div></div>
+      <div class="total-card"><div class="t-label">Score inflam.</div><div class="t-val" id="t-ai">—</div></div>
+      <div class="total-card"><div class="t-label">Budget 4j</div><div class="t-val" id="t-budget">—</div></div>
+    </div>
+    <div id="omega-alert"></div>
+    <div class="menu-slots" id="menu-slots"></div>
+    <div id="menu-detail"></div>
+  </section>
+
+  <!-- RECIPES TAB -->
+  <section id="recipes" class="section">
+    <div class="filter-row">
+      <label>Catégorie</label>
+      <select id="cat-filter" onchange="filterRecipes()">
+        <option value="all">Toutes</option>
+        <option value="matin">Jus / Matin</option>
+        <option value="dejeuner">Déjeuner</option>
+        <option value="diner">Dîner / Soupes</option>
+        <option value="souper">Souper / Plats</option>
+        <option value="collation">Collations</option>
+      </select>
+      <label>Source</label>
+      <select id="src-filter" onchange="filterRecipes()">
+        <option value="all">Les deux</option>
+        <option value="mat">Mat Resume</option>
+        <option value="pyx">Alex PYX</option>
+      </select>
+      <label>Anti-inflam min.</label>
+      <select id="ai-filter" onchange="filterRecipes()">
+        <option value="0">Tous</option>
+        <option value="3">★★★+</option>
+        <option value="4">★★★★+</option>
+        <option value="5">★★★★★</option>
+      </select>
+    </div>
+    <div id="recipe-list"></div>
+  </section>
+
+  <!-- SHOPPING TAB -->
+  <section id="shopping" class="section">
+    <p class="section-sub">Basé sur le menu généré. Coche les articles en magasin.</p>
+    <div id="shopping-content"><div class="empty">Génère un menu d'abord depuis l'onglet "Menu 4 jours".</div></div>
+  </section>
+
+  <!-- BATCH TAB -->
+  <section id="batch" class="section">
+    <p class="section-sub">Coche les étapes au fur et à mesure — durée totale ~2h30.</p>
+    <div class="batch-progress-label" id="batch-progress-label">0/9 étapes</div>
+    <div class="batch-progress-bar-wrap"><div class="batch-progress-bar" id="batch-bar"></div></div>
+    <div id="batch-content"><div class="empty">Génère un menu d'abord depuis l'onglet "Menu 4 jours".</div></div>
+  </section>
+
+</main>
+
+<script>
+const DB = {
+matin:[
+{id:'jus-ai',name:'Jus citron-gingembre-curcuma',src:'mat',cat:'matin',badges:['anti','gf','vegan'],ai:5,kcal:25,prot:0,gluc:6,lip:0,budget:1.5,omega3:false,
+tip:'Curcuma + poivre noir + gingembre = combo anti-inflam numéro 1 pour les articulations. La pipérine du poivre multiplie l\'absorption du curcuma par 20x.',
+ingr:['3 citrons jaunes','2 cc gingembre en poudre','1 pincée curcuma','1 pincée poivre noir','2 cc miel acacia liquide','1 litre eau'],
+steps:['Porter 1 tasse eau + gingembre + miel à ébullition 5 min.','Laisser refroidir 15 min. Filtrer.','Verser dans carafe avec jus citron, curcuma, poivre noir et reste eau.','Conserver au frigo. Boire chaque matin à température ambiante.'],
+but:'Activation anti-inflammatoire dès le réveil — curcuma biodisponible grâce au poivre.'},
+{id:'jus-feu',name:'Fire juice orange-carotte-gingembre',src:'pyx',cat:'matin',badges:['anti','gf','vegan'],ai:5,kcal:80,prot:2,gluc:18,lip:0,budget:2,omega3:false,
+tip:'Vitamine C de l\'orange + gingembre = duo anti-oxydant puissant. Bêtacarotène des carottes soutient la réparation tissulaire.',
+ingr:['2 oranges','2 carottes','1 citron','gingembre frais râpé','eau'],
+steps:['Mixer tous les ingrédients jusqu\'à texture lisse.','Filtrer dans chinois ou torchon.','Verser dans verre ou fioles. Boire frais immédiatement.'],
+but:'Vitamine C, bêtacarotène, anti-inflammatoire — idéal à jeun le matin.'},
+{id:'jus-roi',name:'Potion du roi grenade-betterave',src:'pyx',cat:'matin',badges:['anti','gf','vegan'],ai:5,kcal:90,prot:2,gluc:20,lip:0,budget:3,omega3:false,
+tip:'Betterave + grenade = antioxydants qui réduisent directement les marqueurs inflammatoires CRP et IL-6.',
+ingr:['1 grenade','¼ pastèque','1 betterave crue','gingembre','½ citron','cannelle'],
+steps:['Mixer tous les ingrédients jusqu\'à texture lisse.','Filtrer avec un chinois.','Servir frais.'],
+but:'Booste l\'énergie, supporte l\'endurance, anti-oxydant maximal.'},
+{id:'jus-acne',name:'Jus curcuma-orange-eau de coco',src:'pyx',cat:'matin',badges:['anti','gf','vegan'],ai:4,kcal:60,prot:1,gluc:14,lip:0,budget:1.8,omega3:false,
+tip:'Curcuma + poivre noir + eau de coco : anti-inflammatoire systémique, bénéfique pour les articulations et la peau.',
+ingr:['½ citron','1 orange','gingembre','curcuma','poivre noir','eau de coco'],
+steps:['Mixer tous les ingrédients.','Filtrer et verser dans des fioles.','Consommer à jeun le matin.'],
+but:'Anti-inflammatoire, facilite la digestion, hydratation minéralisante.'},
+],
+dejeuner:[
+{id:'oats-framboise',name:'Overnight oats framboise-chocolat',src:'pyx',cat:'dejeuner',badges:['proto','gf'],ai:3,kcal:470,prot:51,gluc:44,lip:10,budget:4.5,omega3:false,
+tip:'Framboises = anthocyanes anti-inflammatoires. Chocolat 70%+ = antioxydants. La whey est optionnelle — remplace par +200g fromage blanc 0%.',
+ingr:['200g flocons avoine','400ml lait amande','200g framboises surgelées','120g whey vanille (ou +200g fromage blanc 0%)','sirop érable','extrait vanille','600g fromage blanc 0%','20g chocolat noir 70%+','5g huile coco'],
+steps:['Écraser les framboises. Ajouter flocons, lait amande, sirop érable, vanille. Mélanger.','Ajouter whey. Répartir en 4 boîtes. Repos 1-2h frigo.','Fondre chocolat + huile coco au bain-marie.','Ajouter fromage blanc, framboises fraîches et chocolat fondu.'],
+but:'51g protéines/portion — le meilleur déjeuner pour maintenir la masse musculaire.'},
+{id:'oats-banana-choco',name:'Overnight oats banane-cacao-cacahuète',src:'pyx',cat:'dejeuner',badges:['proto','gf'],ai:3,kcal:548,prot:46,gluc:53,lip:12,budget:4.5,omega3:false,
+tip:'Le cacao 70%+ est l\'un des aliments les plus riches en antioxydants. Préfère poudre cacao brut sans sucre.',
+ingr:['200g flocons avoine','120ml lait amande','1 banane écrasée','120g whey chocolat (ou +200g fromage blanc 0%)','sirop érable','extrait vanille','600g fromage blanc 0%','40g beurre cacahuète naturel (sans sel ni sucre ajouté)','20g chocolat noir 70%+'],
+steps:['Écraser banane. Ajouter flocons, whey, sirop érable, vanille, lait amande. Mélanger.','Répartir en 4 boîtes. Repos 1-2h frigo.','Mélanger fromage blanc + beurre cacahuète.','Fondre chocolat. Verser fromage blanc + chocolat fondu par-dessus.'],
+but:'Version gourmande — 46g protéines, énergie longue durée grâce au sarrasin.'},
+{id:'porridge-quinoa',name:'Mat porridge quinoa-chia-fruits rouges',src:'mat',cat:'dejeuner',badges:['anti','gf','vegan'],ai:5,kcal:380,prot:14,gluc:48,lip:12,budget:3.5,omega3:true,
+tip:'Graines de chia + lin = oméga-3 végétaux ALA actifs contre l\'inflammation articulaire. Fruits rouges = anthocyanes. Un des meilleurs déjeuners anti-inflam.',
+ingr:['40g flocons quinoa','200ml lait noisettes','1 cs graines chia','1 cs graines lin','1 banane écrasée','½ cc cannelle','½ cc poudre vanille','1 cs beurre amande','10 myrtilles','10 mûres','5 framboises','½ cc miel acacia'],
+steps:['Mélanger flocons quinoa, graines chia et lin, vanille, cannelle dans un bol.','Porter 100ml eau + 150ml lait noisettes à ébullition.','Réduire feu doux. Ajouter mélange. Remuer 4 min. Ajouter banane + reste lait 2 min.','Verser en bol. Garnir avec fruits rouges, beurre amande, miel.'],
+but:'Le meilleur déjeuner anti-inflammation — oméga-3 végétaux, antioxydants, protéines complètes.'},
+{id:'pancakes-sarrasin',name:'Mat banana pancakes sarrasin',src:'mat',cat:'dejeuner',badges:['anti','gf','vegan'],ai:4,kcal:340,prot:14,gluc:52,lip:9,budget:3,omega3:false,
+tip:'Farine de sarrasin = sans gluten, IG bas, riche en magnésium anti-inflammatoire et en rutine antioxydante.',
+ingr:['1 bol farine sarrasin complète bio','1 bol lait noisettes','1 banane écrasée','1 cc poudre à lever sans gluten','1 cc miel liquide','1 cs cacao 70%','1 cc cannelle','huile olive vierge extra','myrtilles pour servir'],
+steps:['Mélanger farine sarrasin + sel + miel + banane + cacao + cannelle + poudre à lever.','Verser progressivement lait noisettes en remuant de bas en haut pour oxygéner.','Laisser reposer minimum 2h (idéalement une nuit au frigo).','Cuire dans poêle légèrement huilée à feu vif puis moyen, ~3 min sans retourner.','Servir avec myrtilles et filet de miel.'],
+but:'Pancakes fermentés sans gluten — IG bas, magnésium, anti-inflammatoire naturel.'},
+{id:'oats-apple',name:'Overnight oats apple pie',src:'pyx',cat:'dejeuner',badges:['proto','gf'],ai:3,kcal:455,prot:33,gluc:56,lip:11,budget:4,omega3:false,
+tip:'Cannelle = puissant anti-inflammatoire naturel qui régule aussi la glycémie. Utilise-la généreusement.',
+ingr:['200g flocons avoine','120ml lait amande','200g pommes','sirop érable','cannelle généreuse','800g fromage blanc 0%','90g whey vanille (ou +200g fromage blanc)'],
+steps:['Couper pommes en cubes. Rôtir feu doux avec miel. Garder ¼ de côté.','Répartir flocons + fromage blanc + lait + pommes + sirop en 4 boîtes. Repos 1-2h.','Mélanger reste fromage blanc + whey + cannelle.','Verser sur préparation. Ajouter pommes réservées + cannelle généreuse.'],
+but:'Doux, sucré, énergie longue durée — la cannelle booste l\'effet anti-inflammatoire.'},
+],
+diner:[
+{id:'soupe-popeye',name:'Soupe Popeye épinards-patate douce',src:'mat',cat:'diner',badges:['anti','gf','vegan'],ai:5,kcal:220,prot:12,gluc:30,lip:5,budget:3,omega3:false,
+tip:'Épinards = magnésium + fer + vitamines anti-oxydantes. Curcuma + gingembre dans la soupe = combo optimal pour les articulations.',
+ingr:['400g épinards frais ou surgelés','1 patate douce','1 boîte haricots blancs cuits égouttés','1,5L bouillon légumes','4 gousses ail','1 oignon rouge','1 cc curcuma','1 cc gingembre','origan, laurier, persil','huile olive vierge extra'],
+steps:['Éplucher et couper oignon, ail, patate douce.','Chauffer bouillon. Ajouter légumes + curcuma + gingembre + laurier. Ébullition 25 min.','Ajouter haricots et épinards. Cuire 5 min supplémentaires.','Assaisonner. Filet huile olive. Persil ciselé. Répartir 4 portions.'],
+but:'Dîner léger anti-inflammatoire maximal — fer, magnésium, curcuma, gingembre.'},
+{id:'soupe-carotte-coco',name:'Soupe carotte-coco-cannelle',src:'mat',cat:'diner',badges:['anti','gf','vegan'],ai:5,kcal:180,prot:3,gluc:28,lip:7,budget:2.5,omega3:false,
+tip:'Lait de coco + cumin + cannelle = trilogie anti-inflammatoire. Carottes = bêtacarotène précurseur de vitamine A réparatrice.',
+ingr:['1kg carottes','1,2L eau','3 oignons','15cl lait coco','1 cc cumin moulu','1 cc cannelle moulue','coriandre fraîche','persil','4 gouttes citron'],
+steps:['Éplucher et couper carottes en rondelles.','Cuire casserole eau + sel 35 min feu doux.','Ajouter cumin, cannelle, persil, coriandre, citron, lait coco, oignon épluché.','Mixer jusqu\'à texture lisse et onctueuse. Répartir 4 portions.'],
+but:'Soupe veloutée onctueuse, reminéralisante, anti-inflammatoire complète.'},
+{id:'soupe-brocoli',name:'Soupe brocoli-carotte-échalotes',src:'mat',cat:'diner',badges:['anti','gf','vegan'],ai:5,kcal:160,prot:6,gluc:22,lip:5,budget:2.5,omega3:false,
+tip:'Brocoli = sulforaphane, l\'un des composés les plus étudiés contre l\'inflammation chronique et la protection articulaire.',
+ingr:['400g brocolis','150g carottes','150g pommes de terre','3 échalotes','1L eau','huile olive vierge extra','basilic frais','citron'],
+steps:['Couper brocolis en bouquets. Éplucher carottes et pommes de terre en morceaux.','Faire revenir échalotes 6 min dans casserole huilée.','Ajouter légumes, eau, sel, basilic. Couvrir 35 min.','Mixer. Poivrer. Répartir 4 portions.'],
+but:'Sulforaphane du brocoli = anti-inflammatoire puissant et protecteur articulaire.'},
+{id:'soupe-potiron',name:'Soupe potiron-gingembre-curcuma',src:'mat',cat:'diner',badges:['anti','gf','vegan'],ai:5,kcal:170,prot:3,gluc:30,lip:5,budget:3,omega3:false,
+tip:'Potiron + curcuma + gingembre + cannelle = 4 anti-inflammatoires dans un seul bol. La combinaison est plus efficace que chaque ingrédient seul.',
+ingr:['1,5kg potiron','2 oignons','1 échalote','1 cc gingembre moulu','1 cc curcuma','1 cc poivre noir','0,75L eau','1 cc cannelle','1 cc huile noix vierge','basilic'],
+steps:['Éplucher potiron, couper chair en morceaux.','Faire revenir oignons + échalote + gingembre + curcuma dans casserole huilée 4 min.','Ajouter potiron 5 min, puis eau + sel + basilic + cannelle. Couvrir 20 min.','Ajouter huile noix + poivre noir + citron. Mixer jusqu\'à texture onctueuse.'],
+but:'4 anti-inflammatoires dans un bol — bêtacarotène, curcuma, gingembre, cannelle.'},
+{id:'soupe-chou',name:'Soupe chou-fleur-gingembre-curcuma',src:'mat',cat:'diner',badges:['anti','gf','vegan'],ai:4,kcal:140,prot:5,gluc:20,lip:4,budget:2.5,omega3:false,
+tip:'Chou-fleur riche en vitamine C naturelle qui soutient la synthèse de collagène et la réparation des tissus articulaires.',
+ingr:['1 tête chou-fleur','3 carottes','1 oignon rouge','1 gousse ail','1L bouillon légumes','1 cc curcuma','1 cc gingembre','épinards','basilic','jus citron'],
+steps:['Laver et couper chou-fleur en fleurettes, carottes en rondelles.','Faire bouillir bouillon avec tous légumes 25 min couverts.','Mixer avec curcuma, gingembre, sel, poivre.','Ajouter basilic ciselé. Répartir 4 portions.'],
+but:'Vitamine C pour la réparation articulaire + curcuma + gingembre — soupe légère.'},
+],
+souper:[
+{id:'saumon-panko',name:'Saumon panko riz-concombre',src:'pyx',cat:'souper',badges:['proto','anti','omega'],ai:5,kcal:602,prot:48,gluc:62,lip:18,budget:8,omega3:true,
+tip:'Saumon = meilleure source d\'oméga-3 EPA/DHA → réduit directement les prostaglandines inflammatoires. Priorité absolue pour l\'épaule. Viser 2x/semaine minimum.',
+ingr:['600g saumon frais ou surgelé','ail en poudre, paprika','40g chapelure panko','400g concombre','vinaigre riz, sauce soja sans gluten, miel, purée piment','50g sriracha','50g mayo allégée','100g fromage blanc 0%','20ml jus citron vert','600g riz complet cuit'],
+steps:['Couper saumon en cubes. Assaisonner paprika + ail. Rouler dans chapelure panko.','Cuire four 180°C, 10-12 min.','Couper concombre très fin. Mélanger avec sauce soja + miel + vinaigre riz + piment.','Mélanger sauce : sriracha + mayo + fromage blanc + citron vert.','Répartir riz + concombre + saumon + sauce en 4 boîtes.'],
+but:'PRIORITÉ épaule — oméga-3 EPA/DHA du saumon = anti-inflammatoire articulaire direct.'},
+{id:'maquereau-legumes',name:'Maquereau & légumes poêlés',src:'mat',cat:'souper',badges:['anti','omega','gf'],ai:5,kcal:450,prot:35,gluc:18,lip:20,budget:6,omega3:true,
+tip:'Maquereau = petit poisson gras riche en oméga-3, moins contaminé que le thon. Combo idéal épaule + budget raisonnable.',
+ingr:['3 maquereaux vidés (ou 4 filets de maquereau)','1 poireau','1 oignon','8 feuilles épinards','2 échalotes','10cl crème coco','5 cs huile olive vierge extra','aneth','gros sel','poivre du moulin'],
+steps:['Préchauffer four 160°C. Couper maquereaux en gros morceaux. Enduire huile olive + sel.','Enfourner 9 min.','Couper poireau en rondelles. Blanchir 4 min eau bouillante.','Préparer sauce : échalotes + oignon dorés à la poêle, ajouter crème coco, sel, poivre, réduire 8 min.','Wok : légumes + morceaux maquereau + sauce. Cuire 10 min feu doux. Aneth + citron.'],
+but:'Oméga-3 du maquereau + légumes verts = combo anti-inflammation articulaire.'},
+{id:'chicken-spicy',name:'Spicy chicken riz curcuma',src:'pyx',cat:'souper',badges:['proto','gf'],ai:4,kcal:526,prot:53,gluc:57,lip:3,budget:6,omega3:false,
+tip:'Curcuma + poivre noir dans la marinade pour un effet anti-inflammatoire maximal. Poulet fermier = protéines maigres sans graisses saturées.',
+ingr:['800g blancs poulet fermier','paprika, piment doux, ail en poudre, curcuma, poivre noir','huile olive vierge extra','600g riz complet cuit','120g yaourt grec 0%','80g mayo allégée','jus citron','miel'],
+steps:['Mariner poulet avec épices + curcuma + poivre noir 30 min minimum.','Cuire poulet poêle bien chaude jusqu\'à belle coloration.','Cuire riz complet avec curcuma + paprika.','Mixer yaourt + mayo + citron + miel + ail pour la sauce.','Répartir riz + poulet en 4 boîtes. Sauce généreuse.'],
+but:'53g protéines/portion — le plus protéiné, curcuma + poivre pour l\'épaule.'},
+{id:'chicken-bbq',name:'Chicken BBQ gingembre riz-concombre',src:'pyx',cat:'souper',badges:['proto','gf'],ai:3,kcal:486,prot:49,gluc:50,lip:10,budget:6,omega3:false,
+tip:'Gingembre frais dans la marinade renforce l\'effet anti-inflammatoire. Aussi puissant que l\'ibuprofène selon certaines études.',
+ingr:['800g blancs poulet','gingembre frais râpé, ail','25g sriracha','40ml sauce soja sans gluten','graines sésame','400g concombre','miel, vinaigre riz, piment doux','600g riz complet cuit'],
+steps:['Assaisonner poulet. Mariner 1h frigo (gingembre frais, ail, sauce soja, sriracha).','Préparer salade concombre : tranches fines + ail + sriracha + soja + miel + vinaigre riz.','Cuire poulet poêle bien chaude. Ajouter sauce soja fin de cuisson.','Répartir riz + poulet + concombre en 4 boîtes. Graines sésame.'],
+but:'49g protéines, saveur intense — gingembre frais pour l\'effet articulaire.'},
+{id:'pad-thai-tofu',name:'Pad Thaï tofu-brocoli-curcuma',src:'mat',cat:'souper',badges:['anti','gf','vegan'],ai:4,kcal:480,prot:26,gluc:55,lip:16,budget:5,omega3:false,
+tip:'Tofu = protéines végétales complètes + isoflavones aux propriétés anti-inflammatoires. Brocoli = sulforaphane protecteur articulaire.',
+ingr:['400g tofu ferme','300g pâtes de riz','2 carottes','1 brocoli','2 échalotes','3 gousses ail','4 cs beurre cacahuète naturel','3 cs sauce soja sans gluten','jus citron','curcuma, gingembre','huile olive vierge extra','persil frais'],
+steps:['Couper tofu en cubes. Dorer 10 min poêle huilée.','Éplucher échalote, ail. Râper carottes. Couper brocoli en bouquets.','Ajouter brocoli + échalote + ail + curcuma + gingembre à la poêle 6 min.','Cuire pâtes de riz selon paquet.','Sauce : beurre cacahuète + sauce soja + 80ml eau. Mélanger énergiquement.','Assembler : pâtes + sauce + poêle. Citron, persil. Répartir 4 boîtes.'],
+but:'Tofu + brocoli + curcuma + gingembre = plat vegan anti-inflammatoire complet.'},
+{id:'poke-bowl',name:'Poke bowl riz complet-avocat-edamame',src:'mat',cat:'souper',badges:['anti','gf','vegan'],ai:4,kcal:440,prot:18,gluc:52,lip:16,budget:5.5,omega3:false,
+tip:'Avocat = acide oléique + vitamine E = graisses saines anti-inflammatoires. Huile sésame = oméga en petite quantité ok.',
+ingr:['1 tasse riz complet','1,5 tasse edamame','2 avocats','1 carotte','1 oignon','1 cs graines sésame','sauce soja sans gluten','gingembre frais','huile sésame','vinaigre riz','coriandre fraîche','épinards frais'],
+steps:['Cuire riz complet 30 min. Égoutter.','Couper avocats en cubes. Râper carotte. Hacher oignon.','Marinade : huile sésame + vinaigre riz + gingembre + coriandre + soja.','Mélanger oignon + carotte + avocat dans marinade.','Bols : riz + mélange + edamame + épinards + coriandre + citron.'],
+but:'Bons gras de l\'avocat + oméga-3 végétaux edamame + gingembre = anti-inflam complet.'},
+{id:'pasta-bolo',name:'Pasta bœuf bolognaise cottage cheese',src:'pyx',cat:'souper',badges:['proto'],ai:2,kcal:479,prot:48,gluc:47,lip:11,budget:6.5,omega3:false,
+tip:'Viande hachée 5% MG = protéines sans excès de graisses saturées. Préfère pâtes de légumineuses pour réduire le gluten.',
+ingr:['800g viande hachée 5% MG','ail, oignon','paprika, sel, poivre','250g sauce tomate','200ml bouillon bœuf','200g cottage cheese','40g parmesan','herbes italiennes','600g pâtes complètes cuites'],
+steps:['Mélanger viande hachée + épices. Cuire poêle chaude.','Ajouter sauce tomate + bouillon + cottage cheese + parmesan + herbes. Mijoter 30 min feu doux.','Cuire pâtes. Mélanger dans la poêle.','Répartir en 4 boîtes.'],
+but:'48g protéines/portion — plaisir garanti, à équilibrer avec repas plus anti-inflam.'},
+],
+collation:[
+{id:'smoothie-myrtilles',name:'Smoothie myrtilles-lin-amande',src:'mat',cat:'collation',badges:['anti','gf','vegan'],ai:5,kcal:280,prot:8,gluc:32,lip:10,budget:2.5,omega3:true,
+tip:'Myrtilles = anthocyanes anti-inflammatoires articulaires. Graines de lin = oméga-3 végétaux ALA. Noix = anti-inflammatoire prouvé. Meilleure collation pour l\'épaule.',
+ingr:['2 tasses myrtilles surgelées','1 banane','2 cs beurre amande naturel','1 tasse framboises surgelées','1 cs graines lin','400ml lait noisettes','1 poignée noix (à manger à côté)'],
+steps:['Mettre tous les ingrédients sauf noix dans mixeur.','Verser lait progressivement jusqu\'à texture souhaitée.','Répartir en portions. Servir avec poignée de noix.'],
+but:'Meilleure collation anti-inflammation — anthocyanes + oméga-3 végétaux + noix.'},
+{id:'smoothie-choco-pb',name:'Smoothie choco-cacahuète post-effort',src:'pyx',cat:'collation',badges:['proto','gf'],ai:3,kcal:766,prot:53,gluc:53,lip:38,budget:3,omega3:false,
+tip:'53g protéines en collation — très calorique. Réserve ça pour les jours les plus actifs ou quand tu reprends le sport.',
+ingr:['200ml lait amande','120g fromage blanc 0%','30g flocons avoine','30g beurre cacahuète naturel','30g chocolat noir 70%+','cacao brut','30g whey chocolat (optionnel)','sirop érable'],
+steps:['Mettre tous les ingrédients dans blender avec glaçons.','Mixer 2 min jusqu\'à texture onctueuse.','Verser dans grand verre. Saupoudrer cacao brut.'],
+but:'Collation récupération maximale — 53g protéines, réservée aux jours actifs.'},
+{id:'smoothie-myrtille-pyx',name:'Blueberry smoothie protéiné léger',src:'pyx',cat:'collation',badges:['proto','anti','gf'],ai:4,kcal:413,prot:35,gluc:48,lip:9,budget:2.5,omega3:false,
+tip:'Myrtilles + banane + fromage blanc = anti-oxydants + protéines. Version légère idéale pour les jours sédentaires.',
+ingr:['80g banane','80g myrtilles surgelées','30g whey vanille (ou 100g fromage blanc 0%)','50g fromage blanc 0%','100ml lait amande','20g flocons avoine'],
+steps:['Mettre tous les ingrédients dans blender avec glaçons.','Mixer 2 min.','Verser dans grand verre. Ajouter quelques myrtilles fraîches.'],
+but:'Smoothie équilibré — antioxydants + protéines + glucides pour la récupération.'},
+{id:'granola-prote',name:'Granola protéiné cacao-amande maison',src:'pyx',cat:'collation',badges:['proto','gf'],ai:3,kcal:402,prot:28,gluc:43,lip:12,budget:3,omega3:false,
+tip:'Ajoute noix et graines de lin au granola pour booster les oméga-3 anti-inflammatoires. Conservation 4 jours en boîte hermétique.',
+ingr:['150g flocons avoine','60g whey chocolat (ou +50g flocons avoine)','10g miel','10g huile coco','10g beurre cacahuète naturel','10g pépites chocolat 70%+','noix concassées (optionnel)'],
+steps:['Mélanger flocons avoine + whey.','Ajouter progressivement huile coco + miel + beurre cacahuète.','Émietter avec les mains en morceaux. Étaler sur papier sulfurisé.','Four 200°C, 10 min. Surveiller. Laisser refroidir. Ajouter pépites + noix.'],
+but:'Granola croustillant maison — 28g protéines/100g, se conserve 4 jours.'},
+{id:'cookie-prote',name:'Cookies protéinés poudre amande (x10)',src:'pyx',cat:'collation',badges:['proto','gf'],ai:3,kcal:132,prot:9,gluc:5,lip:8,budget:3,omega3:false,
+tip:'Poudre d\'amande = vitamine E anti-oxydant + graisses saines insaturées. Snack sans sucre raffiné, sans gluten.',
+ingr:['1 œuf','10g huile coco','10g sirop agave','10g purée amande','100g poudre amande','60g whey vanille (ou 60g flocons avoine mixés)','50g flocons avoine','10g pépites chocolat 70%+','5g levure chimique','extrait vanille'],
+steps:['Mélanger tous les ingrédients dans saladier jusqu\'à homogène.','Étaler en petits cookies sur papier cuisson à la cuillère.','Four 180°C, 10-12 min.','Déguster chaud ou froid. Conservation 2 jours.'],
+but:'9g protéines par cookie — snack sain sans sucre raffiné, vitamine E anti-oxydant.'},
+{id:'banana-bread',name:'Banana bread protéiné avoine-noix',src:'pyx',cat:'collation',badges:['proto','gf'],ai:3,kcal:345,prot:22,gluc:44,lip:9,budget:3,omega3:false,
+tip:'Ajoute noix concassées dans la pâte pour les oméga-3. Banane + avoine + cannelle = énergie lente + anti-inflammatoire.',
+ingr:['2 bananes bien mûres','160g flocons avoine','60g whey vanille (ou +100g fromage blanc 0%)','10g levure chimique','extrait vanille','100ml lait amande','cannelle généreuse','1 banane pour décoration','chocolat noir 70%+'],
+steps:['Préchauffer four 180°C.','Mixer tous les ingrédients jusqu\'à préparation lisse.','Verser dans moule huilé. Ajouter toppings (banane, chocolat noir, cannelle).','Enfourner 20-25 min. Laisser refroidir. Couper en parts.'],
+but:'Snack doux et énergisant — 22g protéines, se conserve 3 jours.'},
+]
+};
+
+let mode = 'anti';
+let currentMenu = null;
+let shopChecked = new Set();
+
+function showTab(name, el){
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById(name).classList.add('active');
+}
+
+function setMode(m, el){
+  mode = m;
+  document.querySelectorAll('.mode-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  generateMenu();
+}
+
+function weightedPick(arr){
+  if(mode === 'mix'){
+    return arr[Math.floor(Math.random()*arr.length)];
+  }
+  const sorted = [...arr].sort((a,b) => mode==='proto' ? b.prot-a.prot : b.ai-a.ai);
+  const topScore = mode==='proto' ? sorted[0].prot : sorted[0].ai;
+  const pool = sorted.filter(r => (mode==='proto' ? r.prot : r.ai) >= topScore - 1);
+  return pool[Math.floor(Math.random()*pool.length)];
+}
+
+function generateMenu(){
+  const btn = document.getElementById('gen-btn');
+  btn.classList.add('loading');
+  setTimeout(()=>{
+    const m = {
+      matin: weightedPick(DB.matin),
+      dejeuner: weightedPick(DB.dejeuner),
+      diner: weightedPick(DB.diner),
+      souper: weightedPick(DB.souper),
+      collation: weightedPick(DB.collation)
+    };
+    currentMenu = m;
+    renderMenu(m);
+    buildShopping(m);
+    buildBatch(m);
+    btn.classList.remove('loading');
+  }, 200);
+}
+
+function renderMenu(m){
+  const slots = {matin:'🌅 Matin',dejeuner:'🥣 Déjeuner',diner:'🍵 Dîner',souper:'🍗 Souper',collation:'🍫 Collation'};
+  const all = Object.values(m);
+  const totK = all.reduce((s,r)=>s+r.kcal,0);
+  const totP = all.reduce((s,r)=>s+r.prot,0);
+  const totG = all.reduce((s,r)=>s+r.gluc,0);
+  const totL = all.reduce((s,r)=>s+r.lip,0);
+  const totAI = Math.round(all.reduce((s,r)=>s+r.ai,0)/all.length*10)/10;
+  const budget4 = Math.round(all.reduce((s,r)=>s+r.budget,0)*4);
+  const hasOmega = all.some(r=>r.omega3);
+
+  document.getElementById('t-kcal').textContent = Math.round(totK)+' kcal';
+  const pEl = document.getElementById('t-prot');
+  pEl.textContent = Math.round(totP)+'g';
+  pEl.className = 't-val'+(totP>=120?' good':totP<100?' warn':'');
+  document.getElementById('t-gluc').textContent = Math.round(totG)+'g';
+  document.getElementById('t-lip').textContent = Math.round(totL)+'g';
+  const aiEl = document.getElementById('t-ai');
+  aiEl.textContent = totAI.toFixed(1)+'/5';
+  aiEl.className = 't-val'+(totAI>=4?' good':totAI<3?' warn':'');
+  document.getElementById('t-budget').textContent = '~'+Math.round(budget4*0.9)+'–'+budget4+'€';
+
+  document.getElementById('omega-alert').innerHTML = hasOmega
+    ? '<div class="alert green">✓ Ce menu contient une source d\'oméga-3 — essentiel pour réduire l\'inflammation de l\'épaule.</div>'
+    : '<div class="alert amber">⚠ Ce menu ne contient pas d\'oméga-3. Régénère ou inclus saumon/maquereau en souper cette semaine.</div>';
+
+  document.getElementById('menu-slots').innerHTML = Object.entries(m).map(([slot,r])=>`
+    <div class="meal-slot${r.omega3?' has-omega':''}">
+      <h3>${slots[slot]}</h3>
+      <p>${r.name}</p>
+      <div class="macro-mini">${r.kcal} kcal · ${r.prot}g prot</div>
+    </div>`).join('');
+
+  document.getElementById('menu-detail').innerHTML = Object.entries(m).map(([slot,r])=>recipeCard(r, slots[slot])).join('');
+}
+
+function recipeCard(r, slotLabel){
+  const badgeMap = {anti:'Anti-inflam',proto:'Protéiné',vegan:'Vegan',omega:'Oméga-3',gf:'Sans gluten'};
+  return `<div class="recipe-card${r.omega3?' omega':''}">
+    <div class="card-top">
+      <div class="card-meta">
+        ${slotLabel ? `<div class="card-slot-label">${slotLabel}</div>` : ''}
+        <div class="card-name">${r.name}</div>
+        <div class="badges">${r.badges.map(b=>`<span class="badge ${b}">${badgeMap[b]||b}</span>`).join('')}</div>
+        <div class="ai-dots">
+          ${[1,2,3,4,5].map(i=>`<div class="dot${i<=r.ai?' on':''}"></div>`).join('')}
+          <span class="label">${r.src==='mat'?'Mat Resume':'Alex PYX'}</span>
+        </div>
+        <div class="card-macros"><b>${r.kcal}</b> kcal · Prot <b>${r.prot}g</b> · Gluc <b>${r.gluc}g</b> · Lip <b>${r.lip}g</b></div>
+      </div>
+      <button class="expand-btn" onclick="toggleCard(this)">Voir ▾</button>
+    </div>
+    <div class="recipe-detail">
+      <div class="ai-tip-box">💡 ${r.tip}</div>
+      <div class="recipe-but">${r.but}</div>
+      <div class="detail-block"><h4>Ingrédients</h4><ul>${r.ingr.map(i=>`<li>${i}</li>`).join('')}</ul></div>
+      <div class="detail-block"><h4>Préparation</h4><ol>${r.steps.map(s=>`<li>${s}</li>`).join('')}</ol></div>
+    </div>
+  </div>`;
+}
+
+function toggleCard(btn){
+  const d = btn.closest('.recipe-card').querySelector('.recipe-detail');
+  const open = d.classList.toggle('open');
+  btn.textContent = open ? 'Masquer ▴' : 'Voir ▾';
+}
+
+function buildShopping(menu){
+  const cats = {
+    '🐟 Protéines & poissons':[],
+    '🥦 Légumes & fruits':[],
+    '🌾 Féculents & céréales':[],
+    '🥛 Produits frais & laits végétaux':[],
+    '❄️ Surgelés':[],
+    '🧂 Épicerie & condiments':[]
+  };
+  const seen = new Set();
+  Object.values(menu).forEach(r=>{
+    r.ingr.forEach(i=>{
+      const key = i.toLowerCase().replace(/[\d,\.]+\s*[gclm]+\s*/g,'').trim().split(' ').slice(0,4).join(' ');
+      if(seen.has(key)) return;
+      seen.add(key);
+      const il = i.toLowerCase();
+      if(/saumon|maquereau|sardine|poulet|viande|tofu/.test(il)) cats['🐟 Protéines & poissons'].push(i);
+      else if(/surgelé|surgel/.test(il)) cats['❄️ Surgelés'].push(i);
+      else if(/riz|avoine|pâtes|farine|sarrasin|quinoa|flocons|panko/.test(il)) cats['🌾 Féculents & céréales'].push(i);
+      else if(/lait|amande|noisette|fromage|yaourt|cottage|whey|crème coco|beurre amande|beurre cacah/.test(il)) cats['🥛 Produits frais & laits végétaux'].push(i);
+      else if(/carotte|épinard|brocoli|patate|oignon|ail|citron|orange|banane|pomme|poire|concombre|tomate|avocat|betterave|potiron|grenade|pastèque|framboise|myrtille|fraise|coriandre|persil|basilic|gingembre frais/.test(il)) cats['🥦 Légumes & fruits'].push(i);
+      else cats['🧂 Épicerie & condiments'].push(i);
+    });
+  });
+  const budget4 = Math.round(Object.values(menu).reduce((s,r)=>s+r.budget,0)*4);
+  shopChecked = new Set();
+  document.getElementById('shopping-content').innerHTML =
+    `<div class="shop-grid">${Object.entries(cats).filter(([,v])=>v.length>0).map(([cat,items])=>`
+      <div class="shop-cat">
+        <h4>${cat}</h4>
+        <ul>${items.map((item,idx)=>`<li onclick="toggleShop(this)" data-id="${cat}-${idx}">${item}</li>`).join('')}</ul>
+      </div>`).join('')}</div>
+    <div class="price-box">Budget estimé 4 jours (Colruyt) : ~${Math.round(budget4*0.9)} – ${budget4} €</div>`;
+}
+
+function toggleShop(el){
+  el.classList.toggle('checked');
+}
+
+function buildBatch(menu){
+  const m = menu;
+  const steps = [
+    {t:'Veille au soir (5 min)', d:'Préparer la pâte à pancakes OU les overnight oats si applicable. Mélanger, couvrir, laisser au frigo toute la nuit.', time:'5 min'},
+    {t:'Démarrer le four si besoin', d:'Si le souper nécessite le four (saumon, chicken tenders...) — préchauffer à la bonne température maintenant.', time:'2 min'},
+    {t:`Jus du matin — ${m.matin.name}`, d:'Préparer la boisson matinale. Conserver en carafe au frigo pour les 4 jours.', time:'15 min'},
+    {t:`Soupe / dîner — ${m.diner.name}`, d:'Lancer la soupe en premier — elle cuit seule. Répartir en 4 boîtes hermétiques une fois prête.', time:'35 min'},
+    {t:`Déjeuner — ${m.dejeuner.name}`, d:'Pendant la cuisson de la soupe : finaliser le déjeuner / overnight oats. Répartir en 4 boîtes.', time:'20 min'},
+    {t:'Préparer les protéines du souper', d:`Couper, mariner ou assaisonner les protéines pour "${m.souper.name}".`, time:'20 min'},
+    {t:`Cuire & assembler — ${m.souper.name}`, d:'Cuire et assembler le plat principal. Répartir en 4 boîtes hermétiques.', time:'25 min'},
+    {t:`Collation — ${m.collation.name}`, d:'Préparer la collation. Conserver en boîtes ou au frigo selon la recette.', time:'15 min'},
+    {t:'Mise en boîtes finale & étiquetage', d:'Étiqueter toutes les boîtes J1/J2/J3/J4. Vérifier fermetures. J3-J4 des soupes au congélateur si possible.', time:'10 min'},
+  ];
+  const total = steps.length;
+  document.getElementById('batch-content').innerHTML = steps.map((s,i)=>`
+    <div class="batch-step" id="bst-${i}" onclick="toggleBatch(${i},${total})">
+      <span class="step-check">○</span>
+      <div class="step-content">
+        <div class="step-title">${i+1}. ${s.t}</div>
+        <div class="step-desc">${s.d}</div>
+        <span class="batch-time">${s.time}</span>
+      </div>
+    </div>`).join('');
+  updateBatchProgress(0, total);
+}
+
+function toggleBatch(i, total){
+  const el = document.getElementById('bst-'+i);
+  el.classList.toggle('done');
+  el.querySelector('.step-check').textContent = el.classList.contains('done') ? '●' : '○';
+  const done = document.querySelectorAll('.batch-step.done').length;
+  updateBatchProgress(done, total);
+}
+
+function updateBatchProgress(done, total){
+  const pct = Math.round(done/total*100);
+  document.getElementById('batch-bar').style.width = pct+'%';
+  document.getElementById('batch-progress-label').textContent = `${done}/${total} étapes complétées${done===total?' — Batch cooking terminé 🎉':''}`;
+}
+
+function filterRecipes(){
+  const cat = document.getElementById('cat-filter').value;
+  const src = document.getElementById('src-filter').value;
+  const minAI = parseInt(document.getElementById('ai-filter').value)||0;
+  let all = [];
+  Object.entries(DB).forEach(([c,recipes])=>{
+    if(cat==='all'||cat===c){
+      recipes.forEach(r=>{
+        if((src==='all'||src===r.src)&&r.ai>=minAI) all.push(r);
+      });
+    }
+  });
+  all.sort((a,b)=>b.ai-a.ai);
+  if(!all.length){
+    document.getElementById('recipe-list').innerHTML='<div class="empty">Aucune recette pour ces filtres.</div>';
+    return;
+  }
+  document.getElementById('recipe-list').innerHTML = all.map(r=>recipeCard(r,null)).join('');
+}
+
+filterRecipes();
+generateMenu();
+</script>
+</body>
+</html>
