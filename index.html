@@ -318,7 +318,7 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:
       <div class="total-card"><div class="t-lbl">Glucides</div><div class="t-val" id="t-gluc">—</div><div class="t-bar"><div class="t-bar-fill" id="bar-gluc" style="width:0%"></div></div></div>
       <div class="total-card"><div class="t-lbl">Lipides</div><div class="t-val" id="t-lip">—</div><div class="t-bar"><div class="t-bar-fill" id="bar-lip" style="width:0%"></div></div></div>
       <div class="total-card"><div class="t-lbl">Temps total</div><div class="t-val" id="t-ai">—</div></div>
-      <div class="total-card"><div class="t-lbl">Budget 4j</div><div class="t-val" id="t-budget">—</div></div>
+      <div class="total-card"><div class="t-lbl" id="lbl-budget">Budget 4j</div><div class="t-val" id="t-budget">—</div></div>
     </div>
     <div id="omega-alert"></div>
     <div class="menu-slots" id="menu-slots"></div>
@@ -1307,6 +1307,8 @@ function renderMenu(m) {
   aiEl.textContent = totTime + ' min';
   aiEl.className = 't-val';
   document.getElementById('t-budget').textContent = '~' + Math.round(budget4 * .9) + '-' + budget4 + ' EUR';
+  var lblBudget = document.getElementById('lbl-budget');
+  if (lblBudget) lblBudget.textContent = 'Budget ' + batchDays + 'j';
 
   // Omega alert
   var alerts = [];
