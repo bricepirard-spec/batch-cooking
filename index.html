@@ -287,6 +287,12 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:
 /* Shopping item stocked state */
 .shop-cat ul li.in-stock{opacity:.35;text-decoration:line-through}
 .shop-cat ul li.in-stock.show-anyway{opacity:.55;text-decoration:line-through;color:var(--sage)}
+
+/* SLOT SWAP */
+.slot-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px}
+.slot-swap-btn{background:none;border:1px solid var(--paper3);border-radius:100px;color:var(--ink4);font-size:12px;width:26px;height:26px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;transition:all .2s;flex-shrink:0}
+.slot-swap-btn:hover{background:var(--paper2);border-color:var(--ink4);color:var(--ink);transform:rotate(90deg)}
+.slot-swap-btn.spinning{animation:spin .4s linear infinite;color:var(--amber);border-color:var(--amber)}
 </style>
 </head>
 <body>
@@ -1385,13 +1391,23 @@ function renderMenu(m) {
   Object.entries(m).forEach(function(entry) {
     var slot = entry[0], r = entry[1];
     slotsHtml += '<div class="meal-slot">'
+      + '<div class="slot-top">'
       + '<span class="slot-ico">' + icons[slot] + '</span>'
+      + '<button class="slot-swap-btn" data-slot="' + slot + '" title="Changer cette recette">↺</button>'
+      + '</div>'
       + '<div class="slot-cat">' + labels[slot] + '</div>'
       + '<div class="slot-name">' + r.name + '</div>'
       + '<div class="slot-macro">' + r.kcal + ' kcal · ' + r.prot + 'g prot</div>'
       + '</div>';
   });
-  document.getElementById('menu-slots').innerHTML = slotsHtml;
+  var slotsEl = document.getElementById('menu-slots');
+  slotsEl.innerHTML = slotsHtml;
+  slotsEl.querySelectorAll('.slot-swap-btn').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      swapRecipe(this.getAttribute('data-slot'));
+    });
+  });
 
   var detailHtml = '';
   var labelsFull = { matin: 'Matin', dejeuner: 'Dejeuner', diner: 'Diner', souper: 'Souper', collation: 'Collation' };
@@ -2807,6 +2823,31 @@ function renderShoppingList() {
   });
 }
 
+
+function swapRecipe(slot) {
+  if (!currentMenu) return;
+  var btn = document.querySelector('.slot-swap-btn[data-slot="' + slot + '"]');
+  if (btn) {
+    btn.classList.add('spinning');
+    btn.disabled = true;
+  }
+  setTimeout(function() {
+    // Pick a new recipe for this slot, different from current
+    var currentId = currentMenu[slot].id;
+    var arr = DB[slot];
+    var candidate = pick(arr);
+    // If same recipe, try once more
+    if (candidate.id === currentId && arr.length > 1) candidate = pick(arr);
+    currentMenu[slot] = candidate;
+    renderMenu(currentMenu);
+    buildShopping(currentMenu);
+    buildBatch(currentMenu);
+    if (btn) {
+      btn.classList.remove('spinning');
+      btn.disabled = false;
+    }
+  }, 200);
+}
 
 function filterRecipes() {
   var cat = document.getElementById('cat-filter').value;
