@@ -259,6 +259,34 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:
 .task-box{width:16px;height:16px;border:1.5px solid var(--paper3);border-radius:4px;flex-shrink:0;margin-top:2px;transition:all .15s;background:var(--paper)}
 .step-tasks li.task-done .task-box{background:var(--sage);border-color:var(--sage)}
 .step-note{font-size:12px;color:var(--sage);background:var(--sage-light);border:1px solid var(--sage-mid);border-radius:var(--r);padding:8px 12px;margin-top:8px;line-height:1.5}
+
+/* PANTRY */
+.pantry-card{background:var(--white);border:1px solid var(--paper3);border-radius:var(--r-lg);margin-bottom:1.25rem;box-shadow:var(--shadow);overflow:hidden}
+.pantry-header{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;cursor:pointer;user-select:none;transition:background .15s}
+.pantry-header:hover{background:var(--paper2)}
+.pantry-title{font-size:14px;font-weight:500;color:var(--ink);margin-bottom:2px}
+.pantry-sub{font-size:11.5px;color:var(--ink4)}
+.pantry-arrow{font-size:11px;color:var(--ink4);transition:transform .2s}
+.pantry-panel{display:none;padding:0 18px 16px;border-top:1px solid var(--paper2)}
+.pantry-panel.open{display:block;animation:fd .2s ease}
+.pantry-search-wrap{padding:12px 0 10px}
+.pantry-search-wrap input{width:100%;padding:8px 12px;border:1px solid var(--paper3);border-radius:var(--r);font-family:var(--sans);font-size:13px;background:var(--paper);color:var(--ink)}
+.pantry-search-wrap input:focus{outline:2px solid var(--amber);outline-offset:2px}
+.pantry-section{margin-bottom:14px}
+.pantry-section-title{font-size:9.5px;font-weight:500;color:var(--ink4);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px;padding-bottom:5px;border-bottom:1px solid var(--paper2)}
+.pantry-items{display:flex;flex-wrap:wrap;gap:6px}
+.pantry-chip{display:flex;align-items:center;gap:6px;padding:5px 11px;border-radius:100px;border:1.5px solid var(--paper3);background:var(--paper);font-size:12px;color:var(--ink3);cursor:pointer;transition:all .15s;user-select:none}
+.pantry-chip:hover{border-color:var(--ink4);color:var(--ink)}
+.pantry-chip.stocked{background:var(--sage-light);border-color:var(--sage-mid);color:var(--sage)}
+.pantry-chip.stocked::before{content:"✓ ";font-size:10px}
+.pantry-actions{display:flex;gap:8px;margin-top:14px;padding-top:12px;border-top:1px solid var(--paper2)}
+.pantry-reset-btn{padding:6px 14px;border-radius:var(--r);border:1px solid var(--paper3);background:transparent;font-size:12px;color:var(--ink4);cursor:pointer;font-family:var(--sans);transition:all .15s}
+.pantry-reset-btn:hover{border-color:var(--rose-mid);color:var(--rose)}
+.pantry-add-btn{padding:6px 14px;border-radius:var(--r);border:1px solid var(--sage-mid);background:transparent;font-size:12px;color:var(--sage);cursor:pointer;font-family:var(--sans);transition:all .15s}
+.pantry-add-btn:hover{background:var(--sage-light)}
+/* Shopping item stocked state */
+.shop-cat ul li.in-stock{opacity:.35;text-decoration:line-through}
+.shop-cat ul li.in-stock.show-anyway{opacity:.55;text-decoration:line-through;color:var(--sage)}
 </style>
 </head>
 <body>
@@ -373,6 +401,42 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:
     <div class="pg-head">
       <div class="pg-title">Liste de <em>courses</em></div>
     </div>
+
+    <!-- Garde-manger -->
+    <div class="pantry-card">
+      <div class="pantry-header" onclick="togglePantryPanel()">
+        <div>
+          <div class="pantry-title">🏠 Mon garde-manger</div>
+          <div class="pantry-sub" id="pantry-sub">Coche ce que tu as déjà chez toi</div>
+        </div>
+        <span class="pantry-arrow" id="pantry-arrow">▼</span>
+      </div>
+      <div class="pantry-panel" id="pantry-panel">
+        <div class="pantry-search-wrap">
+          <input type="text" id="pantry-search" placeholder="Rechercher un ingrédient..." oninput="filterPantry(this.value)">
+        </div>
+        <div id="pantry-grid"></div>
+        <div class="pantry-actions">
+          <button class="pantry-reset-btn" onclick="resetPantry()">Réinitialiser</button>
+          <button class="pantry-add-btn" onclick="showAddPantryItem()">+ Ajouter un article</button>
+        </div>
+        <div id="pantry-add-form" style="display:none;margin-top:10px">
+          <div style="display:flex;gap:8px">
+            <input type="text" id="pantry-add-input" placeholder="Nom de l'article..." style="flex:1;padding:8px 10px;border:1px solid var(--paper3);border-radius:var(--r);font-family:var(--sans);font-size:13px;background:var(--paper)">
+            <button onclick="addCustomPantryItem()" style="padding:8px 14px;background:var(--sage);color:white;border:none;border-radius:var(--r);font-family:var(--sans);font-size:12px;cursor:pointer">Ajouter</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toggle show stocked -->
+    <div id="shopping-toggle-wrap" style="display:none;margin-bottom:1rem">
+      <label style="display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink3);cursor:pointer">
+        <input type="checkbox" id="show-stocked" onchange="renderShoppingList()" style="accent-color:var(--sage)">
+        Afficher aussi les articles déjà en stock
+      </label>
+    </div>
+
     <div id="shopping-content"><div class="empty">Génère d'abord un menu depuis l'onglet "Menu 4 jours".</div></div>
   </section>
 
@@ -1407,26 +1471,12 @@ function buildShopping(menu) {
       else cats['Epicerie et condiments'].push(item);
     });
   });
-  var budget4 = Math.round(Object.values(menu).reduce(function(s, r) { return s + r.budget; }, 0) * 4);
-  var catIcons = {
-    'Proteines et poissons': '🐟',
-    'Legumes et fruits': '🥦',
-    'Feculent et cereales': '🌾',
-    'Produits frais et laits vegetaux': '🥛',
-    'Surgeles': '❄️',
-    'Epicerie et condiments': '🧂'
-  };
-  var html = '<div class="shop-grid">';
-  Object.entries(cats).forEach(function(entry) {
-    var cat = entry[0], items = entry[1];
-    if (!items.length) return;
-    html += '<div class="shop-cat"><h4>' + catIcons[cat] + ' ' + cat + '</h4><ul>';
-    items.forEach(function(item) { html += '<li onclick="this.classList.toggle(\'checked\')">' + item + '</li>'; });
-    html += '</ul></div>';
-  });
-  html += '</div>';
-  html += '<div class="price-box"><div class="price-main">~' + Math.round(budget4 * .9) + '-' + budget4 + ' EUR</div><div class="price-sub">Budget estime 4 jours · Colruyt</div></div>';
-  document.getElementById('shopping-content').innerHTML = html;
+  // Store globally for re-render when pantry changes
+  lastShoppingCats = cats;
+  // Show the toggle
+  var toggleWrap = document.getElementById('shopping-toggle-wrap');
+  if (toggleWrap) toggleWrap.style.display = 'block';
+  renderShoppingList();
 }
 
 
@@ -2542,6 +2592,222 @@ function updateBP(done, total) {
   document.getElementById('bpl').textContent = done + ' / ' + total + ' etapes' + (done === total && total > 0 ? ' — Session terminee !' : '');
 }
 
+// ============================================================
+// PANTRY SYSTEM
+// ============================================================
+
+var PANTRY_DEFAULTS = {
+  'Huiles & vinaigres': [
+    'huile olive vierge extra', 'huile coco', 'huile sesame', 'huile noix',
+    'vinaigre riz', 'vinaigre balsamique'
+  ],
+  'Epices & aromates': [
+    'sel', 'poivre noir', 'curcuma', 'gingembre en poudre', 'cannelle',
+    'paprika', 'cumin', 'coriandre en poudre', 'piment doux', 'piment Cayenne',
+    'origan', 'basilic sec', 'ail en poudre', 'herbes italiennes', 'laurier'
+  ],
+  'Condiments & sauces': [
+    'sauce soja sans gluten', 'miel', 'sirop erable', 'sirop agave',
+    'moutarde', 'concentre tomate', 'sriracha', 'tabasco', 'extrait vanille'
+  ],
+  'Seche & conserves': [
+    'flocons avoine', 'riz complet', 'lentilles', 'pois chiches',
+    'haricots rouges', 'haricots blancs', 'farine sarrasin', 'maizena',
+    'levure chimique', 'bicarbonate', 'pates completes', 'bouillon legumes',
+    'bouillon boeuf', 'sauce tomate', 'lait coco', 'creme coco'
+  ],
+  'Laits & proteines vegetales': [
+    'lait amande', 'lait noisette', 'lait avoine', 'whey vanille',
+    'whey chocolat', 'puree amande', 'beurre cacahuete naturel',
+    'tahini', 'puree sesame'
+  ],
+  'Fruits secs & graines': [
+    'noix', 'amandes', 'noisettes', 'noix cajou', 'noix Bresil',
+    'graines chia', 'graines lin', 'graines sesame', 'raisins secs',
+    'dattes', 'figues sechees', 'pepites chocolat 70%', 'cacao brut'
+  ],
+  'Frigo permanents': [
+    'fromage blanc 0%', 'yaourt grec 0%', 'oeufs', 'cream cheese',
+    'parmesan', 'feta', 'cottage cheese'
+  ]
+};
+
+var pantryStocked = {};
+var pantryCustom = [];
+
+function loadPantry() {
+  try {
+    var saved = localStorage.getItem('batchcooking_pantry');
+    if (saved) pantryStocked = JSON.parse(saved);
+    var savedCustom = localStorage.getItem('batchcooking_pantry_custom');
+    if (savedCustom) pantryCustom = JSON.parse(savedCustom);
+  } catch(e) {}
+  renderPantry('');
+  updatePantrySub();
+}
+
+function savePantry() {
+  try {
+    localStorage.setItem('batchcooking_pantry', JSON.stringify(pantryStocked));
+    localStorage.setItem('batchcooking_pantry_custom', JSON.stringify(pantryCustom));
+  } catch(e) {}
+  updatePantrySub();
+  if (currentMenu) renderShoppingList();
+}
+
+function updatePantrySub() {
+  var count = Object.values(pantryStocked).filter(Boolean).length;
+  var el = document.getElementById('pantry-sub');
+  if (el) el.textContent = count > 0
+    ? count + ' article' + (count > 1 ? 's' : '') + ' en stock — masqués de ta liste de courses'
+    : 'Coche ce que tu as déjà chez toi';
+}
+
+function togglePantryPanel() {
+  var panel = document.getElementById('pantry-panel');
+  var arrow = document.getElementById('pantry-arrow');
+  if (!panel) return;
+  var open = panel.classList.toggle('open');
+  arrow.textContent = open ? '▲' : '▼';
+}
+
+function togglePantryItem(key) {
+  pantryStocked[key] = !pantryStocked[key];
+  savePantry();
+  renderPantry(document.getElementById('pantry-search') ? document.getElementById('pantry-search').value : '');
+}
+
+function filterPantry(query) {
+  renderPantry(query);
+}
+
+function renderPantry(query) {
+  var grid = document.getElementById('pantry-grid');
+  if (!grid) return;
+  var q = (query || '').toLowerCase().trim();
+  var html = '';
+
+  var allSections = JSON.parse(JSON.stringify(PANTRY_DEFAULTS));
+  if (pantryCustom.length > 0) allSections['Mes ajouts'] = pantryCustom;
+
+  Object.entries(allSections).forEach(function(entry) {
+    var cat = entry[0], items = entry[1];
+    var filtered = q ? items.filter(function(i) { return i.toLowerCase().indexOf(q) >= 0; }) : items;
+    if (!filtered.length) return;
+    html += '<div class="pantry-section">';
+    html += '<div class="pantry-section-title">' + cat + '</div>';
+    html += '<div class="pantry-items">';
+    filtered.forEach(function(item) {
+      var stocked = !!pantryStocked[item];
+      var safe = item.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+      html += '<div class="pantry-chip' + (stocked ? ' stocked' : '') + '" data-pantry-key="' + safe + '">' + item + '</div>';
+    });
+    html += '</div></div>';
+  });
+
+  if (!html) {
+    html = '<div style="font-size:13px;color:var(--ink4);padding:8px 0;font-style:italic">Aucun résultat</div>';
+  }
+  grid.innerHTML = html;
+
+  // Attach click handlers after render
+  grid.querySelectorAll('.pantry-chip').forEach(function(chip) {
+    chip.addEventListener('click', function() {
+      togglePantryItem(this.getAttribute('data-pantry-key'));
+    });
+  });
+}
+
+function resetPantry() {
+  if (!confirm('Vider tout le garde-manger ?')) return;
+  pantryStocked = {};
+  pantryCustom = [];
+  savePantry();
+  renderPantry('');
+}
+
+function showAddPantryItem() {
+  var form = document.getElementById('pantry-add-form');
+  if (form) { form.style.display = form.style.display === 'none' ? 'block' : 'none'; }
+}
+
+function addCustomPantryItem() {
+  var input = document.getElementById('pantry-add-input');
+  var val = input.value.trim().toLowerCase();
+  if (!val) return;
+  if (pantryCustom.indexOf(val) < 0) {
+    pantryCustom.push(val);
+    pantryStocked[val] = true;
+    savePantry();
+    renderPantry('');
+  }
+  input.value = '';
+  document.getElementById('pantry-add-form').style.display = 'none';
+}
+
+function isStocked(itemText) {
+  var il = itemText.toLowerCase();
+  return Object.keys(pantryStocked).some(function(key) {
+    return pantryStocked[key] && il.indexOf(key) >= 0;
+  });
+}
+
+// Separate shopping list render function (extracted from buildShopping)
+var lastShoppingCats = {};
+
+function renderShoppingList() {
+  var showStocked = document.getElementById('show-stocked') && document.getElementById('show-stocked').checked;
+  var cats = lastShoppingCats;
+  if (!Object.keys(cats).length) return;
+
+  var html = '<div class="shop-grid">';
+  var totalHidden = 0;
+
+  Object.entries(cats).forEach(function(entry) {
+    var cat = entry[0], items = entry[1];
+    if (!items.length) return;
+    var visibleItems = [];
+    var hiddenItems = [];
+    items.forEach(function(item) {
+      if (isStocked(item)) hiddenItems.push(item);
+      else visibleItems.push(item);
+    });
+    totalHidden += hiddenItems.length;
+
+    var allItems = showStocked ? visibleItems.concat(hiddenItems) : visibleItems;
+    if (!allItems.length) return;
+
+    html += '<div class="shop-cat"><h4>' + cat + '</h4><ul>';
+    visibleItems.forEach(function(item) {
+      html += '<li class="shop-item">' + item + '</li>';
+    });
+    if (showStocked) {
+      hiddenItems.forEach(function(item) {
+        html += '<li class="shop-item in-stock show-anyway">' + item + ' <span style="font-size:10px;opacity:.7">(en stock)</span></li>';
+      });
+    }
+    html += '</ul></div>';
+  });
+  html += '</div>';
+
+  if (totalHidden > 0 && !showStocked) {
+    html += '<div class="alert green" style="margin-top:1rem">✓ ' + totalHidden + ' article' + (totalHidden > 1 ? 's' : '') + ' masqué' + (totalHidden > 1 ? 's' : '') + ' — déjà dans ton garde-manger.</div>';
+  }
+
+  var budget4 = currentMenu ? Math.round(Object.values(currentMenu).reduce(function(s,r){return s+r.budget;},0) * batchDays) : 0;
+  if (budget4 > 0) {
+    html += '<div class="price-box"><div class="price-main">~' + Math.round(budget4 * .9) + '–' + budget4 + ' EUR</div><div class="price-sub">Budget estimé ' + batchDays + ' jours · Colruyt</div></div>';
+  }
+
+  var sc = document.getElementById('shopping-content');
+  if (!sc) return;
+  sc.innerHTML = html;
+  sc.querySelectorAll('.shop-item').forEach(function(li) {
+    li.addEventListener('click', function() { this.classList.toggle('checked'); });
+  });
+}
+
+
 function filterRecipes() {
   var cat = document.getElementById('cat-filter').value;
   var src = document.getElementById('src-filter').value;
@@ -2575,6 +2841,7 @@ function filterRecipes() {
 // INIT
 loadProfile();
 recalcTargets();
+loadPantry();
 filterRecipes();
 generateMenu();
 
