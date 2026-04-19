@@ -293,6 +293,15 @@ body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:
 .slot-swap-btn{background:none;border:1px solid var(--paper3);border-radius:100px;color:var(--ink4);font-size:12px;width:26px;height:26px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;transition:all .2s;flex-shrink:0}
 .slot-swap-btn:hover{background:var(--paper2);border-color:var(--ink4);color:var(--ink);transform:rotate(90deg)}
 .slot-swap-btn.spinning{animation:spin .4s linear infinite;color:var(--amber);border-color:var(--amber)}
+
+/* PORTIONS SELECTOR */
+.portions-row{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.portions-lbl{font-size:10px;color:var(--ink4);text-transform:uppercase;letter-spacing:.08em;white-space:nowrap}
+.portions-btns{display:flex;gap:4px}
+.port-btn{padding:5px 11px;border-radius:100px;border:1.5px solid var(--paper3);background:transparent;font-size:12px;color:var(--ink3);cursor:pointer;transition:all .15s;font-family:var(--sans)}
+.port-btn:hover{border-color:var(--ink3);color:var(--ink)}
+.port-btn.active{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.portions-note{font-size:11px;color:var(--ink4);font-style:italic}
 </style>
 </head>
 <body>
@@ -1334,6 +1343,7 @@ function generateMenu() {
       collation: pick(DB.collation)
     };
     currentMenu = m;
+    saveMenu(m);
     renderMenu(m);
     buildShopping(m);
     buildBatch(m);
@@ -1422,10 +1432,20 @@ function rcCard(r, lbl) {
   var lblHtml = lbl ? '<div class="card-cat-lbl">' + lbl + '</div>' : '';
   var badgesHtml = '';
   r.badges.forEach(function(b) { badgesHtml += '<span class="badge ' + b + '">' + (bm[b] || b) + '</span>'; });
-  var dotsHtml = '';
+  var diffLabel = r.diff === 1 ? 'Facile' : r.diff === 2 ? 'Moyen' : 'Elabore';
+  var diffColor = r.diff === 1 ? 'var(--sage)' : r.diff === 2 ? 'var(--amber)' : 'var(--rose)';
+  var dotsHtml = '<span style="font-size:10px;color:' + diffColor + ';background:var(--paper2);padding:2px 8px;border-radius:100px;border:1px solid var(--paper3)">' + diffLabel + '</span>'
+    + '<span style="font-size:10px;color:var(--ink4);margin-left:6px">⏱ ' + r.time + ' min</span>';
 
+  // Portions selector — unique id per recipe
+  var uid = r.id.replace(/[^a-z0-9]/g, '-');
+
+  // Build ingredients with data-base for multiplier
   var ingrHtml = '';
-  r.ingr.forEach(function(item) { ingrHtml += '<li>' + item + '</li>'; });
+  r.ingr.forEach(function(item) {
+    ingrHtml += '<li data-base="' + item.replace(/"/g, '&quot;') + '">' + item + '</li>';
+  });
+
   var stepsHtml = '';
   r.steps.forEach(function(step) { stepsHtml += '<li>' + step + '</li>'; });
 
@@ -1443,7 +1463,7 @@ function rcCard(r, lbl) {
     + lblHtml
     + '<div class="card-name">' + r.name + '</div>'
     + '<div class="badges">' + badgesHtml + '</div>'
-    + '<div class="ai-row">' + dotsHtml + '<span class="ai-src">' + (r.src === 'mat' ? 'Anti-inflammatoire' : 'Sport & protéines') + '</span></div>'
+    + '<div class="ai-row">' + dotsHtml + '<span class="ai-src" style="margin-left:8px">' + (r.src === 'mat' ? 'Anti-inflam' : 'Sport & proteines') + '</span></div>'
     + '<div class="card-macros"><b>' + r.kcal + '</b> kcal · Prot <b>' + r.prot + 'g</b> · Gluc <b>' + r.gluc + 'g</b> · Lip <b>' + r.lip + 'g</b></div>'
     + '</div>'
     + '<button class="expand-btn" onclick="toggleCard(this)">Voir la recette</button>'
@@ -1452,7 +1472,19 @@ function rcCard(r, lbl) {
     + portionNote
     + '<div class="tip-box">💡 ' + r.tip + '</div>'
     + '<div class="recipe-desc">' + r.but + '</div>'
-    + '<div class="db"><h4>Ingredients</h4><ul>' + ingrHtml + '</ul></div>'
+    // Portions selector
+    + '<div class="portions-row">'
+    + '<span class="portions-lbl">Portions</span>'
+    + '<div class="portions-btns" id="port-' + uid + '">'
+    + '<button class="port-btn" onclick="setPortions(this, 1)">×1</button>'
+    + '<button class="port-btn active" onclick="setPortions(this, 4)">×4 <span style="font-size:9px;opacity:.6">batch</span></button>'
+    + '<button class="port-btn" onclick="setPortions(this, 5)">×5</button>'
+    + '<button class="port-btn" onclick="setPortions(this, 6)">×6</button>'
+    + '<button class="port-btn" onclick="setPortions(this, 7)">×7</button>'
+    + '</div>'
+    + '<span class="portions-note" id="portnote-' + uid + '">pour 4 jours</span>'
+    + '</div>'
+    + '<div class="db"><h4>Ingredients</h4><ul id="ingr-' + uid + '">' + ingrHtml + '</ul></div>'
     + '<div class="db"><h4>Preparation</h4><ol>' + stepsHtml + '</ol></div>'
     + '</div></div>';
 }
@@ -1464,34 +1496,109 @@ function toggleCard(btn) {
 }
 
 function buildShopping(menu) {
-  var cats = {
-    'Proteines et poissons': [],
-    'Legumes et fruits': [],
-    'Feculent et cereales': [],
-    'Produits frais et laits vegetaux': [],
-    'Surgeles': [],
-    'Epicerie et condiments': []
-  };
-  var seen = {};
-  Object.values(menu).forEach(function(r) {
-    r.ingr.forEach(function(item) {
-      var k = item.toLowerCase().replace(/\d+[\.,]?\d*\s*[gclmkL]+\s*/g, '').trim().split(' ').slice(0, 4).join(' ');
-      if (seen[k]) return;
-      seen[k] = true;
-      var il = item.toLowerCase();
-      if (/saumon|maquereau|sardine|poulet|viande|tofu|crevettes|saint-jacques/.test(il)) cats['Proteines et poissons'].push(item);
-      else if (/surgel/.test(il)) cats['Surgeles'].push(item);
-      else if (/riz|avoine|pates|farine|sarrasin|quinoa|flocons|panko/.test(il)) cats['Feculent et cereales'].push(item);
-      else if (/lait|amande|noisette|fromage|yaourt|cottage|whey|creme coco|beurre amande|beurre cacah|cream cheese/.test(il)) cats['Produits frais et laits vegetaux'].push(item);
-      else if (/carotte|epinard|brocoli|patate|oignon|ail|citron|orange|banane|pomme|poire|concombre|tomate|avocat|betterave|potiron|grenade|pasteque|framboise|myrtille|fraise|coriandre|persil|basilic|gingembre|aubergine|champignon/.test(il)) cats['Legumes et fruits'].push(item);
-      else cats['Epicerie et condiments'].push(item);
+
+  // ── 1. Canonical name extractor ──────────────────────────────────────────
+  // Strips quantities and normalises to a stable key
+  // "200g myrtilles surgelées" → "myrtilles"
+  // "2 tasses myrtilles" → "myrtilles"
+  // "3 carottes râpées" → "carottes"
+  function canonicalKey(raw) {
+    return raw.toLowerCase()
+      // remove leading quantities: "200g", "2 tasses", "½ tasse", "1,5kg", "3cs"...
+      .replace(/^[\d½¼¾,\.]+\s*(g|kg|ml|cl|l|cs|cc|tasse[s]?|bouquet[s]?|tranche[s]?|pincée[s]?|goutte[s]?|pièce[s]?|filet[s]?|poignée[s]?)\s*/i, '')
+      .replace(/^[\d½¼¾,\.]+ /, '')
+      // remove trailing adjectives: surgelé(es), frais(ches), râpé(es), cuit(s)...
+      .replace(/\s+(surgel[eé][es]?|frais|fraîche[s]?|rapé[es]?|râpé[es]?|cuit[es]?|cuite[s]?|égouttée?s?|décortiqué[es]?|entières?|concassée?s?|pelée?s?|bio|vrac|cat1|froi[de]s?|congelée?s?|de saison|en poudre|moulu[es]?)$/i, '')
+      // remove prep info in parens
+      .replace(/\s*\([^)]*\)/g, '')
+      .trim();
+  }
+
+  // ── 2. Quantity extractor ────────────────────────────────────────────────
+  function extractQty(raw) {
+    var m = raw.match(/^([\d½¼¾][\d,\.]*\s*(?:g|kg|ml|cl|l|cs|cc|tasse[s]?)?)/i);
+    return m ? m[1].trim() : '';
+  }
+
+  // ── 3. Category classifier ───────────────────────────────────────────────
+  function classify(il) {
+    if (/saumon|maquereau|sardine|poulet|viande|tofu|crevettes|saint-jacques|magret|canard/.test(il))
+      return 'Protéines & poissons';
+    if (/riz|flocons avoine|pates|farine|sarrasin|quinoa|panko|chapelure/.test(il))
+      return 'Féculents & céréales';
+    if (/lait|amande|noisette|fromage|yaourt|cottage|whey|creme coco|beurre amande|beurre cacah|cream cheese/.test(il))
+      return 'Produits frais & laits végétaux';
+    if (/carotte|epinard|brocoli|patate|oignon|ail|citron|orange|banane|pomme|poire|concombre|tomate|avocat|betterave|potiron|grenade|pasteque|framboise|myrtille|fraise|mure|peche|ananas|coriandre|persil|basilic|menthe|gingembre frais|aubergine|champignon|celeri|courgette|poivron|fenouil/.test(il))
+      return 'Légumes & fruits';
+    if (/surgel|congel/.test(il))
+      return 'Surgelés';
+    return 'Épicerie & condiments';
+  }
+
+  // ── 4. Collect all ingredients from menu ────────────────────────────────
+  // Map: canonicalKey → { display, qty[], category, rawList[] }
+  var ingredientMap = {};
+
+  Object.values(menu).forEach(function(recipe) {
+    recipe.ingr.forEach(function(raw) {
+      var key = canonicalKey(raw);
+      if (!key) return;
+
+      var il = key.toLowerCase();
+      var cat = classify(il);
+
+      // If ingredient already seen, try to merge quantities
+      if (ingredientMap[key]) {
+        var qty = extractQty(raw);
+        if (qty && ingredientMap[key].qtys.indexOf(qty) < 0) {
+          ingredientMap[key].qtys.push(qty);
+        }
+        // Promote to surgelé category only if not already in légumes
+        // (fresh always wins over frozen in display)
+        if (cat !== 'Surgelés') {
+          ingredientMap[key].category = cat;
+        }
+      } else {
+        ingredientMap[key] = {
+          display: key.charAt(0).toUpperCase() + key.slice(1),
+          qtys: extractQty(raw) ? [extractQty(raw)] : [],
+          category: cat,
+          raw: raw
+        };
+      }
     });
   });
+
+  // ── 5. Build category buckets ────────────────────────────────────────────
+  var cats = {
+    'Protéines & poissons': [],
+    'Légumes & fruits': [],
+    'Féculents & céréales': [],
+    'Produits frais & laits végétaux': [],
+    'Surgelés': [],
+    'Épicerie & condiments': []
+  };
+
+  Object.values(ingredientMap).forEach(function(item) {
+    var label = item.display;
+    if (item.qtys.length > 0) {
+      label += ' (' + item.qtys.join(' + ') + ')';
+    }
+    cats[item.category].push(label);
+  });
+
+  // Sort each category alphabetically
+  Object.keys(cats).forEach(function(cat) {
+    cats[cat].sort();
+  });
+
   // Store globally for re-render when pantry changes
   lastShoppingCats = cats;
+
   // Show the toggle
   var toggleWrap = document.getElementById('shopping-toggle-wrap');
   if (toggleWrap) toggleWrap.style.display = 'block';
+
   renderShoppingList();
 }
 
@@ -2839,6 +2946,7 @@ function swapRecipe(slot) {
     // If same recipe, try once more
     if (candidate.id === currentId && arr.length > 1) candidate = pick(arr);
     currentMenu[slot] = candidate;
+    saveMenu(currentMenu);
     renderMenu(currentMenu);
     buildShopping(currentMenu);
     buildBatch(currentMenu);
@@ -2848,6 +2956,98 @@ function swapRecipe(slot) {
     }
   }, 200);
 }
+
+function setPortions(btn, mult) {
+  // Find the portions button group
+  var portRow = btn.closest('.portions-row') || btn.parentNode.parentNode;
+  var btnGroup = btn.parentNode;
+  btnGroup.querySelectorAll('.port-btn').forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+
+  // Find the ingredient list (sibling .db ul)
+  var rd = btn.closest('.rd');
+  if (!rd) return;
+  var ul = rd.querySelector('.db ul');
+  if (!ul) return;
+
+  // Reset each ingredient to base then multiply
+  ul.querySelectorAll('li').forEach(function(li) {
+    var base = li.getAttribute('data-base');
+    if (!base || mult === 1) {
+      li.textContent = base || li.textContent;
+      return;
+    }
+    // Try to multiply numeric quantities in the string
+    var scaled = base.replace(/(\d+[\.,]?\d*)/g, function(match) {
+      var num = parseFloat(match.replace(',', '.'));
+      var result = Math.round(num * mult * 10) / 10;
+      // Clean up: 4.0 → 4
+      return result % 1 === 0 ? result.toString() : result.toString().replace('.', ',');
+    });
+    li.textContent = scaled;
+  });
+
+  // Update the note
+  var noteId = btnGroup.id.replace('port-', 'portnote-');
+  var note = rd.querySelector('.portions-note');
+  if (note) {
+    note.textContent = mult === 1 ? '1 personne · 1 repas'
+      : mult === 4 ? 'pour 4 jours (batch)'
+      : 'pour ' + mult + ' jours (batch)';
+  }
+}
+
+
+function saveMenu(menu) {
+  try {
+    // Store only the recipe ids — we rebuild from DB on load
+    var ids = {};
+    Object.keys(menu).forEach(function(slot) { ids[slot] = menu[slot].id; });
+    localStorage.setItem('batchcooking_menu', JSON.stringify(ids));
+    localStorage.setItem('batchcooking_days', batchDays);
+  } catch(e) {}
+}
+
+function loadSavedMenu() {
+  try {
+    var saved = localStorage.getItem('batchcooking_menu');
+    var savedDays = localStorage.getItem('batchcooking_days');
+    if (!saved) return false;
+
+    var ids = JSON.parse(saved);
+    var slots = ['matin', 'dejeuner', 'diner', 'souper', 'collation'];
+    var menu = {};
+
+    for (var i = 0; i < slots.length; i++) {
+      var slot = slots[i];
+      if (!ids[slot]) return false;
+      // Find recipe in DB
+      var found = null;
+      var arr = DB[slot];
+      for (var j = 0; j < arr.length; j++) {
+        if (arr[j].id === ids[slot]) { found = arr[j]; break; }
+      }
+      if (!found) return false;
+      menu[slot] = found;
+    }
+
+    // Restore days selector
+    if (savedDays) {
+      batchDays = parseInt(savedDays) || 4;
+      document.querySelectorAll('.day-btn').forEach(function(btn) {
+        btn.classList.remove('active');
+        if (btn.textContent.trim() === batchDays + ' j') btn.classList.add('active');
+      });
+    }
+
+    currentMenu = menu;
+    renderMenu(menu);
+    buildShopping(menu);
+    buildBatch(menu);
+    return true;
+  } catch(e) { return false; }
+}
+
 
 function filterRecipes() {
   var cat = document.getElementById('cat-filter').value;
@@ -2884,7 +3084,7 @@ loadProfile();
 recalcTargets();
 loadPantry();
 filterRecipes();
-generateMenu();
+if (!loadSavedMenu()) { generateMenu(); }
 
 // Live recalc on profile fields change
 ['p-age','p-sex','p-height','p-weight','p-goal','p-activity'].forEach(function(id) {
